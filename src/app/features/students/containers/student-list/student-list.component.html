@@ -1,0 +1,121 @@
+// src/app/features/students/containers/students-list/students-list.component.html
+<div class="students-list-container">
+  <app-page-header title="Students">
+    <button mat-raised-button color="primary">
+      <mat-icon>add</mat-icon>
+      Add Student
+    </button>
+  </app-page-header>
+
+  <mat-card>
+    <mat-card-content>
+      <div class="table-filters">
+        <mat-form-field appearance="outline">
+          <mat-label>Search</mat-label>
+          <input matInput placeholder="Search by name or ID">
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+        
+        <mat-form-field appearance="outline">
+          <mat-label>Risk Filter</mat-label>
+          <mat-select>
+            <mat-option value="all">All Students</mat-option>
+            <mat-option value="at-risk">At Risk</mat-option>
+            <mat-option value="normal">Normal</mat-option>
+          </mat-select>
+        </mat-form-field>
+        
+        <mat-form-field appearance="outline">
+          <mat-label>Grade</mat-label>
+          <mat-select>
+            <mat-option value="all">All Grades</mat-option>
+            <mat-option value="5th">5th Grade</mat-option>
+            <mat-option value="6th">6th Grade</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="table-wrapper" *ngIf="!(loading$ | async); else loading">
+        <table mat-table [dataSource]="students$ | async" class="mat-elevation-z1">
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <td mat-cell *matCellDef="let student">
+              <div class="student-name">
+                {{ getFullName(student) }}
+              </div>
+            </td>
+          </ng-container>
+
+          <!-- Grade Column -->
+          <ng-container matColumnDef="grade">
+            <th mat-header-cell *matHeaderCellDef>Grade</th>
+            <td mat-cell *matCellDef="let student">{{ student.grade }}</td>
+          </ng-container>
+
+          <!-- Risk Status Column -->
+          <ng-container matColumnDef="riskStatus">
+            <th mat-header-cell *matHeaderCellDef>Risk Status</th>
+            <td mat-cell *matCellDef="let student">
+              <span class="risk-status" [ngClass]="getRiskStatusClass(student.atRisk)">
+                {{ getRiskStatusText(student.atRisk) }}
+              </span>
+            </td>
+          </ng-container>
+
+          <!-- Risk Score Column -->
+          <ng-container matColumnDef="riskScore">
+            <th mat-header-cell *matHeaderCellDef>Risk Score</th>
+            <td mat-cell *matCellDef="let student">
+              {{ student.riskScore || 'N/A' }}
+            </td>
+          </ng-container>
+
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let student">
+              <button mat-icon-button color="primary" [routerLink]="['/students', student.id]">
+                <mat-icon>visibility</mat-icon>
+              </button>
+              <button mat-icon-button color="accent">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr 
+            mat-row 
+            *matRowDef="let student; columns: displayedColumns;"
+            [ngClass]="{'at-risk-row': student.atRisk}"
+            [routerLink]="['/students', student.id]">
+          </tr>
+        </table>
+
+        <!-- Empty State -->
+        <div class="empty-state" *ngIf="(students$ | async)?.length === 0">
+          <mat-icon>sentiment_very_dissatisfied</mat-icon>
+          <p>No students found</p>
+          <button mat-raised-button color="primary">
+            <mat-icon>add</mat-icon>
+            Add Student
+          </button>
+        </div>
+      </div>
+
+      <mat-paginator 
+        [pageSize]="10" 
+        [pageSizeOptions]="[5, 10, 25, 100]"
+        showFirstLastButtons>
+      </mat-paginator>
+    </mat-card-content>
+  </mat-card>
+
+  <ng-template #loading>
+    <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Loading students...</p>
+    </div>
+  </ng-template>
+</div>

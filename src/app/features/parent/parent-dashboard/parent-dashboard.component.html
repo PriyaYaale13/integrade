@@ -1,0 +1,36 @@
+<app-header></app-header>
+
+<div class="page-container parent-dashboard">
+  <h1>Parent Dashboard</h1>
+
+  <ng-container *ngIf="(children$ | async) as children; else loading">
+    <mat-card *ngIf="children.length > 0; else noChildren">
+      <mat-card-header>
+        <mat-card-title>My Children</mat-card-title>
+        <mat-card-subtitle>Select a child to view their details</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-list role="list">
+          <mat-list-item *ngFor="let child of children" role="listitem" (click)="viewChildDetails(child.id)" class="child-list-item">
+             <mat-icon matListItemIcon>child_care</mat-icon>
+             <div matListItemTitle>{{ child.firstName }} {{ child.lastName }}</div>
+             <div matListItemLine>Grade: {{ child.gradeLevel ?? 'N/A' }}</div>
+             <button mat-icon-button aria-label="View details">
+                <mat-icon>chevron_right</mat-icon>
+             </button>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+
+    <ng-template #noChildren>
+        <mat-card>
+            <mat-card-content>No children linked to this account.</mat-card-content>
+        </mat-card>
+    </ng-template>
+  </ng-container>
+
+  <ng-template #loading>
+     <div class="loading-container"> <mat-spinner diameter="40"></mat-spinner> <p>Loading dashboard...</p> </div>
+  </ng-template>
+</div>

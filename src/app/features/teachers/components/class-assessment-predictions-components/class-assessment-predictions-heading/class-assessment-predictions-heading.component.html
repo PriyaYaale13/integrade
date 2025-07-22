@@ -1,0 +1,16 @@
+<div class="p-4 space-y-0 bg-white rounded shadow">
+    <!-- Header row with title and select filters -->
+    <div class="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
+        <h3 class="text-xl font-bold text-gray-800">{{title}}</h3>
+
+        <div class="flex flex-col sm:flex-row sm:space-x-4 w-full sm:w-auto space-y-4 sm:space-y-0">
+            <h6 class="flex text-orange-500 cursor-pointer" [routerLink]="'/teacher/predict'">
+                <span class="material-icons text-orange-500 text-lg">arrow_back</span> 
+                <span class="ml-2 text-lg">Back</span> 
+            </h6>
+            
+          
+        </div>
+        </div>
+        <h5 class="text-gray-500">{{count}} Students | 2025 Spring Assessment</h5>
+    </div>

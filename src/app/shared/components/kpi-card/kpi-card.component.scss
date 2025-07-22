@@ -1,0 +1,75 @@
+@use '@angular/material' as mat;
+
+:host {
+  display: block;
+}
+
+.kpi-card {
+  border-radius: 8px;
+  padding: 12px 10px; // Slightly adjusted padding
+  min-width: 120px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); // Match global card shadow
+
+  &.clickable {
+    // Style for clickable KPIs
+    cursor: pointer;
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
+    }
+  }
+}
+
+mat-card-header {
+  padding: 0 0 6px 0; // Reduced padding
+  display: block;
+  min-height: auto; // Override default min-height if needed
+}
+
+mat-card-title {
+  font-size: 0.85rem; // Slightly smaller title
+  font-weight: 500; // Medium weight
+  margin-bottom: 0;
+  line-height: 1.3;
+}
+
+mat-card-content {
+  padding: 0 !important; // Remove default padding
+}
+
+.kpi-value {
+  font-size: 1.6em; // Larger value
+  font-weight: bold;
+  display: inline-block;
+  margin-right: 4px;
+  line-height: 1.2;
+}
+
+.trend-icon {
+  font-size: 1.1em; // Adjust icon size
+  vertical-align: middle; // Align icon nicely
+  position: relative;
+  top: -2px; // Fine-tune vertical alignment
+
+  &.down {
+    color: #a5d6a7;
+  }
+
+  // Lighter green for down arrow (positive trend for absentees)
+  &.up {
+    color: #ef9a9a;
+  }
+
+  // Lighter red for up arrow
+
+  @media (max-width: 640px) {
+
+    // Adjust breakpoint if needed
+    .kpi-grid {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+  }
+
+}

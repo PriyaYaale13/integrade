@@ -1,0 +1,210 @@
+<app-header></app-header>
+
+<div *ngIf="student; else notFound">
+  <div class="min-h-screen bg-[#F5F7FA]">
+    <div class="page-layout-container">
+      <app-sidebar title="Quick Links" [menuItems]="sidebarMenuItems" [useCustomIcons]="true"></app-sidebar>
+
+      <main class="app-main-content">
+
+        <h1  _ngcontent-ng-c3925825219 class="page-title">Welcome {{student.parent_name}}</h1>
+        <!-- Student Details Card -->
+        <div *ngIf="student">
+
+       
+
+
+          <section id="section-info" class="bg-white rounded-lg shadow mb-6 p-6 sm:p-6">
+
+            <!-- Image and Print button Container -->
+            <div
+              class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 space-y-4 sm:space-y-0">
+              <div class="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-6">
+
+                <!-- Image Container -->
+                <img src="{{student.image}}" alt="Student Photo"
+                  class="w-24 h-24 rounded-lg object-cover border-4 border-[#b53f64] shadow-md">
+
+                <!-- Academy Name -->
+
+                <div>
+                  <h1 class="text-2xl font-medium text-[#212121]">{{student.full_name}}</h1>
+                  <p class="text-[#757575] mt-1">{{student.Academy}}</p>
+                </div>
+              </div>
+
+              <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                  <div *ngFor="let item of students">
+                    <label class="student-item flex items-center gap-2 cursor-pointer">
+                      <input type="radio" class="appearance-auto w-4 h-4 accent-blue-600" name="student-selection"
+                        [value]="item.student_id" [(ngModel)]="studentId"
+                        (change)="onStudentSelected(item.student_id)" />
+
+
+                      <span>{{ item.full_name }}</span>
+                    </label>
+                  </div>
+                </div>
+
+                <button
+                  class="w-full sm:w-auto px-4 py-2 bg-[#FF881F]  hover:bg-orange-600 text-white rounded flex items-center justify-center whitespace-nowrap">
+                  <i class="fa-regular fa-envelope mr-2"></i>
+                  Print Report
+                </button>
+              </div>
+            </div>
+
+            <!-- Students Details Grid -->
+            <div class="grid grid-cols-4 gap-6">
+              <div class="space-y-2 col-span-2 sm:col-span-2 lg:col-span-1">
+                <p class="text-[#757575]">Student ID</p>
+                <p class="font-medium">{{student.student_id}}</p>
+              </div>
+              <div class="space-y-2 col-span-2 sm:col-span-2 lg:col-span-1">
+                <p class="text-[#757575]">Age / Gender</p>
+                <p class="font-medium">{{student.age_gender}}</p>
+              </div>
+              <div class="space-y-2 col-span-2 sm:col-span-2 lg:col-span-1">
+                <p class="text-[#757575]">Ethnicity</p>
+                <p class="font-medium">{{student.ethnicity}}</p>
+              </div>
+              <div class="space-y-2 col-span-2 sm:col-span-2 lg:col-span-1">
+                <p class="text-[#757575]">Grade</p>
+                <p class="font-medium">{{student.grade}}</p>
+              </div>
+              <div class="space-y-2 col-span-2 sm:col-span-2 lg:col-span-1">
+                <p class="text-[#757575]">Bus No.</p>
+                <p class="font-medium">{{student.bus_no}}</p>
+              </div>
+              <div class="space-y-2 col-span-2 sm:col-span-2 lg:col-span-1">
+                <p class="text-[#757575]">Teacher</p>
+                <p class="font-medium">{{student.teacher}}</p>
+              </div>
+              <div class="space-y-2 col-span-2 sm:col-span-2 lg:col-span-1">
+                <p class="text-[#757575]">Room</p>
+                <p class="font-medium">{{student.room}}</p>
+              </div>
+              <div class="space-y-2 col-span-4 sm:col-span-2 lg:col-span-1">
+                <p class="text-[#757575]">Address</p>
+                <p class="font-medium break-words">{{student.address}}</p>
+              </div>
+            </div>
+
+
+          </section>
+        </div>
+
+        <!-- Dashboard Widgets -->
+        <section id="student-widgets" class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <!-- Intervention Status -->
+          <div class="bg-white rounded-lg shadow p-4 hover:bg-gray-100 cursor-pointer">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="font-medium">Intervention Status</h3>
+              <span class="bg-[#4caf50] text-white text-xs px-2 py-1 rounded">On Track</span>
+            </div>
+            <div class="space-y-3">
+              <div class="border-l-4 border-[#3f51b5] pl-3">
+                <p class="font-medium">Reading Comprehension</p>
+                <div class="flex items-center gap-2 text-sm text-[#757575]">
+                  <i class="fa-regular fa-clock"></i>
+                  <span>Started: Jan 15, 2025</span>
+                </div>
+                <div class="mt-2 flex items-center gap-2">
+                  <div class="flex-1 h-2 bg-[#e0e0e0] rounded-full">
+                    <div class="w-[75%] h-2 bg-[#4caf50] rounded-full"></div>
+                  </div>
+                  <span class="text-sm font-medium">75%</span>
+                </div>
+              </div>
+              <div class="flex items-center justify-between text-sm pt-2">
+                <span class="text-[#757575]">Next Review:</span>
+                <span class="font-medium">Mar 15, 2025</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Attendance -->
+          <div class="bg-white rounded-lg shadow p-4 hover:bg-gray-100 cursor-pointer">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="font-medium">Attendance</h3>
+              <i class="fa-solid fa-calendar text-[#757575] size-5"></i>
+            </div>
+            <div class="space-y-2">
+              <div class="flex justify-between">
+                <span class="text-[#757575]">Present</span>
+                <span class="font-medium text-[#4caf50]">85%</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-[#757575]">Tardy</span>
+                <span class="font-medium text-[#ff9800]">8%</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-[#757575]">Absent</span>
+                <span class="font-medium text-[#f44336]">7%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Disciplinary Actions -->
+          <div class="bg-white rounded-lg shadow p-4 hover:bg-gray-100 cursor-pointer">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="font-medium">Disciplinary Actions</h3>
+              <i class="fa-solid fa-triangle-exclamation text-[#f44336] size-5"></i>
+            </div>
+            <p class="text-2xl font-medium">2</p>
+            <p class="text-[#757575] text-sm">Minor Incidents</p>
+          </div>
+
+          <!-- Warnings -->
+          <div class="bg-white rounded-lg shadow p-4 hover:bg-gray-100 cursor-pointer">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="font-medium">Warnings</h3>
+              <i class="fa-solid fa-bell text-[#ff9800] size-5"></i>
+            </div>
+            <p class="text-2xl font-medium">1</p>
+            <p class="text-[#757575] text-sm">Academic Warning</p>
+          </div>
+
+          <!-- Awards -->
+          <div class="bg-white rounded-lg shadow p-4 hover:bg-gray-100 cursor-pointer">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="font-medium">Awards</h3>
+              <i class="fa-solid fa-medal text-[#ffd700] size-5"></i>
+            </div>
+            <p class="text-2xl font-medium">5</p>
+            <p class="text-[#757575] text-sm">Academic Awards</p>
+          </div>
+
+          <!-- Cafeteria Balance -->
+          <div class="bg-white rounded-lg shadow p-4 hover:bg-gray-100 cursor-pointer">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="font-medium">Cafeteria Balance</h3>
+              <i class="fa-solid fa-utensils text-[#3f51b5] size-5"></i>
+            </div>
+            <div class="space-y-2">
+              <div class="flex justify-between">
+                <span class="text-[#757575]">Balance</span>
+                <span class="font-medium text-[#4caf50]">$125.75</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-[#757575]">Total Spent</span>
+                <span class="font-medium">$45.50</span>
+              </div>
+            </div>
+            <p class="text-[#757575] text-xs mt-2">Last updated: Today</p>
+          </div>
+        </section>
+
+       
+      </main>
+    </div>
+  </div>
+</div>
+
+<ng-template #notFound>
+  <div class="bg-white rounded-xl shadow-lg p-8 flex flex-col items-center justify-center min-h-[300px]">
+    <mat-spinner diameter="40" class="mb-4"></mat-spinner>
+    <p class="text-[#757575]">Loading dashboard data...</p>
+  </div>
+</ng-template>

@@ -1,0 +1,152 @@
+<app-header></app-header>
+
+<div class="min-h-screen bg-[#F5F7FA] pt-2">
+    <div class="page-layout-container flex flex-col lg:flex-row">
+        <!-- Sidebar (Can be similar to Teacher or specific to Principal) -->
+        <app-sidebar title="Quick Links" [menuItems]="sidebarMenuItems" [useCustomIcons]="true">
+        </app-sidebar>
+
+        <main class="app-main-content flex-1 px-4 md:px-6 pt-5 overflow-x-hidden">
+            <!-- Page Title and Notifications -->
+            <div class="flex justify-between items-center mb-6 mt-10">
+                <h1 class="page-title text-xl md:text-2xl">Teacher Directory</h1>
+                <div class="relative space-x-4">
+                    <button mat-raised-button class="relative bg-[#FF881F]" (click)="exportToExcel()">
+                        <span class="text-[#FFFFFF]">Export</span>
+                    </button>
+                </div>
+            </div>
+            <div class="filters-bar mb-6">
+                <div class="flex w-full items-center">
+                    <div class="grid grid-cols-1 sm:grid-cols-4 gap-5 flex-grow">
+                        <!-- Department -->
+                        <mat-form-field appearance="outline" class="w-full filter-field">
+                            <mat-label>Department</mat-label>
+                            <mat-select [(ngModel)]="currentFilters.department" (selectionChange)="applyFilters()">
+                                <mat-option value="all">All Departments</mat-option> <!-- Add 'All' option -->
+                                <mat-option *ngFor="let dept of (departments$ | async)" [value]="dept">{{ dept
+                                    }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <!-- Grades -->
+                        <mat-form-field appearance="outline" class="w-full filter-field">
+                            <mat-label>Grade</mat-label>
+                            <mat-select [(ngModel)]="currentFilters.grade" (selectionChange)="applyFilters()">
+                                <mat-option value="all">All Grades</mat-option> <!-- Add 'All' option -->
+                                <mat-option *ngFor="let grade of (grades$ | async)" [value]="grade">{{ grade
+                                    }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <!-- Employment Statuses -->
+                        <mat-form-field appearance="outline" class="w-full filter-field">
+                            <mat-label>Employment Status</mat-label>
+                            <mat-select [(ngModel)]="currentFilters.employmentStatus"
+                                (selectionChange)="applyFilters()">
+                                <mat-option value="all">All Employment</mat-option> <!-- Add 'All' option -->
+                                <mat-option *ngFor="let employment of (employmentStatuses$ | async)"
+                                    [value]="employment">{{
+                                    employment
+                                    }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <!-- Search teachers -->
+                        <mat-form-field appearance="outline" class="w-full filter-field">
+                            <mat-label>Search teachers...</mat-label>
+                            <input matInput #searchInput [ngModel]="currentFilters.searchTerm"
+                                (input)="onSearchTermChange($event)" placeholder="Enter Teacher">
+                            <div matSuffix class="icon-container">
+                                <button *ngIf="searchInput.value" mat-icon-button aria-label="Clear"
+                                    (click)="clearSearch()">
+                                    <mat-icon>close</mat-icon>
+                                </button>
+                                <button *ngIf="!searchInput.value" mat-icon-button aria-label="search">
+                                    <mat-icon *ngIf="!searchInput.value">search</mat-icon>
+                                </button>
+                            </div>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <!-- Data Loading Area (Identical structure to Teacher HTML) -->
+            <ng-container *ngIf="dashboardData$ | async as data; else loadingOrError">
+                <div class="kpi-grid">
+                    <app-kpi-card *ngFor="let kpi of data.kpis" [kpi]="kpi"></app-kpi-card>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="teachersList$ | async as data; else loadingOrError">
+                <!-- Teachers Table Section -->
+                <div class="table-section">
+                    <div class="table-container overflow-x-auto">
+                        <table mat-table [dataSource]="dataSource" class="intervention-table min-w-full">
+                            <!-- Columns -->
+                            <ng-container matColumnDef="teacher">
+                                <th mat-header-cell *matHeaderCellDef>Teacher</th>
+                                <td mat-cell *matCellDef="let element">
+                                    <div class="student-cell">
+                                        <img [src]="element.student?.avatarUrl || 'assets/default-profile.png'"
+                                            alt="Teacher" class="student-avatar">
+                                        <span>{{ element?.name || 'N/A' }}</span>
+                                    </div>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="department">
+                                <th mat-header-cell *matHeaderCellDef>Department</th>
+                                <td mat-cell *matCellDef="let element">{{ element.department || 'N/A' }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="gradeLevel">
+                                <th mat-header-cell *matHeaderCellDef>Grade Level</th>
+                                <td mat-cell *matCellDef="let element">{{ element?.gradeLevel }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="experience">
+                                <th mat-header-cell *matHeaderCellDef>Experience</th>
+                                <td mat-cell *matCellDef="let element">{{ element?.experience || 'N/A' }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="student">
+                                <th mat-header-cell *matHeaderCellDef>Students</th>
+                                <td mat-cell *matCellDef="let element">
+                                    <span class="status-badge">
+                                        {{ element?.studentsCount || 'N/A' }}
+                                    </span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="performance">
+                                <th mat-header-cell *matHeaderCellDef>Performance</th>
+                                <td mat-cell *matCellDef="let element">
+                                    <div class="progress-bar-bg table-progress">
+                                        <div class="progress-bar" [style.width.%]="element.performance || 0"></div>
+                                    </div>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="status">
+                                <th mat-header-cell *matHeaderCellDef>Status</th>
+                                <td mat-cell *matCellDef="let element">
+                                    <span class="status-badge">
+                                        {{ element.status || 'N/A' }}
+                                    </span>
+                                </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="table-row"></tr>
+                            <tr class="mat-row" *matNoDataRow>
+                                <td class="mat-cell" [attr.colspan]="displayedColumns.length">No teachers data found
+                                    matching filters.</td>
+                            </tr>
+                        </table>
+                        <mat-paginator #teacherListPagination [length]="data?.teachers?.length" [pageSize]="5"
+                            [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons>
+                        </mat-paginator>
+                    </div>
+                </div>
+            </ng-container>
+
+            <ng-template #loadingOrError>
+                <div class="loading-container">
+                    <mat-spinner diameter="50"></mat-spinner>
+                    <p>Loading dashboard data...</p>
+                </div>
+            </ng-template>
+
+        </main>
+    </div>
+</div>

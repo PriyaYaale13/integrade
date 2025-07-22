@@ -1,0 +1,25 @@
+// src/app/features/parent-portal/components/student-select/student-select.component.html
+<div class="student-select-container">
+  <h3 class="section-title">My Students</h3>
+  
+  <div class="student-list">
+    <div 
+      *ngFor="let student of students" 
+      class="student-item" 
+      [class.selected]="student.id === selectedStudentId"
+      (click)="onStudentClick(student.id)">
+      
+      <div class="student-avatar">
+        <div *ngIf="!student.photo" class="avatar-placeholder">
+          {{ student.name.charAt(0) }}
+        </div>
+        <img *ngIf="student.photo" [src]="student.photo" alt="{{ student.name }}" class="avatar-image">
+      </div>
+      
+      <div class="student-info">
+        <div class="student-name">{{ student.name }}</div>
+        <div class="student-grade">{{ student.grade }} Grade</div>
+      </div>
+    </div>
+  </div>
+</div>

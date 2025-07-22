@@ -1,0 +1,31 @@
+[
+    {
+      "id": 1,
+      "name": "Harvard High School",
+      "tier": "Tier 1",
+      "students": 1200,
+      "attendance": 95,
+      "performance": 90,
+      "trend": "up",
+      "school": "Harvard High School",
+      "academicYear": "2024",
+      "grade": "12th",
+      "awardType": "Maths",
+      "subject": "Mathematics"
+    },
+    {
+      "id": 2,
+      "name": "Stanford Prep",
+      "tier": "Tier 2",
+      "students": 800,
+      "attendance": 92,
+      "performance": 85,
+      "trend": "neutral",
+      "school": "Stanford Prep",
+      "academicYear": "2025",
+      "grade": "11th",
+      "awardType": "Science",
+      "subject": "Biology"
+    }
+  ]
+  

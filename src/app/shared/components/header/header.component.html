@@ -1,0 +1,62 @@
+<div class="bg-white shadow-sm border-b border-[#E0E0E0] header-container">
+  <div class="container-fluid pl-2 pr-8">
+    <div class="flex justify-between h-16">
+      <div class="flex items-center">
+        <a [routerLink]="dashboardRoute" class="flex-shrink-0 flex items-center logo-container">
+          <!-- Optional: Add logo text if needed -->
+          <!-- <span class="ml-2 text-xl font-bold text-primary">InteGrade</span> -->
+        </a>
+      </div>
+      
+      <div class="flex items-center">
+        <!-- Parent Child Selector -->
+        <div class="user-controls-container">
+          <ng-container *ngIf="currentUser && currentUser.role === 'Parent' && currentUser.children && currentUser.children.length > 0">
+            <mat-form-field appearance="outline" class="child-selector mr-4 w-48">
+              <mat-label>Viewing Child</mat-label>
+              <mat-select [(ngModel)]="selectedChildId" (ngModelChange)="onChildSelectionChange($event)" class="text-[#424242]">
+                <mat-option *ngFor="let child of currentUser.children" [value]="child.id">
+                  {{ child.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </ng-container>
+                
+          <ng-container *ngIf="isLoggedIn && currentUser">
+            <button mat-button [matMenuTriggerFor]="userMenu" class="user-menu-button flex items-center text-[#424242] hover:text-[#FF881F]">
+              <div class="inline-flex items-center">
+                <div class="profile-image-container">
+                  <img [src]="getProfileImage()" alt="Profile" class="profile-image">
+                </div>
+                <div class="flex flex-col items-start ml-2">
+                  <span>{{ currentUser.userName }}</span>
+                  <span class="text-xs text-[#FF881F]">({{ currentUser.role }})</span>
+                </div>
+                <i class="fa-solid fa-chevron-down ml-1 text-xs"></i>
+              </div>
+            </button>
+          </ng-container>
+          
+          <!-- Move mat-menu outside of ng-container to avoid nesting issues -->
+          <mat-menu #userMenu="matMenu" class="user-dropdown-menu flex justify-center items-center">
+            <button mat-menu-item class="">
+              <i class="fa-solid fa-gear mr-2 text-[#FF881F]"></i>
+              <span>Settings</span>
+            </button>
+            <button mat-menu-item (click)="logout()" class="">
+              <i class="fa-solid fa-sign-out-alt mr-2 text-[#FF881F]"></i>
+              <span>Logout</span>
+            </button>
+          </mat-menu>
+                
+          <ng-container *ngIf="!isLoggedIn">
+            <button mat-button routerLink="/login" class="flex items-center text-[#424242] hover:text-[#FF881F]">
+              <i class="fa-solid fa-sign-in-alt mr-2"></i>
+              <span>Login</span>
+            </button>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

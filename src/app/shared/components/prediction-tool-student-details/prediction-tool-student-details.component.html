@@ -1,0 +1,101 @@
+<div id="student-list" class="bg-white rounded-xl shadow-sm overflow-hidden">
+    <div class="overflow-x-auto">
+        <table class="w-full">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">Student</th>
+                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">MATH PREDICTION</th>
+                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">ELA PREDICTION</th>
+                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">POSITIVE FACTORS</th>
+                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">NEGATIVE FACTORS</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+                <tr *ngFor="let details of paginatedStudentDetails">
+                    <td class="px-6 py-4">
+                        <div class="flex items-center">
+                            <img [src]="details.image" class="w-8 h-8 rounded-full mr-3" alt="Avatar">
+                            <div>
+                                <div class="font-medium">{{ details.name }}</div>
+                                <div class="text-sm text-gray-500">{{ details.studentId }}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="px-3 py-1 rounded-full text-sm" [ngClass]="{
+                                'bg-green-100 text-green-800': details.math_prediction >= '80',
+                                'bg-orange-100 text-orange-600': details.math_prediction < '80',
+                                'bg-red-100 text-red-800': details.math_prediction < '60'
+                            }">
+                            {{ details.math_prediction }}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="px-3 py-1 rounded-full text-sm" [ngClass]="{
+                                'bg-green-100 text-green-800': details.ela_prediction >= '80',
+                                'bg-orange-100 text-orange-600': details.ela_prediction < '80',
+                                'bg-red-100 text-red-800': details.ela_prediction < '60'
+                            }">
+                            {{ details.ela_prediction }}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="flex flex-col space-y-2">
+                            <div class="px-3 py-1 text-sm inline-flex items-center bg-green-100 text-green-800 rounded">
+                                <mat-icon class="mr-2 text-green-600">check_circle</mat-icon>
+                                {{ details.positive_factor[0] }}
+                            </div>
+                            <div class="px-3 py-1 text-sm inline-flex items-center bg-green-100 text-green-800 rounded">
+                                <mat-icon class="mr-2 text-green-600">check_circle</mat-icon>
+                                {{ details.positive_factor[1] }}
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="flex flex-col space-y-2">
+                            <div class="px-3 py-1 text-sm inline-flex items-center bg-red-100 text-red-800 rounded">
+                                <mat-icon class="mr-2 text-red-600">info</mat-icon>
+                                {{ details.negative_factor[0] }}
+                            </div>
+                            <div class="px-3 py-1 text-sm inline-flex items-center bg-red-100 text-red-800 rounded">
+                                <mat-icon class="mr-2 text-red-600">info</mat-icon>
+                                {{ details.negative_factor[1] }}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <tr *ngIf="studentDetails.length === 0">
+        <td colspan="7" class="text-center px-6 py-10 text-gray-500">No matching students found.</td>
+    </tr>
+    
+    <!-- Pagination controls with custom styles -->
+    <div class="p-6 border-t">
+        <div class="flex items-center justify-between">
+            <!-- Showing page range and total number of students -->
+            <div class="text-sm text-gray-500">
+                Showing {{ (currentPage - 1) * itemsPerPage + 1 }}-{{ (currentPage * itemsPerPage) >
+                studentDetails.length ? studentDetails.length : currentPage * itemsPerPage }} of {{
+                studentDetails.length }} students
+            </div>
+
+            <!-- Pagination Buttons -->
+            <div class="flex items-center space-x-2">
+                <!-- Previous Button -->
+                <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1"
+                    class="px-3 py-1 border rounded-lg text-sm text-gray-600 hover:bg-gray-200 disabled:bg-gray-300 cursor-pointer">
+                    Previous
+                </button>
+
+                <!-- Next Button -->
+                <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages"
+                    class="px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white border rounded-lg text-sm disabled:bg-gray-300 cursor-pointer">
+                    Next
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

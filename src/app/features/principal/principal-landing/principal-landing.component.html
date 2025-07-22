@@ -1,0 +1,200 @@
+<app-header></app-header>
+
+<div class="min-h-screen bg-[#F5F7FA] pt-2 mt-5">
+    <div class="page-layout-container">
+        <!-- Sidebar (Can be similar to Teacher or specific to Principal) -->
+        <app-sidebar title="Quick Links" [menuItems]="sidebarMenuItems" [useCustomIcons]="true">
+        </app-sidebar>
+
+        <main class="app-main-content">
+            <!-- Page Title and Notifications -->
+            <div class="flex justify-between items-center mb-6 mt-10">
+                <h1 class="page-title">{{ schoolName? schoolName.school +' Overview' : 'School Overview' }}</h1>
+            </div>
+            <!-- Filters (Add Grade and Teacher) -->
+            <div class="filters-bar mb-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                    <!-- Academic Year -->
+                    <mat-form-field appearance="outline" class="w-full filter-field">
+                        <mat-label>Academic Year</mat-label>
+                        <mat-select [(ngModel)]="currentFilters.academicYear" (selectionChange)="applyFilters()">
+                            <mat-option *ngFor="let year of (academicYears$ | async)" [value]="year">{{ year
+                                }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <!-- Grade -->
+                    <mat-form-field appearance="outline" class="w-full filter-field">
+                        <mat-label>Grade</mat-label>
+                        <mat-select [(ngModel)]="currentFilters.grade" (selectionChange)="applyFilters()">
+                            <mat-option value="all">All Grades</mat-option>
+                            <mat-option *ngFor="let grade of (grades$ | async)" [value]="grade">{{ grade }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <!-- Department -->
+                    <mat-form-field appearance="outline" class="w-full filter-field">
+                        <mat-label>Department</mat-label>
+                        <mat-select [(ngModel)]="currentFilters.department" (selectionChange)="applyFilters()">
+                            <mat-option value="all">All Departments</mat-option>
+                            <mat-option *ngFor="let dept of (departments$ | async)" [value]="dept">{{ dept
+                                }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <!-- Search Teacher -->
+                    <div class="relative w-full filter-field">
+
+                        <mat-form-field appearance="outline" class="w-full filter-field">
+                            <mat-label>Search Teachers...</mat-label>
+                            <input matInput #searchTeacher [ngModel]="currentFilters.searchTeacher"
+                                (input)="onSearchTermChange($event)" placeholder="Enter Teacher">
+                            <div matSuffix class="icon-container">
+                                <button *ngIf="searchTeacher.value" mat-icon-button aria-label="Clear"
+                                    (click)="clearSearch('teacherSearch')">
+                                    <mat-icon>close</mat-icon>
+                                </button>
+                                <button *ngIf="!searchTeacher.value" mat-icon-button aria-label="search">
+                                    <mat-icon>search</mat-icon>
+                                </button>
+                            </div>
+                        </mat-form-field>
+                        <!-- Optional: Search Results -->
+                        <ng-container *ngIf="currentFilters.searchTeacher">
+                            <div *ngIf="teachersList$ | async as searchTeacherResults"
+                                class="absolute w-full z-10 bg-white rounded-md shadow-lg max-h-60 overflow-auto">
+                                <!-- teacher results -->
+                                <div role="option" *ngFor="let teacher of searchTeacherResults.teachers"
+                                    class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center border-b border-gray-100 last:border-b-0"
+                                    (click)="navigateToTeacherDetails()">
+                                    <img [src]="teacher.image" class="w-8 h-8 rounded-full mr-3" alt="teacher photo"
+                                        onerror="this.src='assets/images/profile-placeholder.png'">
+                                    <div class="flex-1">
+                                        <div class="font-medium text-gray-800">{{teacher.name}}</div>
+                                        <div class="text-xs text-gray-600">
+                                            {{teacher.department}}&nbsp;|&nbsp;{{teacher.gradeLevel}}</div>
+                                    </div>
+                                    <i class="fa-solid fa-chevron-right text-gray-400 text-xs"></i>
+                                </div>
+                                <div *ngIf="searchTeacherResults.teachers.length === 0"
+                                    class="px-4 py-2 text-gray-500 text-center">
+                                    No teachers found
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                    <!-- Search Student -->
+                    <div class="relative w-full filter-field">
+                        <mat-form-field appearance="outline" class="w-full filter-field">
+                            <mat-label>Search Student...</mat-label>
+                            <input matInput #searchStudentInput [(ngModel)]="currentFilters.searchStudent"
+                                (input)="searchStudent()" placeholder="Enter name..." />
+                            <div matSuffix class="icon-container">
+                                <button *ngIf="searchStudentInput.value" mat-icon-button aria-label="Clear"
+                                    (click)="clearSearch('studentSearch')">
+                                    <mat-icon>close</mat-icon>
+                                </button>
+                                <button *ngIf="!searchStudentInput.value" mat-icon-button aria-label="search">
+                                    <mat-icon>search</mat-icon>
+                                </button>
+                            </div>
+                        </mat-form-field>
+                        <ng-container *ngIf="currentFilters.searchStudent">
+                            <div *ngIf="searchStudentsResults"
+                                class="absolute z-10 bg-white rounded-md shadow-lg max-h-60 overflow-auto">
+                                <!-- student results -->
+                                <div role="option" *ngFor="let student of searchStudentsResults"
+                                    class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center border-b border-gray-100 last:border-b-0"
+                                    (click)="navigateToStudentDetails(student)">
+                                    <img [src]="student.image" class="w-8 h-8 rounded-full mr-3" alt="Student photo"
+                                        onerror="this.src='assets/images/profile-placeholder.png'">
+                                    <div class="flex-1">
+                                        <div class="font-medium text-gray-800">{{student.displayName}}</div>
+                                        <div class="text-xs text-gray-600">
+                                            {{student.displayInfo}}</div>
+                                    </div>
+                                    <i class="fa-solid fa-chevron-right text-gray-400 text-xs"></i>
+                                </div>
+                                <div *ngIf="searchStudentsResults.length === 0"
+                                    class="px-4 py-2 text-gray-500 text-center">
+                                    No students found
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+            <!-- Data Loading Area (Identical structure to Teacher HTML) -->
+            <ng-container *ngIf="dashboardData$ | async as data; else loadingOrError">
+                <div class="kpi-grid">
+                    <app-kpi-card *ngFor="let kpi of data.kpis" [kpi]="kpi"></app-kpi-card>
+                </div>
+            </ng-container>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                <!-- Student Ethnicity Distribution -->
+                <div class="bg-white rounded-xl p-6 shadow col-span-full">
+                    <div class="flex justify-between items-center">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 flex-grow">
+                            <h3 class="text-[#212121] font-semibold ">Student Ethnicity Distribution</h3>
+                            <mat-form-field appearance="outline" class="w-full filter-field">
+                                <mat-label>Ethnic Diversity</mat-label>
+                                <mat-select [(ngModel)]="selectedEthinic" (selectionChange)="onEthnicChange()">
+                                    <mat-option value="all">All Ethnic</mat-option> <!-- Add 'All' option -->
+                                    <mat-option *ngFor="let ethinic of (ethnicDiversity$ | async)" [value]="ethinic">{{
+                                        ethinic
+                                        }}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div *ngFor="let group of ethnicityGroups" class="flex justify-between items-center mb-3">
+                        <div class="flex items-center gap-2 w-full">
+                            <span class="text-[#212121] text-sm w-24">{{ group.label }}</span>
+                            <div class="flex-1">
+                                <div class="progress-bar-bg">
+                                    <div class="progress-bar" [style.width.%]="group.value || 0"
+                                        [style.background]="group.color">
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="text-sm w-8 text-right text-[#757575]">{{ group.value }}%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activities -->
+            <ng-container *ngIf="dashboardData$ | async as data; else loadingOrError">
+                <div class="bg-[#FAFAFA] p-6 rounded-xl shadow">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-[#212121] font-semibold">Recent Activities</h3>
+                        <a href="#" class="text-sm text-[#FF881F] font-medium" (click)="toggleView($event)">
+                            {{ viewAll ? 'Show Less' : 'View All' }}
+                        </a>
+                    </div>
+                    <div *ngFor="let activity of (viewAll ? data.recentActivities : data.recentActivities.slice(0, 3))"
+                        class="flex justify-between items-start border-b last:border-b-0">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-full flex items-center justify-center"
+                                [ngStyle]="{'background-color': activity.bgColor}">
+                                <i [ngClass]="activity.icon"></i> <!-- Ensure icon color and size -->
+                            </div>
+                            <div class="flex flex-col justify-center">
+                                <p class="text-[#212121] font-medium leading-tight mb-3">{{ activity.title }}</p>
+                                <p class="text-[#757575] text-sm mt-0.5">{{ activity.subtitle }}</p>
+                            </div>
+                        </div>
+                        <div class="text-[#9E9E9E] text-sm whitespace-nowrap">{{ activity.time }}</div>
+                    </div>
+                </div>
+            </ng-container>
+
+            <ng-template #loadingOrError>
+                <div class="loading-container"> <mat-spinner diameter="50"></mat-spinner>
+                    <p>Loading dashboard data...</p>
+                </div>
+            </ng-template>
+        </main>
+    </div>
+</div>

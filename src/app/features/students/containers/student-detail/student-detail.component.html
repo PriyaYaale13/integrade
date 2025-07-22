@@ -1,0 +1,163 @@
+<!-- // src/app/features/students/containers/student-detail/student-detail.component.html
+<div class="student-detail-container">
+  <app-page-header [title]="'Student Details'" [backRoute]="'/students'">
+    <button mat-raised-button color="primary">
+      <mat-icon>edit</mat-icon>
+      Edit Student
+    </button>
+  </app-page-header>
+
+  <div class="student-content" *ngIf="!(loading$ | async) && (student$ | async) as student; else loading">
+    <div class="student-info-section" fxLayout="row wrap" fxLayoutGap="24px">
+      <div fxFlex="100" fxFlex.gt-sm="30">
+        <app-student-info-card [student]="student"></app-student-info-card>
+      </div>
+      
+      <div fxFlex="100" fxFlex.gt-sm="70">
+        <mat-card>
+          <mat-card-content>
+            <mat-tab-group>
+              <mat-tab label="Performance">
+                <app-student-performance 
+                  [student]="student" 
+                  [performances]="performances$ | async">
+                </app-student-performance>
+              </mat-tab>
+              
+              <mat-tab label="Interventions" *ngIf="student.atRisk">
+                <app-student-interventions 
+                  [student]="student" 
+                  [interventions]="interventions$ | async">
+                </app-student-interventions>
+              </mat-tab>
+              
+              <mat-tab label="Behavior">
+                <app-student-behavior [student]="student"></app-student-behavior>
+              </mat-tab>
+              
+              <mat-tab label="Assessments">
+                <app-student-assessments [student]="student"></app-student-assessments>
+              </mat-tab>
+              
+              <mat-tab label="Growth Analysis">
+                <app-student-growth-chart [student]="student"></app-student-growth-chart>
+              </mat-tab>
+            </mat-tab-group>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #loading>
+    <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Loading student data...</p>
+    </div>
+  </ng-template>
+</div>
+
+-->
+
+//testing phase
+
+<div class="container">
+  <div class="back-link">
+    <a routerLink="/students">← Back to Students</a>
+  </div>
+  
+  <div class="student-header">
+    <h2>{{ student.name }}</h2>
+    <div [ngClass]="'risk-badge risk-' + student.riskLevel">{{ student.riskLevel | titlecase }} Risk</div>
+  </div>
+  
+  <div class="profile-section">
+    <div class="profile-image">
+      <div class="placeholder">
+        {{ student.name }}
+      </div>
+    </div>
+    
+    <div class="profile-details">
+      <div class="detail">
+        <span class="label">Student ID:</span>
+        <span>{{ student.id }}</span>
+      </div>
+      <div class="detail">
+        <span class="label">Grade:</span>
+        <span>{{ student.grade }}</span>
+      </div>
+      <div class="detail">
+        <span class="label">Gender:</span>
+        <span>{{ student.gender }}</span>
+      </div>
+      <div class="detail">
+        <span class="label">Date of Birth:</span>
+        <span>{{ student.dateOfBirth }}</span>
+      </div>
+      <div class="detail">
+        <span class="label">Email:</span>
+        <span>{{ student.email }}</span>
+      </div>
+      <div class="detail">
+        <span class="label">Phone:</span>
+        <span>{{ student.phone }}</span>
+      </div>
+    </div>
+  </div>
+  
+  <div class="metrics-section">
+    <div class="metric-card">
+      <h3>Attendance</h3>
+      <div class="metric-value">{{ student.attendance }}%</div>
+      <div class="metric-chart">
+        <div class="placeholder-chart">[Attendance Trend Chart]</div>
+      </div>
+    </div>
+    
+    <div class="metric-card">
+      <h3>GPA</h3>
+      <div class="metric-value">{{ student.gpa }}</div>
+      <div class="metric-chart">
+        <div class="placeholder-chart">[GPA Trend Chart]</div>
+      </div>
+    </div>
+    
+    <div class="metric-card">
+      <h3>Performance Index</h3>
+      <div class="metric-value">{{ student.performanceIndex }}%</div>
+      <div class="metric-chart">
+        <div class="placeholder-chart">[Performance Trend Chart]</div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="tabs">
+    <button class="tab-btn active">Academic History</button>
+    <button class="tab-btn">Behavioral Records</button>
+    <button class="tab-btn">Interventions</button>
+    <button class="tab-btn">Notes</button>
+  </div>
+  
+  <div class="tab-content">
+    <h3>Academic History</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Subject</th>
+          <th>Grade</th>
+          <th>Teacher</th>
+          <th>Comments</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let subject of student.subjects">
+          <td>{{ subject.name }}</td>
+          <td>{{ subject.grade }}</td>
+          <td>{{ subject.teacher }}</td>
+          <td>{{ subject.comments }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

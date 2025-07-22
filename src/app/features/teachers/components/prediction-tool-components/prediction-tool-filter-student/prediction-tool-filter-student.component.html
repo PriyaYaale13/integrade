@@ -1,0 +1,75 @@
+<div class="p-4 space-y-4 bg-white rounded shadow">
+  <!-- Header row with title and select filters -->
+  <div class="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
+    <h3 class="text-lg font-semibold text-gray-800">Student Performance Prediction</h3>
+
+    <div class="flex flex-col sm:flex-row sm:space-x-4 w-full sm:w-auto space-y-4 sm:space-y-0">
+      <!-- Grade Select -->
+      <!-- <select id="scoreFilter" [(ngModel)]="scoreFilter" (change)="applyScoreFilter()"
+        class="border border-gray-300 rounded px-4 py-2 text-xs w-full sm:w-40 focus:outline-none focus:ring-2 focus:ring-orange-500">
+        <option value="">All Scores</option>
+        <option value="90">90% and above</option>
+        <option value="80">80% and above</option>
+        <option value="70">70% and above</option>
+        <option value="60">60% and above</option>
+      </select> -->
+
+      <!-- Class Select -->
+      <!-- <select id="classes"
+        class="border border-gray-300 rounded px-4 py-2 text-xs w-full sm:w-40 focus:outline-none focus:ring-2 focus:ring-orange-500"
+        (change)="onClassChange($event)">
+        <option value="All Class Students">All Class Students</option>
+        <option *ngFor="let c of allClasses" [value]="c.title">{{ c.title }}</option>
+      </select> -->
+
+      <button class="bg-orange-500 text-white px-4 py-3 rounded border border-gray-300 hover:bg-orange-600 text-sm"
+        (click)="onClick()">
+        Predict Class
+      </button>
+    </div>
+  </div>
+
+  <!-- Search bar -->
+  <div class="flex items-stretch space-x-2">
+    <!-- Search input with icon -->
+    <div class="relative flex-1">
+      <div class="absolute inset-y-0 start-0 flex items-center pl-3 pointer-events-none">
+        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+          fill="none" viewBox="0 0 20 20">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+        </svg>
+      </div>
+      <input type="search" id="search"
+        class="block w-full h-full px-4 py-3 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-orange-500 focus:border-orange-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-orange-500 dark:focus:border-orange-500"
+        placeholder="Search" [(ngModel)]="searchQuery" (input)="onSearch()" />
+    </div>
+
+    <!-- Predict Button -->
+    <button class="bg-orange-500 text-white px-4 py-3 rounded-lg border border-gray-300 hover:bg-orange-600 text-sm"
+      (click)="onPredictClick()">
+      Predict
+    </button>
+
+
+
+  </div>
+</div>
+<div *ngIf="suggestions">
+
+  <div *ngFor="let student of suggestions"
+    class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center border-b border-gray-100 last:border-b-0"
+    tabindex="0" (click)="selectStudent(student)" (keydown.enter)="selectStudent(student)">
+    <img [src]="student.image" class="w-8 h-8 rounded-full mr-3" alt="Student photo"
+      onerror="this.src='assets/images/profile-placeholder.png'">
+    <div class="flex-1">
+      <div class="font-medium text-gray-800">{{student.name}}</div>
+      <div class="text-xs text-gray-600">{{student.studentId}} | {{getClassTitle(student)}}</div>
+    </div>
+    <i class="fa-solid fa-chevron-right text-gray-400 text-xs"></i>
+  </div>
+  <div *ngIf="suggestions.length === 0 && searchQuery.trim() !== ''" class="px-4 py-2 text-gray-500 text-center">
+    No students found
+  </div>
+
+</div>

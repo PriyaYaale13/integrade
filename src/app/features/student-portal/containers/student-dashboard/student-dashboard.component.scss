@@ -1,0 +1,252 @@
+// src/app/features/student-portal/containers/student-dashboard/student-dashboard.component.scss
+.student-dashboard-container {
+    padding: 24px;
+    
+    .dashboard-header {
+      margin-bottom: 24px;
+      
+      .welcome-message {
+        font-size: 28px;
+        font-weight: 500;
+        margin: 0 0 8px 0;
+        color: #37474f;
+      }
+      
+      .date-display {
+        font-size: 16px;
+        color: #607d8b;
+        margin: 0;
+      }
+    }
+    
+    .dashboard-content {
+      display: flex;
+      gap: 24px;
+      
+      .main-content {
+        flex: 1;
+        
+        .schedule-card {
+          margin-bottom: 24px;
+        }
+        
+        .dashboard-cards {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+          gap: 24px;
+          
+          .dashboard-card {
+            height: 100%;
+            
+            mat-card-header {
+              padding: 16px 16px 0 16px;
+              
+              mat-card-title {
+                font-size: 18px;
+                font-weight: 500;
+                margin-bottom: 16px;
+              }
+            }
+          }
+        }
+      }
+      
+      .sidebar {
+        width: 320px;
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        
+        .profile-card {
+          .profile-section {
+            display: flex;
+            align-items: center;
+            
+            .student-avatar {
+              width: 64px;
+              height: 64px;
+              margin-right: 16px;
+              
+              .avatar-placeholder {
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+                background-color: #3f51b5;
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 28px;
+                font-weight: 500;
+              }
+              
+              .avatar-image {
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+                object-fit: cover;
+              }
+            }
+            
+            .student-info {
+              .student-name {
+                font-size: 18px;
+                font-weight: 500;
+                margin: 0 0 8px 0;
+                color: #37474f;
+              }
+              
+              .student-details {
+                .detail-item {
+                  display: flex;
+                  align-items: center;
+                  font-size: 14px;
+                  color: #607d8b;
+                  margin-bottom: 4px;
+                  
+                  mat-icon {
+                    font-size: 16px;
+                    height: 16px;
+                    width: 16px;
+                    margin-right: 4px;
+                  }
+                  
+                  &:last-child {
+                    margin-bottom: 0;
+                  }
+                }
+              }
+            }
+          }
+        }
+        
+        .upcoming-card {
+          .upcoming-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            
+            .upcoming-item {
+              display: flex;
+              background-color: #f5f5f5;
+              border-radius: 8px;
+              padding: 12px;
+              
+              .item-icon {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-right: 12px;
+                
+                mat-icon {
+                  color: white;
+                }
+                
+                &.status-not-started {
+                  background-color: #f44336;
+                }
+                
+                &.status-in-progress {
+                  background-color: #ff9800;
+                }
+                
+                &.status-upcoming {
+                  background-color: #2196f3;
+                }
+                
+                &.status-completed {
+                  background-color: #4caf50;
+                }
+              }
+              
+              .item-content {
+                flex: 1;
+                
+                .item-title {
+                  font-weight: 500;
+                  color: #37474f;
+                  margin-bottom: 4px;
+                }
+                
+                .item-details {
+                  display: flex;
+                  justify-content: space-between;
+                  font-size: 14px;
+                  color: #607d8b;
+                  margin-bottom: 8px;
+                }
+                
+                .item-status {
+                  display: flex;
+                  align-items: center;
+                  font-size: 12px;
+                  font-weight: 500;
+                  
+                  mat-icon {
+                    font-size: 14px;
+                    height: 14px;
+                    width: 14px;
+                    margin-right: 4px;
+                  }
+                  
+                  &.status-not-started {
+                    color: #f44336;
+                  }
+                  
+                  &.status-in-progress {
+                    color: #ff9800;
+                  }
+                  
+                  &.status-upcoming {
+                    color: #2196f3;
+                  }
+                  
+                  &.status-completed {
+                    color: #4caf50;
+                  }
+                }
+              }
+            }
+          }
+        }
+        
+        .quick-links-card {
+          .quick-links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            
+            .quick-link {
+              display: flex;
+              align-items: center;
+              justify-content: flex-start;
+              
+              mat-icon {
+                margin-right: 8px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  @media (max-width: 992px) {
+    .student-dashboard-container {
+      padding: 16px;
+      
+      .dashboard-content {
+        flex-direction: column;
+        
+        .sidebar {
+          width: 100%;
+          order: -1;
+          margin-bottom: 24px;
+        }
+      }
+    }
+  }

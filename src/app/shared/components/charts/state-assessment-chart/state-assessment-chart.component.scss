@@ -1,0 +1,43 @@
+// Styles originally provided, slightly adjusted
+:host {
+    display: block; // Ensure it takes space
+    margin-bottom: 1.5rem;
+  }
+  
+  .state-assessment-chart-container {
+     border: 1px solid #eee;
+     padding: 10px 12px; // Adjusted padding
+     background-color: #f9f9f9; // Consistent light background
+     border-radius: 4px;
+     text-align: center; // Center title
+     min-width: 250px; // Ensure minimum width is respected
+  }
+  
+  .chart-title {
+     font-size: 0.9em;
+     font-weight: bold;
+     margin-bottom: 8px; // Increased space below title
+     color: #333;
+  }
+  
+  svg {
+    display: block; // Prevent extra space below SVG
+    margin: 0 auto; // Center SVG if container is wider
+    overflow: visible; // Allow labels/markers outside main SVG bounds
+  }
+
+.state-assessment-container {
+  position: relative;
+  margin-bottom: 1rem;
+  
+  svg {
+    border-radius: 0.5rem;
+    overflow: visible;
+    background-color: transparent;
+  }
+  
+  .class-label {
+    position: relative;
+    margin-top: 0.5rem;
+  }
+}

@@ -1,0 +1,25 @@
+// src/app/features/students/components/student-performance/student-performance.component.scss
+.student-performance {
+    padding: 16px;
+    
+    h3 {
+      color: #37474f;
+      font-size: 18px;
+      font-weight: 500;
+      margin-bottom: 16px;
+    }
+    
+    .performance-chart {
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: center;
+    }
+    
+    .performance-table {
+      margin-top: 24px;
+      
+      table {
+        width: 100%;
+      }
+    }
+  }

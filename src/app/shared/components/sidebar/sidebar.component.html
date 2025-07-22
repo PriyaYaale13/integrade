@@ -1,0 +1,62 @@
+<div class="mobile-menu-button">
+  <button mat-icon-button (click)="toggleSidebar()">
+    <mat-icon>menu</mat-icon>
+  </button>
+</div>
+
+<div class="sidebar" [class.collapsed]="isCollapsed">
+  <div class="sidebar-content">
+    <div class="sidebar-header">
+      <button mat-icon-button class="toggle-button" (click)="toggleSidebar()">
+        <mat-icon>{{ isCollapsed ? 'menu' : 'chevron_left' }}</mat-icon>
+      </button>
+    </div>
+    
+    <h2 class="sidebar-title" *ngIf="!isCollapsed">{{ title }}</h2>
+    
+    <div class="sidebar-button-group">
+      <ng-container *ngFor="let item of menuItems">
+        <!-- Regular navigation button -->
+        <button mat-button 
+          *ngIf="!item.hasMenu && !item.children" 
+          [routerLink]="item.route" 
+          [routerLinkActive]="'active'"
+          class="sidebar-nav-button">
+          <div class="nav-button-content">
+            <!-- Custom FontAwesome icon -->
+            <i *ngIf="useCustomIcons && item.icon" [class]="item.icon + ' nav-icon mr-3'"></i>
+            <!-- Material icon -->
+            <mat-icon *ngIf="!useCustomIcons && item.icon">{{ item.icon }}</mat-icon>
+            <span *ngIf="!isCollapsed">{{ item.label }}</span>
+          </div>
+        </button>
+        
+        <!-- Button with dropdown menu -->
+        <button mat-button 
+          *ngIf="item.hasMenu && item.menuItems" 
+          [matMenuTriggerFor]="menu" 
+          class="sidebar-nav-button">
+          <div class="nav-button-content">
+            <!-- Custom FontAwesome icon -->
+            <i *ngIf="useCustomIcons && item.icon" [class]="item.icon + ' nav-icon mr-3'"></i>
+            <!-- Material icon -->
+            <mat-icon *ngIf="!useCustomIcons && item.icon">{{ item.icon }}</mat-icon>
+            <span *ngIf="!isCollapsed">{{ item.label }}</span>
+            <i *ngIf="!isCollapsed" class="fa-solid fa-chevron-down nav-arrow"></i>
+          </div>
+        </button>
+        
+        <!-- Menu for dropdown -->
+        <mat-menu #menu="matMenu" class="rounded-lg">
+          <button mat-menu-item 
+            *ngFor="let menuItem of item.menuItems" 
+            [routerLink]="menuItem.route">
+            {{ menuItem.label }}
+          </button>
+        </mat-menu>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+  

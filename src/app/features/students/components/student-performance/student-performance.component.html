@@ -1,0 +1,61 @@
+// src/app/features/students/components/student-performance/student-performance.component.html
+<div class="student-performance">
+  <h3>Academic Performance</h3>
+  
+  <div class="performance-chart">
+    <app-line-chart
+      [series]="chartSeries"
+      [width]="800"
+      [height]="400"
+      [title]="'Performance Trend'"
+      [xAxisLabel]="'Semester'"
+      [yAxisLabel]="'Score'"
+      [minYValue]="0"
+      [maxYValue]="100"
+      [showPoints]="true"
+      [animated]="true">
+    </app-line-chart>
+  </div>
+  
+  <div class="performance-table">
+    <h3>Course Scores</h3>
+    
+    <table mat-table [dataSource]="tableData" class="mat-elevation-z1">
+      <!-- Course Column -->
+      <ng-container matColumnDef="course">
+        <th mat-header-cell *matHeaderCellDef>Course</th>
+        <td mat-cell *matCellDef="let row">{{ row.course }}</td>
+      </ng-container>
+      
+      <!-- Semester 1 Column -->
+      <ng-container matColumnDef="semester1">
+        <th mat-header-cell *matHeaderCellDef>1<sup>st</sup> Semester</th>
+        <td mat-cell *matCellDef="let row">
+          <span *ngIf="row.semester1 !== null">{{ row.semester1 }}%</span>
+          <span *ngIf="row.semester1 === null">-</span>
+        </td>
+      </ng-container>
+      
+      <!-- Semester 2 Column -->
+      <ng-container matColumnDef="semester2">
+        <th mat-header-cell *matHeaderCellDef>2<sup>nd</sup> Semester</th>
+        <td mat-cell *matCellDef="let row">
+          <span *ngIf="row.semester2 !== null">{{ row.semester2 }}%</span>
+          <span *ngIf="row.semester2 === null">-</span>
+        </td>
+      </ng-container>
+      
+      <!-- Semester 3 Column -->
+      <ng-container matColumnDef="semester3">
+        <th mat-header-cell *matHeaderCellDef>3<sup>rd</sup> Semester</th>
+        <td mat-cell *matCellDef="let row">
+          <span *ngIf="row.semester3 !== null">{{ row.semester3 }}%</span>
+          <span *ngIf="row.semester3 === null">-</span>
+        </td>
+      </ng-container>
+      
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,1847 @@
+[
+    {
+        "studentName": "Sophia Williams",
+        "studentId": "s1000",
+        "grade": "6th Grade",
+        "imageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg",
+        "isActive": true,
+        "interventionTypes": [
+            {
+                "type": "Academic Support",
+                "frequency": "Weekly Twice",
+                "duration": "30 Minutes",
+                "focusAreas": [
+                    "Comprehension",
+                    "Fluency",
+                    "Vocabulary"
+                ],
+                "startDate": "Mar 10, 2025",
+                "targetEndDate": "May 20, 2025",
+                "supportTeam": [
+                    {
+                        "teacherName": "Emily Johnson",
+                        "department": "Reading Specialist",
+                        "teacherId": "t101",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-16.jpg"
+                    },
+                    {
+                        "teacherName": "Sarah Lee",
+                        "department": "Homeroom Teacher",
+                        "teacherId": "t102",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-17.jpg"
+                    },
+                    {
+                        "teacherName": "David Harris",
+                        "department": "Special Education",
+                        "teacherId": "t103",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-18.jpg"
+                    }
+                ],
+                "nextReview": "May 15, 2025",
+                "assessmentDue": "May 10, 2025",
+                "targetScore": 85,
+                "startScore": 65.2,
+                "currentScore": 74.8,
+                "progressNotes": [
+                    {
+                        "date": "Apr 12, 2025",
+                        "progressId": "p1",
+                        "status": "On Track",
+                        "progressStatusMessages": "Consistent progress, on target to meet goal"
+                    },
+                    {
+                        "date": "Apr 18, 2025",
+                        "progressId": "p2",
+                        "status": "Needs Support",
+                        "progressStatusMessages": "Making gains, but performance is still under goal \u2014 more practice needed"
+                    },
+                    {
+                        "date": "May 2, 2025",
+                        "progressId": "p3",
+                        "status": "On Track",
+                        "progressStatusMessages": "Steady improvement, aligned with expectations"
+                    }
+                ]
+            },
+            {
+                "type": "Supplemental Academic Support",
+                "frequency": "Bi-weekly",
+                "duration": "30 Minutes",
+                "focusAreas": [
+                    "Vocabulary",
+                    "Fluency",
+                    "Comprehension"
+                ],
+                "startDate": "Mar 10, 2025",
+                "targetEndDate": "May 20, 2025",
+                "supportTeam": [
+                    {
+                        "teacherName": "Emily Johnson",
+                        "department": "Reading Specialist",
+                        "teacherId": "t101",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-16.jpg"
+                    },
+                    {
+                        "teacherName": "Sarah Lee",
+                        "department": "Homeroom Teacher",
+                        "teacherId": "t102",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-17.jpg"
+                    },
+                    {
+                        "teacherName": "David Harris",
+                        "department": "Special Education",
+                        "teacherId": "t103",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-18.jpg"
+                    }
+                ],
+                "nextReview": "May 15, 2025",
+                "assessmentDue": "May 10, 2025",
+                "targetScore": 90,
+                "startScore": 65.2,
+                "currentScore": 71.1,
+                "progressNotes": [
+                    {
+                        "date": "Apr 12, 2025",
+                        "progressId": "p1",
+                        "status": "On Track",
+                        "progressStatusMessages": "Consistent progress, on target to meet goal"
+                    },
+                    {
+                        "date": "Apr 18, 2025",
+                        "progressId": "p2",
+                        "status": "Needs Support",
+                        "progressStatusMessages": "Making gains, but performance is still under goal \u2014 more practice needed"
+                    },
+                    {
+                        "date": "May 2, 2025",
+                        "progressId": "p3",
+                        "status": "On Track",
+                        "progressStatusMessages": "Steady improvement, aligned with expectations"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "studentName": "Liam Smith",
+        "studentId": "s1001",
+        "grade": "7th Grade",
+        "imageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg",
+        "isActive": true,
+        "interventionTypes": [
+            {
+                "type": "Behavioral Support",
+                "frequency": "Daily",
+                "duration": "45 Minutes",
+                "focusAreas": [
+                    "Behavior Management",
+                    "Comprehension",
+                    "Fluency"
+                ],
+                "startDate": "Feb 28, 2025",
+                "targetEndDate": "Apr 30, 2025",
+                "supportTeam": [
+                    {
+                        "teacherName": "Michael Thompson",
+                        "department": "Counselor",
+                        "teacherId": "t104",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-19.jpg"
+                    },
+                    {
+                        "teacherName": "Brian Walker",
+                        "department": "Special Education",
+                        "teacherId": "t105",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-20.jpg"
+                    },
+                    {
+                        "teacherName": "Jessica Nguyen",
+                        "department": "Homeroom Teacher",
+                        "teacherId": "t106",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-21.jpg"
+                    }
+                ],
+                "nextReview": "Apr 25, 2025",
+                "assessmentDue": "Apr 20, 2025",
+                "targetScore": 72,
+                "startScore": 58.6,
+                "currentScore": 56.3,
+                "progressNotes": [
+                    {
+                        "date": "Mar 15, 2025",
+                        "progressId": "p4",
+                        "status": "Critical",
+                        "progressStatusMessages": "Significant decline in performance, immediate intervention required."
+                    },
+                    {
+                        "date": "Apr 2, 2025",
+                        "progressId": "p5",
+                        "status": "Needs Support",
+                        "progressStatusMessages": "Slight improvement observed, but still below target \u2014 recommend additional support."
+                    },
+                    {
+                        "date": "Apr 14, 2025",
+                        "progressId": "p6",
+                        "status": "On Track",
+                        "progressStatusMessages": "Positive momentum, tracking toward success"
+                    }
+                ]
+            },
+            {
+                "type": "Supplemental Behavioral Support",
+                "frequency": "Bi-weekly",
+                "duration": "45 Minutes",
+                "focusAreas": [
+                    "Fluency",
+                    "Comprehension",
+                    "Behavior Management"
+                ],
+                "startDate": "Feb 28, 2025",
+                "targetEndDate": "Apr 30, 2025",
+                "supportTeam": [
+                    {
+                        "teacherName": "Michael Thompson",
+                        "department": "Counselor",
+                        "teacherId": "t104",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-19.jpg"
+                    },
+                    {
+                        "teacherName": "Brian Walker",
+                        "department": "Special Education",
+                        "teacherId": "t105",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-20.jpg"
+                    },
+                    {
+                        "teacherName": "Jessica Nguyen",
+                        "department": "Homeroom Teacher",
+                        "teacherId": "t106",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-21.jpg"
+                    }
+                ],
+                "nextReview": "Apr 25, 2025",
+                "assessmentDue": "Apr 20, 2025",
+                "targetScore": 77,
+                "startScore": 58.6,
+                "currentScore": 53.5,
+                "progressNotes": [
+                    {
+                        "date": "Mar 15, 2025",
+                        "progressId": "p4",
+                        "status": "Critical",
+                        "progressStatusMessages": "Significant decline in performance, immediate intervention required."
+                    },
+                    {
+                        "date": "Apr 2, 2025",
+                        "progressId": "p5",
+                        "status": "Needs Support",
+                        "progressStatusMessages": "Slight improvement observed, but still below target \u2014 recommend additional support."
+                    },
+                    {
+                        "date": "Apr 14, 2025",
+                        "progressId": "p6",
+                        "status": "On Track",
+                        "progressStatusMessages": "Positive momentum, tracking toward success"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "studentName": "Olivia Brown",
+        "studentId": "s1002",
+        "grade": "8th Grade",
+        "imageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg",
+        "isActive": true,
+        "interventionTypes": [
+            {
+                "type": "Reading Intervention",
+                "frequency": "Weekly Once",
+                "duration": "1 Hour",
+                "focusAreas": [
+                    "Fluency",
+                    "Vocabulary",
+                    "Comprehension"
+                ],
+                "startDate": "Mar 15, 2025",
+                "targetEndDate": "May 25, 2025",
+                "supportTeam": [
+                    {
+                        "teacherName": "Avery Martinez",
+                        "department": "Reading Specialist",
+                        "teacherId": "t107",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-22.jpg"
+                    },
+                    {
+                        "teacherName": "Christopher Brooks",
+                        "department": "Homeroom Teacher",
+                        "teacherId": "t108",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-23.jpg"
+                    },
+                    {
+                        "teacherName": "Chloe Mitchell",
+                        "department": "Special Education",
+                        "teacherId": "t109",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-14.jpg"
+                    }
+                ],
+                "nextReview": "May 20, 2025",
+                "assessmentDue": "May 18, 2025",
+                "targetScore": 90,
+                "startScore": 68.5,
+                "currentScore": 78.6,
+                "progressNotes": [
+                    {
+                        "date": "Apr 1, 2025",
+                        "progressId": "p7",
+                        "status": "On Track",
+                        "progressStatusMessages": "Progressing as planned, on schedule"
+                    },
+                    {
+                        "date": "Apr 12, 2025",
+                        "progressId": "p8",
+                        "status": "On Track",
+                        "progressStatusMessages": "Making gains, goal within reach"
+                    },
+                    {
+                        "date": "May 1, 2025",
+                        "progressId": "p9",
+                        "status": "On Track",
+                        "progressStatusMessages": "Performance stable, goal achievable"
+                    }
+                ]
+            },
+            {
+                "type": "Supplemental Reading Intervention",
+                "frequency": "Bi-weekly",
+                "duration": "1 Hour",
+                "focusAreas": [
+                    "Comprehension",
+                    "Vocabulary",
+                    "Fluency"
+                ],
+                "startDate": "Mar 15, 2025",
+                "targetEndDate": "May 25, 2025",
+                "supportTeam": [
+                    {
+                        "teacherName": "Avery Martinez",
+                        "department": "Reading Specialist",
+                        "teacherId": "t107",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-22.jpg"
+                    },
+                    {
+                        "teacherName": "Christopher Brooks",
+                        "department": "Homeroom Teacher",
+                        "teacherId": "t108",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-23.jpg"
+                    },
+                    {
+                        "teacherName": "Chloe Mitchell",
+                        "department": "Special Education",
+                        "teacherId": "t109",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-14.jpg"
+                    }
+                ],
+                "nextReview": "May 20, 2025",
+                "assessmentDue": "May 18, 2025",
+                "targetScore": 95,
+                "startScore": 68.5,
+                "currentScore": 74.7,
+                "progressNotes": [
+                    {
+                        "date": "Apr 1, 2025",
+                        "progressId": "p7",
+                        "status": "On Track",
+                        "progressStatusMessages": "Progressing as planned, on schedule"
+                    },
+                    {
+                        "date": "Apr 12, 2025",
+                        "progressId": "p8",
+                        "status": "On Track",
+                        "progressStatusMessages": "Making gains, goal within reach"
+                    },
+                    {
+                        "date": "May 1, 2025",
+                        "progressId": "p9",
+                        "status": "On Track",
+                        "progressStatusMessages": "Performance stable, goal achievable"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "studentName": "James Davis",
+        "studentId": "s1003",
+        "grade": "9th Grade",
+        "imageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-4.jpg",
+        "isActive": true,
+        "interventionTypes": [
+            {
+                "type": "Speech Therapy",
+                "frequency": "Bi-weekly",
+                "duration": "30 Minutes",
+                "focusAreas": [
+                    "Vocabulary",
+                    "Fluency",
+                    "Phonemic Awareness"
+                ],
+                "startDate": "Feb 20, 2025",
+                "targetEndDate": "Apr 30, 2025",
+                "supportTeam": [
+                    {
+                        "teacherName": "Dr. Robert Clark",
+                        "department": "Speech Therapist",
+                        "teacherId": "t110",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-25.jpg"
+                    },
+                    {
+                        "teacherName": "Lauren Adams",
+                        "department": "Homeroom Teacher",
+                        "teacherId": "t111",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-26.jpg"
+                    },
+                    {
+                        "teacherName": "Isabella Scott",
+                        "department": "Reading Specialist",
+                        "teacherId": "t112",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-27.jpg"
+                    }
+                ],
+                "nextReview": "Apr 20, 2025",
+                "assessmentDue": "Apr 15, 2025",
+                "targetScore": 70,
+                "startScore": 50.4,
+                "currentScore": 58.9,
+                "progressNotes": [
+                    {
+                        "date": "Mar 10, 2025",
+                        "progressId": "p10",
+                        "status": "Needs Support",
+                        "progressStatusMessages": "Showing improvement, though falling short \u2014 tutoring advised."
+                    },
+                    {
+                        "date": "Mar 22, 2025",
+                        "progressId": "p11",
+                        "status": "Needs Support",
+                        "progressStatusMessages": "Making gains, but performance is still under goal \u2014 more practice needed."
+                    },
+                    {
+                        "date": "Apr 5, 2025",
+                        "progressId": "p12",
+                        "status": "On Track",
+                        "progressStatusMessages": "Advancing well, aligned with targets"
+                    }
+                ]
+            },
+            {
+                "type": "Supplemental Speech Therapy",
+                "frequency": "Weekly Once",
+                "duration": "30 Minutes",
+                "focusAreas": [
+                    "Phonemic Awareness",
+                    "Fluency",
+                    "Vocabulary"
+                ],
+                "startDate": "Feb 20, 2025",
+                "targetEndDate": "Apr 30, 2025",
+                "supportTeam": [
+                    {
+                        "teacherName": "Dr. Robert Clark",
+                        "department": "Speech Therapist",
+                        "teacherId": "t110",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-25.jpg"
+                    },
+                    {
+                        "teacherName": "Lauren Adams",
+                        "department": "Homeroom Teacher",
+                        "teacherId": "t111",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-26.jpg"
+                    },
+                    {
+                        "teacherName": "Isabella Scott",
+                        "department": "Reading Specialist",
+                        "teacherId": "t112",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-27.jpg"
+                    }
+                ],
+                "nextReview": "Apr 20, 2025",
+                "assessmentDue": "Apr 15, 2025",
+                "targetScore": 75,
+                "startScore": 50.4,
+                "currentScore": 56.0,
+                "progressNotes": [
+                    {
+                        "date": "Mar 10, 2025",
+                        "progressId": "p10",
+                        "status": "Needs Support",
+                        "progressStatusMessages": "Showing improvement, though falling short \u2014 tutoring advised."
+                    },
+                    {
+                        "date": "Mar 22, 2025",
+                        "progressId": "p11",
+                        "status": "Needs Support",
+                        "progressStatusMessages": "Making gains, but performance is still under goal \u2014 more practice needed."
+                    },
+                    {
+                        "date": "Apr 5, 2025",
+                        "progressId": "p12",
+                        "status": "On Track",
+                        "progressStatusMessages": "Advancing well, aligned with targets"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "studentName": "Isabella Garcia",
+        "studentId": "s1004",
+        "grade": "10th Grade",
+        "imageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg",
+        "isActive": true,
+        "interventionTypes": [
+            {
+                "type": "Academic Support",
+                "frequency": "Weekly Twice",
+                "duration": "45 Minutes",
+                "focusAreas": [
+                    "Comprehension",
+                    "Fluency",
+                    "Vocabulary"
+                ],
+                "startDate": "Mar 5, 2025",
+                "targetEndDate": "May 15, 2025",
+                "supportTeam": [
+                    {
+                        "teacherName": "Sarah Lee",
+                        "department": "Reading Specialist",
+                        "teacherId": "t113",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-28.jpg"
+                    },
+                    {
+                        "teacherName": "James Ramirez",
+                        "department": "Special Education",
+                        "teacherId": "t114",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-29.jpg"
+                    },
+                    {
+                        "teacherName": "Matthew Green",
+                        "department": "Homeroom Teacher",
+                        "teacherId": "t115",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-30.jpg"
+                    }
+                ],
+                "nextReview": "May 10, 2025",
+                "assessmentDue": "May 8, 2025",
+                "targetScore": 84,
+                "startScore": 62.3,
+                "currentScore": 75.1,
+                "progressNotes": [
+                    {
+                        "date": "Apr 1, 2025",
+                        "progressId": "p13",
+                        "status": "On Track",
+                        "progressStatusMessages": "Growth maintained, path looks solid"
+                    },
+                    {
+                        "date": "Apr 14, 2025",
+                        "progressId": "p14",
+                        "status": "On Track",
+                        "progressStatusMessages": "Trending upward, staying on course"
+                    },
+                    {
+                        "date": "Apr 30, 2025",
+                        "progressId": "p15",
+                        "status": "On Track",
+                        "progressStatusMessages": "On pace, moving toward objective"
+                    }
+                ]
+            },
+            {
+                "type": "Supplemental Academic Support",
+                "frequency": "Bi-weekly",
+                "duration": "45 Minutes",
+                "focusAreas": [
+                    "Vocabulary",
+                    "Fluency",
+                    "Comprehension"
+                ],
+                "startDate": "Mar 5, 2025",
+                "targetEndDate": "May 15, 2025",
+                "supportTeam": [
+                    {
+                        "teacherName": "Sarah Lee",
+                        "department": "Reading Specialist",
+                        "teacherId": "t113",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-28.jpg"
+                    },
+                    {
+                        "teacherName": "James Ramirez",
+                        "department": "Special Education",
+                        "teacherId": "t114",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-29.jpg"
+                    },
+                    {
+                        "teacherName": "Matthew Green",
+                        "department": "Homeroom Teacher",
+                        "teacherId": "t115",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-30.jpg"
+                    }
+                ],
+                "nextReview": "May 10, 2025",
+                "assessmentDue": "May 8, 2025",
+                "targetScore": 89,
+                "startScore": 62.3,
+                "currentScore": 71.3,
+                "progressNotes": [
+                    {
+                        "date": "Apr 1, 2025",
+                        "progressId": "p13",
+                        "status": "On Track",
+                        "progressStatusMessages": "Growth maintained, path looks solid"
+                    },
+                    {
+                        "date": "Apr 14, 2025",
+                        "progressId": "p14",
+                        "status": "On Track",
+                        "progressStatusMessages": "Trending upward, staying on course"
+                    },
+                    {
+                        "date": "Apr 30, 2025",
+                        "progressId": "p15",
+                        "status": "On Track",
+                        "progressStatusMessages": "On pace, moving toward objective"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "studentName": "Ethan Martin",
+        "studentId": "s1005",
+        "grade": "11th Grade",
+        "imageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-6.jpg",
+        "isActive": true,
+        "interventionTypes": [
+            {
+                "type": "Academic Support",
+                "frequency": "Weekly Once",
+                "duration": "1 Hour",
+                "focusAreas": [
+                    "Vocabulary",
+                    "Comprehension",
+                    "Fluency"
+                ],
+                "startDate": "Feb 25, 2025",
+                "targetEndDate": "May 25, 2025",
+                "supportTeam": [
+                    {
+                        "teacherName": "David Harris",
+                        "department": "Reading Specialist",
+                        "teacherId": "t116",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-31.jpg"
+                    },
+                    {
+                        "teacherName": "Chloe Mitchell",
+                        "department": "Special Education",
+                        "teacherId": "t117",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-32.jpg"
+                    },
+                    {
+                        "teacherName": "Olivia Carter",
+                        "department": "Homeroom Teacher",
+                        "teacherId": "t118",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-34.jpg"
+                    }
+                ],
+                "nextReview": "May 18, 2025",
+                "assessmentDue": "May 10, 2025",
+                "targetScore": 88,
+                "startScore": 70.0,
+                "currentScore": 82.2,
+                "progressNotes": [
+                    {
+                        "date": "Mar 20, 2025",
+                        "progressId": "p16",
+                        "status": "On Track",
+                        "progressStatusMessages": "Improvements noted, expectations met"
+                    },
+                    {
+                        "date": "Apr 10, 2025",
+                        "progressId": "p17",
+                        "status": "On Track",
+                        "progressStatusMessages": "Showing development, targets in sight"
+                    },
+                    {
+                        "date": "Apr 28, 2025",
+                        "progressId": "p18",
+                        "status": "On Track",
+                        "progressStatusMessages": "Progress visible, remaining consistent"
+                    }
+                ]
+            },
+            {
+                "type": "Supplemental Academic Support",
+                "frequency": "Bi-weekly",
+                "duration": "1 Hour",
+                "focusAreas": [
+                    "Fluency",
+                    "Comprehension",
+                    "Vocabulary"
+                ],
+                "startDate": "Feb 25, 2025",
+                "targetEndDate": "May 25, 2025",
+                "supportTeam": [
+                    {
+                        "teacherName": "David Harris",
+                        "department": "Reading Specialist",
+                        "teacherId": "t116",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-31.jpg"
+                    },
+                    {
+                        "teacherName": "Chloe Mitchell",
+                        "department": "Special Education",
+                        "teacherId": "t117",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-32.jpg"
+                    },
+                    {
+                        "teacherName": "Olivia Carter",
+                        "department": "Homeroom Teacher",
+                        "teacherId": "t118",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-34.jpg"
+                    }
+                ],
+                "nextReview": "May 18, 2025",
+                "assessmentDue": "May 10, 2025",
+                "targetScore": 93,
+                "startScore": 70.0,
+                "currentScore": 78.1,
+                "progressNotes": [
+                    {
+                        "date": "Mar 20, 2025",
+                        "progressId": "p16",
+                        "status": "On Track",
+                        "progressStatusMessages": "Improvements noted, expectations met"
+                    },
+                    {
+                        "date": "Apr 10, 2025",
+                        "progressId": "p17",
+                        "status": "On Track",
+                        "progressStatusMessages": "Showing development, targets in sight"
+                    },
+                    {
+                        "date": "Apr 28, 2025",
+                        "progressId": "p18",
+                        "status": "On Track",
+                        "progressStatusMessages": "Progress visible, remaining consistent"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "studentName": "Mia Thompson",
+        "studentId": "s1006",
+        "grade": "12th Grade",
+        "imageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-7.jpg",
+        "isActive": true,
+        "interventionTypes": [
+            {
+                "type": "Speech Therapy",
+                "frequency": "Weekly Twice",
+                "duration": "30 Minutes",
+                "focusAreas": [
+                    "Fluency",
+                    "Vocabulary",
+                    "Phonemic Awareness"
+                ],
+                "startDate": "Mar 1, 2025",
+                "targetEndDate": "May 30, 2025",
+                "supportTeam": [
+                    {
+                        "teacherName": "Jessica Nguyen",
+                        "department": "Speech Therapist",
+                        "teacherId": "t119",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-35.jpg"
+                    },
+                    {
+                        "teacherName": "Lauren Adams",
+                        "department": "Homeroom Teacher",
+                        "teacherId": "t120",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-36.jpg"
+                    },
+                    {
+                        "teacherName": "Matthew Green",
+                        "department": "Special Education",
+                        "teacherId": "t121",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-37.jpg"
+                    }
+                ],
+                "nextReview": "May 25, 2025",
+                "assessmentDue": "May 20, 2025",
+                "targetScore": 82,
+                "startScore": 58.7,
+                "currentScore": 67.9,
+                "progressNotes": [
+                    {
+                        "date": "Mar 25, 2025",
+                        "progressId": "p19",
+                        "status": "Needs Support",
+                        "progressStatusMessages": "Improving gradually, however, not at expected level \u2014 intervention suggested."
+                    },
+                    {
+                        "date": "Apr 10, 2025",
+                        "progressId": "p20",
+                        "status": "On Track",
+                        "progressStatusMessages": "Tracking well, approach working effectively"
+                    },
+                    {
+                        "date": "Apr 30, 2025",
+                        "progressId": "p21",
+                        "status": "On Track",
+                        "progressStatusMessages": "Progress visible, remaining consistent"
+                    }
+                ]
+            },
+            {
+                "type": "Supplemental Speech Therapy",
+                "frequency": "Bi-weekly",
+                "duration": "30 Minutes",
+                "focusAreas": [
+                    "Phonemic Awareness",
+                    "Vocabulary",
+                    "Fluency"
+                ],
+                "startDate": "Mar 1, 2025",
+                "targetEndDate": "May 30, 2025",
+                "supportTeam": [
+                    {
+                        "teacherName": "Jessica Nguyen",
+                        "department": "Speech Therapist",
+                        "teacherId": "t119",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-35.jpg"
+                    },
+                    {
+                        "teacherName": "Lauren Adams",
+                        "department": "Homeroom Teacher",
+                        "teacherId": "t120",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-36.jpg"
+                    },
+                    {
+                        "teacherName": "Matthew Green",
+                        "department": "Special Education",
+                        "teacherId": "t121",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-37.jpg"
+                    }
+                ],
+                "nextReview": "May 25, 2025",
+                "assessmentDue": "May 20, 2025",
+                "targetScore": 87,
+                "startScore": 58.7,
+                "currentScore": 64.5,
+                "progressNotes": [
+                    {
+                        "date": "Mar 25, 2025",
+                        "progressId": "p19",
+                        "status": "Needs Support",
+                        "progressStatusMessages": "Improving gradually, however, not at expected level \u2014 intervention suggested."
+                    },
+                    {
+                        "date": "Apr 10, 2025",
+                        "progressId": "p20",
+                        "status": "On Track",
+                        "progressStatusMessages": "Tracking well, approach working effectively"
+                    },
+                    {
+                        "date": "Apr 30, 2025",
+                        "progressId": "p21",
+                        "status": "On Track",
+                        "progressStatusMessages": "Progress visible, remaining consistent"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "studentName": "Benjamin Rodriguez",
+        "studentId": "s1007",
+        "grade": "6th Grade",
+        "imageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg",
+        "isActive": true,
+        "interventionTypes": [
+            {
+                "type": "Reading Intervention",
+                "frequency": "Weekly Once",
+                "duration": "45 Minutes",
+                "focusAreas": [
+                    "Comprehension",
+                    "Fluency",
+                    "Vocabulary"
+                ],
+                "startDate": "Mar 12, 2025",
+                "targetEndDate": "May 30, 2025",
+                "supportTeam": [
+                    {
+                        "teacherName": "Brian Walker",
+                        "department": "Reading Specialist",
+                        "teacherId": "t122",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-38.jpg"
+                    },
+                    {
+                        "teacherName": "Emily Johnson",
+                        "department": "Homeroom Teacher",
+                        "teacherId": "t123",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-39.jpg"
+                    },
+                    {
+                        "teacherName": "James Ramirez",
+                        "department": "Special Education",
+                        "teacherId": "t124",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-40.jpg"
+                    }
+                ],
+                "nextReview": "May 22, 2025",
+                "assessmentDue": "May 15, 2025",
+                "targetScore": 86,
+                "startScore": 66.1,
+                "currentScore": 79.4,
+                "progressNotes": [
+                    {
+                        "date": "Apr 5, 2025",
+                        "progressId": "p22",
+                        "status": "On Track",
+                        "progressStatusMessages": "Growth maintained, path looks solid"
+                    },
+                    {
+                        "date": "Apr 18, 2025",
+                        "progressId": "p23",
+                        "status": "On Track",
+                        "progressStatusMessages": "Positive momentum, tracking toward success"
+                    },
+                    {
+                        "date": "May 5, 2025",
+                        "progressId": "p24",
+                        "status": "On Track",
+                        "progressStatusMessages": "Improving steadily, direction is right"
+                    }
+                ]
+            },
+            {
+                "type": "Supplemental Reading Intervention",
+                "frequency": "Bi-weekly",
+                "duration": "45 Minutes",
+                "focusAreas": [
+                    "Vocabulary",
+                    "Fluency",
+                    "Comprehension"
+                ],
+                "startDate": "Mar 12, 2025",
+                "targetEndDate": "May 30, 2025",
+                "supportTeam": [
+                    {
+                        "teacherName": "Brian Walker",
+                        "department": "Reading Specialist",
+                        "teacherId": "t122",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-38.jpg"
+                    },
+                    {
+                        "teacherName": "Emily Johnson",
+                        "department": "Homeroom Teacher",
+                        "teacherId": "t123",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-39.jpg"
+                    },
+                    {
+                        "teacherName": "James Ramirez",
+                        "department": "Special Education",
+                        "teacherId": "t124",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-40.jpg"
+                    }
+                ],
+                "nextReview": "May 22, 2025",
+                "assessmentDue": "May 15, 2025",
+                "targetScore": 91,
+                "startScore": 66.1,
+                "currentScore": 75.4,
+                "progressNotes": [
+                    {
+                        "date": "Apr 5, 2025",
+                        "progressId": "p22",
+                        "status": "On Track",
+                        "progressStatusMessages": "Growth maintained, path looks solid"
+                    },
+                    {
+                        "date": "Apr 18, 2025",
+                        "progressId": "p23",
+                        "status": "On Track",
+                        "progressStatusMessages": "Positive momentum, tracking toward success"
+                    },
+                    {
+                        "date": "May 5, 2025",
+                        "progressId": "p24",
+                        "status": "On Track",
+                        "progressStatusMessages": "Improving steadily, direction is right"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "studentName": "Charlotte Wilson",
+        "studentId": "s1008",
+        "grade": "7th Grade",
+        "imageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-9.jpg",
+        "isActive": true,
+        "interventionTypes": [
+            {
+                "type": "Behavioral Support",
+                "frequency": "Bi-weekly",
+                "duration": "30 Minutes",
+                "focusAreas": [
+                    "Behavior Management",
+                    "Vocabulary",
+                    "Comprehension"
+                ],
+                "startDate": "Mar 8, 2025",
+                "targetEndDate": "May 25, 2025",
+                "supportTeam": [
+                    {
+                        "teacherName": "Lauren Adams",
+                        "department": "Counselor",
+                        "teacherId": "t125",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-41.jpg"
+                    },
+                    {
+                        "teacherName": "Olivia Carter",
+                        "department": "Special Education",
+                        "teacherId": "t126",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-42.jpg"
+                    },
+                    {
+                        "teacherName": "Chloe Mitchell",
+                        "department": "Homeroom Teacher",
+                        "teacherId": "t127",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-43.jpg"
+                    }
+                ],
+                "nextReview": "May 10, 2025",
+                "assessmentDue": "May 5, 2025",
+                "targetScore": 76,
+                "startScore": 52.4,
+                "currentScore": 63.5,
+                "progressNotes": [
+                    {
+                        "date": "Apr 2, 2025",
+                        "progressId": "p25",
+                        "status": "Needs Support",
+                        "progressStatusMessages": "Progress noted, yet target not met \u2014 consider extra guidance."
+                    },
+                    {
+                        "date": "Apr 19, 2025",
+                        "progressId": "p26",
+                        "status": "On Track",
+                        "progressStatusMessages": "Advancing well, aligned with targets"
+                    },
+                    {
+                        "date": "May 3, 2025",
+                        "progressId": "p27",
+                        "status": "On Track",
+                        "progressStatusMessages": "On pace, moving toward objective"
+                    }
+                ]
+            },
+            {
+                "type": "Supplemental Behavioral Support",
+                "frequency": "Weekly Once",
+                "duration": "30 Minutes",
+                "focusAreas": [
+                    "Comprehension",
+                    "Vocabulary",
+                    "Behavior Management"
+                ],
+                "startDate": "Mar 8, 2025",
+                "targetEndDate": "May 25, 2025",
+                "supportTeam": [
+                    {
+                        "teacherName": "Lauren Adams",
+                        "department": "Counselor",
+                        "teacherId": "t125",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-41.jpg"
+                    },
+                    {
+                        "teacherName": "Olivia Carter",
+                        "department": "Special Education",
+                        "teacherId": "t126",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-42.jpg"
+                    },
+                    {
+                        "teacherName": "Chloe Mitchell",
+                        "department": "Homeroom Teacher",
+                        "teacherId": "t127",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-43.jpg"
+                    }
+                ],
+                "nextReview": "May 10, 2025",
+                "assessmentDue": "May 5, 2025",
+                "targetScore": 81,
+                "startScore": 52.4,
+                "currentScore": 60.3,
+                "progressNotes": [
+                    {
+                        "date": "Apr 2, 2025",
+                        "progressId": "p25",
+                        "status": "Needs Support",
+                        "progressStatusMessages": "Progress noted, yet target not met \u2014 consider extra guidance."
+                    },
+                    {
+                        "date": "Apr 19, 2025",
+                        "progressId": "p26",
+                        "status": "On Track",
+                        "progressStatusMessages": "Advancing well, aligned with targets"
+                    },
+                    {
+                        "date": "May 3, 2025",
+                        "progressId": "p27",
+                        "status": "On Track",
+                        "progressStatusMessages": "On pace, moving toward objective"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "studentName": "Amelia Johnson",
+        "studentId": "s1009",
+        "grade": "8th Grade",
+        "imageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-10.jpg",
+        "isActive": true,
+        "interventionTypes": [
+            {
+                "type": "Academic Support",
+                "frequency": "Weekly Once",
+                "duration": "45 Minutes",
+                "focusAreas": [
+                    "Fluency",
+                    "Comprehension",
+                    "Vocabulary"
+                ],
+                "startDate": "Mar 3, 2025",
+                "targetEndDate": "May 30, 2025",
+                "supportTeam": [
+                    {
+                        "teacherName": "Christopher Brooks",
+                        "department": "Reading Specialist",
+                        "teacherId": "t128",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-44.jpg"
+                    },
+                    {
+                        "teacherName": "Sarah Lee",
+                        "department": "Homeroom Teacher",
+                        "teacherId": "t129",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-45.jpg"
+                    },
+                    {
+                        "teacherName": "Jessica Nguyen",
+                        "department": "Special Education",
+                        "teacherId": "t130",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-46.jpg"
+                    }
+                ],
+                "nextReview": "May 18, 2025",
+                "assessmentDue": "May 10, 2025",
+                "targetScore": 88,
+                "startScore": 64.7,
+                "currentScore": 77.1,
+                "progressNotes": [
+                    {
+                        "date": "Mar 25, 2025",
+                        "progressId": "p28",
+                        "status": "On Track",
+                        "progressStatusMessages": "Tracking well, approach working effectively"
+                    },
+                    {
+                        "date": "Apr 12, 2025",
+                        "progressId": "p29",
+                        "status": "On Track",
+                        "progressStatusMessages": "Consistent progress, on target to meet goal"
+                    },
+                    {
+                        "date": "Apr 30, 2025",
+                        "progressId": "p30",
+                        "status": "On Track",
+                        "progressStatusMessages": "Growth maintained, path looks solid"
+                    }
+                ]
+            },
+            {
+                "type": "Supplemental Academic Support",
+                "frequency": "Bi-weekly",
+                "duration": "45 Minutes",
+                "focusAreas": [
+                    "Vocabulary",
+                    "Comprehension",
+                    "Fluency"
+                ],
+                "startDate": "Mar 3, 2025",
+                "targetEndDate": "May 30, 2025",
+                "supportTeam": [
+                    {
+                        "teacherName": "Christopher Brooks",
+                        "department": "Reading Specialist",
+                        "teacherId": "t128",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-44.jpg"
+                    },
+                    {
+                        "teacherName": "Sarah Lee",
+                        "department": "Homeroom Teacher",
+                        "teacherId": "t129",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-45.jpg"
+                    },
+                    {
+                        "teacherName": "Jessica Nguyen",
+                        "department": "Special Education",
+                        "teacherId": "t130",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-46.jpg"
+                    }
+                ],
+                "nextReview": "May 18, 2025",
+                "assessmentDue": "May 10, 2025",
+                "targetScore": 93,
+                "startScore": 64.7,
+                "currentScore": 73.2,
+                "progressNotes": [
+                    {
+                        "date": "Mar 25, 2025",
+                        "progressId": "p28",
+                        "status": "On Track",
+                        "progressStatusMessages": "Tracking well, approach working effectively"
+                    },
+                    {
+                        "date": "Apr 12, 2025",
+                        "progressId": "p29",
+                        "status": "On Track",
+                        "progressStatusMessages": "Consistent progress, on target to meet goal"
+                    },
+                    {
+                        "date": "Apr 30, 2025",
+                        "progressId": "p30",
+                        "status": "On Track",
+                        "progressStatusMessages": "Growth maintained, path looks solid"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "studentName": "Lucas Lee",
+        "studentId": "s1010",
+        "grade": "9th Grade",
+        "imageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-11.jpg",
+        "isActive": true,
+        "interventionTypes": [
+            {
+                "type": "Reading Intervention",
+                "frequency": "Weekly Twice",
+                "duration": "1 Hour",
+                "focusAreas": [
+                    "Vocabulary",
+                    "Fluency",
+                    "Phonemic Awareness"
+                ],
+                "startDate": "Feb 28, 2025",
+                "targetEndDate": "May 15, 2025",
+                "supportTeam": [
+                    {
+                        "teacherName": "Olivia Carter",
+                        "department": "Reading Specialist",
+                        "teacherId": "t131",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-47.jpg"
+                    },
+                    {
+                        "teacherName": "Emily Johnson",
+                        "department": "Special Education",
+                        "teacherId": "t132",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-48.jpg"
+                    },
+                    {
+                        "teacherName": "Lauren Adams",
+                        "department": "Homeroom Teacher",
+                        "teacherId": "t133",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-49.jpg"
+                    }
+                ],
+                "nextReview": "May 10, 2025",
+                "assessmentDue": "May 5, 2025",
+                "targetScore": 90,
+                "startScore": 69.5,
+                "currentScore": 80.2,
+                "progressNotes": [
+                    {
+                        "date": "Mar 20, 2025",
+                        "progressId": "p31",
+                        "status": "On Track",
+                        "progressStatusMessages": "Tracking well, approach working effectively"
+                    },
+                    {
+                        "date": "Apr 6, 2025",
+                        "progressId": "p32",
+                        "status": "On Track",
+                        "progressStatusMessages": "Making gains, goal within reach"
+                    },
+                    {
+                        "date": "Apr 25, 2025",
+                        "progressId": "p33",
+                        "status": "On Track",
+                        "progressStatusMessages": "Progressing as planned, on schedule"
+                    }
+                ]
+            },
+            {
+                "type": "Supplemental Reading Intervention",
+                "frequency": "Bi-weekly",
+                "duration": "1 Hour",
+                "focusAreas": [
+                    "Phonemic Awareness",
+                    "Fluency",
+                    "Vocabulary"
+                ],
+                "startDate": "Feb 28, 2025",
+                "targetEndDate": "May 15, 2025",
+                "supportTeam": [
+                    {
+                        "teacherName": "Olivia Carter",
+                        "department": "Reading Specialist",
+                        "teacherId": "t131",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-47.jpg"
+                    },
+                    {
+                        "teacherName": "Emily Johnson",
+                        "department": "Special Education",
+                        "teacherId": "t132",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-48.jpg"
+                    },
+                    {
+                        "teacherName": "Lauren Adams",
+                        "department": "Homeroom Teacher",
+                        "teacherId": "t133",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-49.jpg"
+                    }
+                ],
+                "nextReview": "May 10, 2025",
+                "assessmentDue": "May 5, 2025",
+                "targetScore": 95,
+                "startScore": 69.5,
+                "currentScore": 76.2,
+                "progressNotes": [
+                    {
+                        "date": "Mar 20, 2025",
+                        "progressId": "p31",
+                        "status": "On Track",
+                        "progressStatusMessages": "Tracking well, approach working effectively"
+                    },
+                    {
+                        "date": "Apr 6, 2025",
+                        "progressId": "p32",
+                        "status": "On Track",
+                        "progressStatusMessages": "Making gains, goal within reach"
+                    },
+                    {
+                        "date": "Apr 25, 2025",
+                        "progressId": "p33",
+                        "status": "On Track",
+                        "progressStatusMessages": "Progressing as planned, on schedule"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "studentName": "Zoe Moore",
+        "studentId": "s1011",
+        "grade": "10th Grade",
+        "imageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-12.jpg",
+        "isActive": true,
+        "interventionTypes": [
+            {
+                "type": "Speech Therapy",
+                "frequency": "Bi-weekly",
+                "duration": "30 Minutes",
+                "focusAreas": [
+                    "Phonemic Awareness",
+                    "Fluency",
+                    "Vocabulary"
+                ],
+                "startDate": "Mar 5, 2025",
+                "targetEndDate": "May 28, 2025",
+                "supportTeam": [
+                    {
+                        "teacherName": "James Ramirez",
+                        "department": "Speech Therapist",
+                        "teacherId": "t134",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-50.jpg"
+                    },
+                    {
+                        "teacherName": "Brian Walker",
+                        "department": "Special Education",
+                        "teacherId": "t135",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-51.jpg"
+                    },
+                    {
+                        "teacherName": "David Harris",
+                        "department": "Homeroom Teacher",
+                        "teacherId": "t136",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-52.jpg"
+                    }
+                ],
+                "nextReview": "May 20, 2025",
+                "assessmentDue": "May 14, 2025",
+                "targetScore": 83,
+                "startScore": 61.9,
+                "currentScore": 73.5,
+                "progressNotes": [
+                    {
+                        "date": "Mar 28, 2025",
+                        "progressId": "p34",
+                        "status": "Needs Support",
+                        "progressStatusMessages": "Showing improvement, though falling short \u2014 tutoring advised."
+                    },
+                    {
+                        "date": "Apr 15, 2025",
+                        "progressId": "p35",
+                        "status": "On Track",
+                        "progressStatusMessages": "Improvements noted, expectations met"
+                    },
+                    {
+                        "date": "May 1, 2025",
+                        "progressId": "p36",
+                        "status": "On Track",
+                        "progressStatusMessages": "Positive momentum, tracking toward success"
+                    }
+                ]
+            },
+            {
+                "type": "Supplemental Speech Therapy",
+                "frequency": "Weekly Once",
+                "duration": "30 Minutes",
+                "focusAreas": [
+                    "Vocabulary",
+                    "Fluency",
+                    "Phonemic Awareness"
+                ],
+                "startDate": "Mar 5, 2025",
+                "targetEndDate": "May 28, 2025",
+                "supportTeam": [
+                    {
+                        "teacherName": "James Ramirez",
+                        "department": "Speech Therapist",
+                        "teacherId": "t134",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-50.jpg"
+                    },
+                    {
+                        "teacherName": "Brian Walker",
+                        "department": "Special Education",
+                        "teacherId": "t135",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-51.jpg"
+                    },
+                    {
+                        "teacherName": "David Harris",
+                        "department": "Homeroom Teacher",
+                        "teacherId": "t136",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-52.jpg"
+                    }
+                ],
+                "nextReview": "May 20, 2025",
+                "assessmentDue": "May 14, 2025",
+                "targetScore": 88,
+                "startScore": 61.9,
+                "currentScore": 69.8,
+                "progressNotes": [
+                    {
+                        "date": "Mar 28, 2025",
+                        "progressId": "p34",
+                        "status": "Needs Support",
+                        "progressStatusMessages": "Showing improvement, though falling short \u2014 tutoring advised."
+                    },
+                    {
+                        "date": "Apr 15, 2025",
+                        "progressId": "p35",
+                        "status": "On Track",
+                        "progressStatusMessages": "Improvements noted, expectations met"
+                    },
+                    {
+                        "date": "May 1, 2025",
+                        "progressId": "p36",
+                        "status": "On Track",
+                        "progressStatusMessages": "Positive momentum, tracking toward success"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "studentName": "Jackson Harris",
+        "studentId": "s1012",
+        "grade": "11th Grade",
+        "imageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-13.jpg",
+        "isActive": true,
+        "interventionTypes": [
+            {
+                "type": "Behavioral Support",
+                "frequency": "Weekly Once",
+                "duration": "45 Minutes",
+                "focusAreas": [
+                    "Behavior Management",
+                    "Comprehension",
+                    "Fluency"
+                ],
+                "startDate": "Mar 2, 2025",
+                "targetEndDate": "May 20, 2025",
+                "supportTeam": [
+                    {
+                        "teacherName": "Isabella Scott",
+                        "department": "Counselor",
+                        "teacherId": "t137",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-53.jpg"
+                    },
+                    {
+                        "teacherName": "Sarah Lee",
+                        "department": "Special Education",
+                        "teacherId": "t138",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-54.jpg"
+                    },
+                    {
+                        "teacherName": "Christopher Brooks",
+                        "department": "Homeroom Teacher",
+                        "teacherId": "t139",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-55.jpg"
+                    }
+                ],
+                "nextReview": "May 12, 2025",
+                "assessmentDue": "May 7, 2025",
+                "targetScore": 75,
+                "startScore": 53.3,
+                "currentScore": 66.7,
+                "progressNotes": [
+                    {
+                        "date": "Mar 18, 2025",
+                        "progressId": "p37",
+                        "status": "Needs Support",
+                        "progressStatusMessages": "Making gains, but performance is still under goal \u2014 more practice needed."
+                    },
+                    {
+                        "date": "Apr 8, 2025",
+                        "progressId": "p38",
+                        "status": "On Track",
+                        "progressStatusMessages": "Growth maintained, path looks solid"
+                    },
+                    {
+                        "date": "Apr 30, 2025",
+                        "progressId": "p39",
+                        "status": "On Track",
+                        "progressStatusMessages": "Showing development, targets in sight"
+                    }
+                ]
+            },
+            {
+                "type": "Supplemental Behavioral Support",
+                "frequency": "Bi-weekly",
+                "duration": "45 Minutes",
+                "focusAreas": [
+                    "Fluency",
+                    "Comprehension",
+                    "Behavior Management"
+                ],
+                "startDate": "Mar 2, 2025",
+                "targetEndDate": "May 20, 2025",
+                "supportTeam": [
+                    {
+                        "teacherName": "Isabella Scott",
+                        "department": "Counselor",
+                        "teacherId": "t137",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-53.jpg"
+                    },
+                    {
+                        "teacherName": "Sarah Lee",
+                        "department": "Special Education",
+                        "teacherId": "t138",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-54.jpg"
+                    },
+                    {
+                        "teacherName": "Christopher Brooks",
+                        "department": "Homeroom Teacher",
+                        "teacherId": "t139",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-55.jpg"
+                    }
+                ],
+                "nextReview": "May 12, 2025",
+                "assessmentDue": "May 7, 2025",
+                "targetScore": 80,
+                "startScore": 53.3,
+                "currentScore": 63.4,
+                "progressNotes": [
+                    {
+                        "date": "Mar 18, 2025",
+                        "progressId": "p37",
+                        "status": "Needs Support",
+                        "progressStatusMessages": "Making gains, but performance is still under goal \u2014 more practice needed."
+                    },
+                    {
+                        "date": "Apr 8, 2025",
+                        "progressId": "p38",
+                        "status": "On Track",
+                        "progressStatusMessages": "Growth maintained, path looks solid"
+                    },
+                    {
+                        "date": "Apr 30, 2025",
+                        "progressId": "p39",
+                        "status": "On Track",
+                        "progressStatusMessages": "Showing development, targets in sight"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "studentName": "Harper Clark",
+        "studentId": "s1013",
+        "grade": "12th Grade",
+        "imageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-14.jpg",
+        "isActive": true,
+        "interventionTypes": [
+            {
+                "type": "Academic Support",
+                "frequency": "Weekly Twice",
+                "duration": "1 Hour",
+                "focusAreas": [
+                    "Fluency",
+                    "Vocabulary",
+                    "Comprehension"
+                ],
+                "startDate": "Mar 10, 2025",
+                "targetEndDate": "May 30, 2025",
+                "supportTeam": [
+                    {
+                        "teacherName": "Matthew Green",
+                        "department": "Reading Specialist",
+                        "teacherId": "t140",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-56.jpg"
+                    },
+                    {
+                        "teacherName": "Jessica Nguyen",
+                        "department": "Special Education",
+                        "teacherId": "t141",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-57.jpg"
+                    },
+                    {
+                        "teacherName": "David Harris",
+                        "department": "Homeroom Teacher",
+                        "teacherId": "t142",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-58.jpg"
+                    }
+                ],
+                "nextReview": "May 24, 2025",
+                "assessmentDue": "May 19, 2025",
+                "targetScore": 89,
+                "startScore": 71.0,
+                "currentScore": 84.5,
+                "progressNotes": [
+                    {
+                        "date": "Apr 1, 2025",
+                        "progressId": "p40",
+                        "status": "On Track",
+                        "progressStatusMessages": "Tracking well, approach working effectively"
+                    },
+                    {
+                        "date": "Apr 20, 2025",
+                        "progressId": "p41",
+                        "status": "On Track",
+                        "progressStatusMessages": "Progressing as planned, on schedule"
+                    },
+                    {
+                        "date": "May 5, 2025",
+                        "progressId": "p42",
+                        "status": "On Track",
+                        "progressStatusMessages": "Advancing well, aligned with targets"
+                    }
+                ]
+            },
+            {
+                "type": "Supplemental Academic Support",
+                "frequency": "Bi-weekly",
+                "duration": "1 Hour",
+                "focusAreas": [
+                    "Comprehension",
+                    "Vocabulary",
+                    "Fluency"
+                ],
+                "startDate": "Mar 10, 2025",
+                "targetEndDate": "May 30, 2025",
+                "supportTeam": [
+                    {
+                        "teacherName": "Matthew Green",
+                        "department": "Reading Specialist",
+                        "teacherId": "t140",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-56.jpg"
+                    },
+                    {
+                        "teacherName": "Jessica Nguyen",
+                        "department": "Special Education",
+                        "teacherId": "t141",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-57.jpg"
+                    },
+                    {
+                        "teacherName": "David Harris",
+                        "department": "Homeroom Teacher",
+                        "teacherId": "t142",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-58.jpg"
+                    }
+                ],
+                "nextReview": "May 24, 2025",
+                "assessmentDue": "May 19, 2025",
+                "targetScore": 94,
+                "startScore": 71.0,
+                "currentScore": 80.3,
+                "progressNotes": [
+                    {
+                        "date": "Apr 1, 2025",
+                        "progressId": "p40",
+                        "status": "On Track",
+                        "progressStatusMessages": "Tracking well, approach working effectively"
+                    },
+                    {
+                        "date": "Apr 20, 2025",
+                        "progressId": "p41",
+                        "status": "On Track",
+                        "progressStatusMessages": "Progressing as planned, on schedule"
+                    },
+                    {
+                        "date": "May 5, 2025",
+                        "progressId": "p42",
+                        "status": "On Track",
+                        "progressStatusMessages": "Advancing well, aligned with targets"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "studentName": "Elijah Lee",
+        "studentId": "s1014",
+        "grade": "6th Grade",
+        "imageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-15.jpg",
+        "isActive": true,
+        "interventionTypes": [
+            {
+                "type": "Reading Intervention",
+                "frequency": "Weekly Once",
+                "duration": "45 Minutes",
+                "focusAreas": [
+                    "Comprehension",
+                    "Vocabulary",
+                    "Phonemic Awareness"
+                ],
+                "startDate": "Mar 7, 2025",
+                "targetEndDate": "May 22, 2025",
+                "supportTeam": [
+                    {
+                        "teacherName": "Chloe Mitchell",
+                        "department": "Reading Specialist",
+                        "teacherId": "t143",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-59.jpg"
+                    },
+                    {
+                        "teacherName": "Emily Johnson",
+                        "department": "Homeroom Teacher",
+                        "teacherId": "t144",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-60.jpg"
+                    },
+                    {
+                        "teacherName": "Sarah Lee",
+                        "department": "Special Education",
+                        "teacherId": "t145",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-62.jpg"
+                    }
+                ],
+                "nextReview": "May 17, 2025",
+                "assessmentDue": "May 10, 2025",
+                "targetScore": 87,
+                "startScore": 67.5,
+                "currentScore": 76.8,
+                "progressNotes": [
+                    {
+                        "date": "Mar 30, 2025",
+                        "progressId": "p43",
+                        "status": "Needs Support",
+                        "progressStatusMessages": "Progress noted, yet target not met \u2014 consider extra guidance"
+                    },
+                    {
+                        "date": "Apr 14, 2025",
+                        "progressId": "p44",
+                        "status": "On Track",
+                        "progressStatusMessages": "On pace, moving toward objective"
+                    },
+                    {
+                        "date": "Apr 28, 2025",
+                        "progressId": "p45",
+                        "status": "On Track",
+                        "progressStatusMessages": "Progressing as planned, on schedule"
+                    }
+                ]
+            },
+            {
+                "type": "Supplemental Reading Intervention",
+                "frequency": "Bi-weekly",
+                "duration": "45 Minutes",
+                "focusAreas": [
+                    "Phonemic Awareness",
+                    "Vocabulary",
+                    "Comprehension"
+                ],
+                "startDate": "Mar 7, 2025",
+                "targetEndDate": "May 22, 2025",
+                "supportTeam": [
+                    {
+                        "teacherName": "Chloe Mitchell",
+                        "department": "Reading Specialist",
+                        "teacherId": "t143",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-59.jpg"
+                    },
+                    {
+                        "teacherName": "Emily Johnson",
+                        "department": "Homeroom Teacher",
+                        "teacherId": "t144",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-60.jpg"
+                    },
+                    {
+                        "teacherName": "Sarah Lee",
+                        "department": "Special Education",
+                        "teacherId": "t145",
+                        "teacherImageUrl": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-62.jpg"
+                    }
+                ],
+                "nextReview": "May 17, 2025",
+                "assessmentDue": "May 10, 2025",
+                "targetScore": 92,
+                "startScore": 67.5,
+                "currentScore": 73.0,
+                "progressNotes": [
+                    {
+                        "date": "Mar 30, 2025",
+                        "progressId": "p43",
+                        "status": "Needs Support",
+                        "progressStatusMessages": "Progress noted, yet target not met \u2014 consider extra guidance"
+                    },
+                    {
+                        "date": "Apr 14, 2025",
+                        "progressId": "p44",
+                        "status": "On Track",
+                        "progressStatusMessages": "On pace, moving toward objective"
+                    },
+                    {
+                        "date": "Apr 28, 2025",
+                        "progressId": "p45",
+                        "status": "On Track",
+                        "progressStatusMessages": "Progressing as planned, on schedule"
+                    }
+                ]
+            }
+        ]
+    }
+]

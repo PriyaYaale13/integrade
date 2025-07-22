@@ -1,0 +1,2122 @@
+A detailed documentation covering the API, Backend Plugin Guide, Frontend Developer Guide, and Backend Developer Guide.
+
+1. API Documentation (OpenAPI v3)
+openapi: 3.0.3
+info:
+  title: InteGrade Educational Dashboard API
+  description: |
+    API for the InteGrade Educational Dashboard, integrating data from multiple sources like PowerSchool, STAR, Smarter Balance, etc., to provide comprehensive insights into student performance, risk, and interventions.
+  version: 1.0.0
+  contact:
+    name: InteGrade Support
+    email: support@integrade.io
+servers:
+  - url: https://api.integrade.io/v1
+    description: Production server
+  - url: https://staging-api.integrade.io/v1
+    description: Staging server
+  - url: http://localhost:8080/v1 # Assuming Spring Boot default context path might be adjusted
+    description: Local development
+
+tags:
+  - name: Authentication
+    description: User authentication and session management
+  - name: Dashboard
+    description: Aggregated data for user dashboards
+  - name: Students
+    description: Student information, performance, risk, and demographics
+  - name: Assessments
+    description: Standardized and course-based assessment data
+  - name: Interventions
+    description: Student intervention tracking and management
+  - name: Classes & Courses
+    description: Class rosters, course details, and teacher assignments
+  - name: Behavior & Attendance
+    description: Student behavioral incidents and attendance records
+  - name: Reports
+    description: Generation and retrieval of various reports
+  - name: Users
+    description: User management (primarily for Admins)
+  - name: Configuration
+    description: System and tenant configuration settings
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    # Common Schemas
+    ErrorResponse:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        status:
+          type: integer
+        error:
+          type: string
+        message:
+          type: string
+        path:
+          type: string
+      required:
+        - timestamp
+        - status
+        - error
+        - message
+
+    Pageable:
+      type: object
+      properties:
+        page:
+          type: integer
+          format: int32
+          description: Page number (0-indexed)
+        size:
+          type: integer
+          format: int32
+          description: Number of items per page
+        sort:
+          type: array
+          items:
+            type: string
+          description: Sorting parameters (e.g., "lastName,asc")
+
+    PagedResult:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            type: object # Generic item, specific type defined in endpoint
+        pageable:
+          type: object
+          properties:
+            sort:
+              type: object # Details about sorting
+            offset:
+              type: integer
+            pageNumber:
+              type: integer
+            pageSize:
+              type: integer
+            paged:
+              type: boolean
+            unpaged:
+              type: boolean
+        totalPages:
+          type: integer
+        totalElements:
+          type: integer
+        last:
+          type: boolean
+        size:
+          type: integer
+        number:
+          type: integer
+        sort:
+          type: object # Details about sorting
+        numberOfElements:
+          type: integer
+        first:
+          type: boolean
+        empty:
+          type: boolean
+
+    # Authentication Schemas
+    LoginRequest:
+      type: object
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+          example: teacher1@school.org
+        password:
+          type: string
+          format: password
+          example: password123
+
+    TokenResponse:
+      type: object
+      properties:
+        accessToken:
+          type: string
+        refreshToken:
+          type: string
+        tokenType:
+          type: string
+          example: Bearer
+        expiresIn:
+          type: integer
+          format: int64
+          description: Access token validity duration in milliseconds
+        userInfo:
+          $ref: '#/components/schemas/UserInfo'
+
+    UserInfo:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        username:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+          format: email
+        roles:
+          type: array
+          items:
+            type: string
+            enum: [ADMIN, TEACHER, PARENT, STUDENT] # Consistent Roles
+        districtId:
+          type: string
+          format: uuid
+          nullable: true
+        schoolId:
+          type: string
+          format: uuid
+          nullable: true
+
+    # Core Data Schemas (Simplified - combine/refine based on Data Model Artifact)
+    Student:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        externalId:
+          type: string
+          description: ID from the source Student Information System
+        firstName:
+          type: string
+        lastName:
+          type: string
+        grade:
+          type: string
+        schoolId:
+          type: string
+          format: uuid
+        dateOfBirth:
+          type: string
+          format: date
+        gender:
+          type: string
+        ethnicity:
+          type: string
+        specialEducation:
+          type: boolean
+        englishLearner:
+          type: boolean
+        iepStatus: # From PPTX / Data Model
+          type: boolean
+          default: false
+        atRisk: # From PPTX / Data Model
+          type: boolean
+          default: false
+        riskScore: # From PPTX / Risk Assessment
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 100
+          nullable: true
+        riskFactors: # From Risk Assessment
+          type: array
+          items:
+            type: string
+            enum: [ATTENDANCE, ACADEMICS, BEHAVIOR, TARDINESS] # Corresponds to service logic
+          nullable: true
+      required:
+        - id
+        - firstName
+        - lastName
+        - grade
+        - schoolId
+
+    Teacher:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        externalId:
+          type: string
+        userId: # Link to User account
+          type: string
+          format: uuid
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+          format: email
+        schoolId:
+          type: string
+          format: uuid
+        department:
+          type: string
+          nullable: true
+        subjectSpecialties: # From Data Model
+          type: array
+          items:
+            type: string
+          nullable: true
+        gradeLevels: # From Data Model
+          type: array
+          items:
+            type: string
+          nullable: true
+      required:
+        - id
+        - userId
+        - firstName
+        - lastName
+        - email
+        - schoolId
+
+    Course:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        externalId:
+          type: string
+        code:
+          type: string
+        name:
+          type: string
+        subject:
+          type: string
+        gradeLevel:
+          type: string
+        schoolYear:
+          type: string
+      required:
+        - id
+        - code
+        - name
+        - subject
+        - schoolYear
+
+    ClassSection: # From Data Model
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        externalId:
+          type: string
+        courseId:
+          type: string
+          format: uuid
+        teacherId:
+          type: string
+          format: uuid
+        name:
+          type: string
+        semester:
+          type: string
+        schoolYear:
+          type: string
+        period:
+          type: string
+          nullable: true
+        room:
+          type: string
+          nullable: true
+      required:
+        - id
+        - courseId
+        - teacherId
+        - name
+        - semester
+        - schoolYear
+
+    Enrollment: # From Data Model
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        studentId:
+          type: string
+          format: uuid
+        classSectionId:
+          type: string
+          format: uuid
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+          nullable: true
+        status:
+          type: string
+          enum: [ACTIVE, WITHDRAWN, COMPLETED]
+      required:
+        - id
+        - studentId
+        - classSectionId
+        - startDate
+        - status
+
+    CourseGrade: # From PPTX / Data Model
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        studentId:
+          type: string
+          format: uuid
+        classSectionId:
+          type: string
+          format: uuid
+        assignmentName:
+          type: string
+          nullable: true
+        assignmentType:
+          type: string
+          nullable: true
+        score:
+          type: number
+          format: float
+          nullable: true
+        maxScore:
+          type: number
+          format: float
+          nullable: true
+        percentage:
+          type: number
+          format: float
+          nullable: true
+        letterGrade:
+          type: string
+          nullable: true
+        gradingPeriod: # e.g., Q1, Q2, Semester 1
+          type: string
+        submissionDate:
+          type: string
+          format: date-time
+          nullable: true
+        sourceSystem: # From Data Model
+          type: string
+          example: PowerSchool
+      required:
+        - id
+        - studentId
+        - classSectionId
+        - gradingPeriod
+        - sourceSystem
+
+    Assessment: # From PPTX / Data Model
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        assessmentName: # e.g., "STAR Reading Fall 2023", "Unit 3 Math Test"
+          type: string
+        assessmentType: # e.g., STATE, BENCHMARK, COURSE, SAT, ACT
+          type: string
+        subject:
+          type: string
+        dateAdministered:
+          type: string
+          format: date
+        schoolYear:
+          type: string
+        semester:
+          type: string
+          nullable: true
+        maxScore:
+          type: integer
+          nullable: true
+        proficiencyThreshold:
+          type: integer
+          nullable: true
+      required:
+        - id
+        - assessmentName
+        - assessmentType
+        - subject
+        - dateAdministered
+        - schoolYear
+
+    StudentAssessmentResult: # From PPTX / Data Model
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        studentId:
+          type: string
+          format: uuid
+        assessmentId:
+          type: string
+          format: uuid
+        score:
+          type: number # Could be raw score, scaled score, etc.
+          format: float
+        percentile:
+          type: integer
+          nullable: true
+        performanceLevel: # e.g., "Advanced", "Proficient", "Basic"
+          type: string
+          nullable: true
+        # Add specific score fields if needed (e.g., elaScore, mathScore for state tests)
+        elaScore:
+          type: integer
+          nullable: true
+        mathScore:
+          type: integer
+          nullable: true
+        scienceScore:
+          type: integer
+          nullable: true
+        verbalScore: # For SAT/ACT
+          type: integer
+          nullable: true
+        compositeScore: # For ACT
+          type: integer
+          nullable: true
+        notes:
+          type: string
+          nullable: true
+      required:
+        - id
+        - studentId
+        - assessmentId
+        - score
+
+    Intervention: # From PPTX / Data Model
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        studentId:
+          type: string
+          format: uuid
+        type: # e.g., MATH, LITERACY, EMOTIONAL, ATTENDANCE
+          type: string
+        startDate:
+          type: string
+          format: date
+        targetCompletionDate:
+          type: string
+          format: date
+          nullable: true
+        actualCompletionDate:
+          type: string
+          format: date
+          nullable: true
+        startScore: # Baseline score/metric
+          type: number
+          format: float
+          nullable: true
+        currentScore: # Latest score/metric
+          type: number
+          format: float
+          nullable: true
+        goalScore: # Target score/metric
+          type: number
+          format: float
+          nullable: true
+        status: # e.g., ON_TRACK, NOT_ON_TRACK, COMPLETED, CANCELLED
+          type: string
+          enum: [ON_TRACK, NOT_ON_TRACK, COMPLETED, CANCELLED]
+        notes:
+          type: string
+          nullable: true
+        createdByUserId:
+          type: string
+          format: uuid
+        assignedToUserId:
+          type: string
+          format: uuid
+          nullable: true
+      required:
+        - id
+        - studentId
+        - type
+        - startDate
+        - status
+        - createdByUserId
+
+    InterventionProgressUpdate: # From Data Model
+       type: object
+       properties:
+        assessmentDate:
+          type: string
+          format: date
+        currentScore:
+          type: number
+          format: float
+        notes:
+          type: string
+          nullable: true
+       required:
+        - assessmentDate
+        - currentScore
+
+    AttendanceRecord: # From PPTX / Data Model
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        studentId:
+          type: string
+          format: uuid
+        date:
+          type: string
+          format: date
+        status: # PRESENT, ABSENT, TARDY, EARLY_DISMISSAL
+          type: string
+          enum: [PRESENT, ABSENT, TARDY, EARLY_DISMISSAL]
+        reason:
+          type: string
+          nullable: true
+        excused:
+          type: boolean
+          default: false
+        minutesMissed:
+          type: integer
+          default: 0
+      required:
+        - id
+        - studentId
+        - date
+        - status
+
+    BehaviorIncident: # From PPTX / Data Model
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        studentId:
+          type: string
+          format: uuid
+        incidentDate:
+          type: string
+          format: date
+        incidentType:
+          type: string
+        description:
+          type: string
+          nullable: true
+        actionTaken:
+          type: string
+          nullable: true
+        reportedByUserId:
+          type: string
+          format: uuid
+      required:
+        - id
+        - studentId
+        - incidentDate
+        - incidentType
+        - reportedByUserId
+
+    # Dashboard Schemas (Simplified)
+    TeacherDashboard:
+      type: object
+      properties:
+        classAverages:
+          type: array
+          items:
+            type: object
+            properties:
+              classSectionId:
+                type: string
+                format: uuid
+              className:
+                type: string
+              subject:
+                type: string
+              averageScore:
+                type: number
+                format: float
+        atRiskStudentsSummary:
+          type: object
+          properties:
+            count:
+              type: integer
+            # potentially add breakdown by risk factor
+        upcomingAssessments:
+          type: integer
+        activeInterventions:
+          type: integer
+
+    StudentDashboard:
+      type: object
+      properties:
+        currentGrades:
+          type: array
+          items:
+            $ref: '#/components/schemas/CourseGrade'
+        recentAssessments:
+          type: array
+          items:
+            $ref: '#/components/schemas/StudentAssessmentResult'
+        activeInterventions:
+           type: array
+           items:
+             $ref: '#/components/schemas/Intervention'
+        attendanceSummary:
+          $ref: '#/components/schemas/StudentAttendanceSummary'
+
+    ParentDashboard:
+      type: object
+      properties:
+        childId:
+          type: string
+          format: uuid
+        childName:
+          type: string
+        # Similar content to StudentDashboard but potentially summarized
+        currentGradesSummary:
+          type: object # Simplified representation
+        recentAssessmentsSummary:
+          type: object
+        activeInterventionsCount:
+          type: integer
+        attendanceSummary:
+          $ref: '#/components/schemas/StudentAttendanceSummary'
+
+    StudentAttendanceSummary: # Helper for dashboards
+      type: object
+      properties:
+        attendanceRate:
+          type: number
+          format: float
+        absentDays:
+          type: integer
+        tardyDays:
+          type: integer
+
+    # Report Schema
+    ReportRequest:
+      type: object
+      required:
+        - reportType
+        - format
+      properties:
+        reportType:
+          type: string
+          enum: [STUDENT_PERFORMANCE, CLASS_PROFICIENCY, AT_RISK_LIST, INTERVENTION_PROGRESS, ATTENDANCE_SUMMARY, LONGITUDINAL_ASSESSMENT]
+        format:
+          type: string
+          enum: [PDF, CSV, XLSX]
+        filters:
+          type: object
+          properties:
+            studentId:
+              type: string
+              format: uuid
+            classSectionId:
+              type: string
+              format: uuid
+            schoolId:
+              type: string
+              format: uuid
+            gradeLevel:
+              type: string
+            startDate:
+              type: string
+              format: date
+            endDate:
+              type: string
+              format: date
+            assessmentId:
+              type: string
+              format: uuid
+            # Add other relevant filters based on KPIs
+
+    ReportStatus:
+      type: object
+      properties:
+        reportId:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: [PENDING, PROCESSING, COMPLETED, FAILED]
+        downloadUrl:
+          type: string
+          format: uri
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+        completedAt:
+          type: string
+          format: date-time
+          nullable: true
+        errorMessage:
+          type: string
+          nullable: true
+
+# Global Security Requirement
+security:
+  - bearerAuth: []
+
+paths:
+  /auth/login:
+    post:
+      tags: [Authentication]
+      summary: Authenticate user
+      description: Logs in a user and returns JWT tokens.
+      security: [] # No token required for login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Authentication successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /auth/refresh:
+    post:
+      tags: [Authentication]
+      summary: Refresh access token
+      description: Uses a refresh token to obtain a new access token.
+      security: [] # Usually refresh token is sent in body or specific header
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                refreshToken:
+                  type: string
+      responses:
+        '200':
+          description: Token refreshed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+        '401':
+          description: Invalid or expired refresh token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /dashboard:
+    get:
+      tags: [Dashboard]
+      summary: Get dashboard data for the current user
+      description: Retrieves aggregated data tailored to the logged-in user's role (Teacher, Student, Parent, Admin). Filters might apply based on role.
+      parameters: # Optional filters, context might be derived from token
+        - name: semester
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: schoolYear
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Dashboard data retrieved successfully
+          content:
+            application/json:
+              schema:
+                oneOf: # Response depends on user role
+                  - $ref: '#/components/schemas/TeacherDashboard'
+                  - $ref: '#/components/schemas/StudentDashboard'
+                  - $ref: '#/components/schemas/ParentDashboard'
+                  # - $ref: '#/components/schemas/AdminDashboard' # Define if needed
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /students:
+    get:
+      tags: [Students]
+      summary: List students
+      description: Retrieves a paginated list of students, potentially filterable by grade, school, risk status, etc. Access controlled by role.
+      parameters:
+        - name: page
+          in: query
+          schema: { type: integer, default: 0 }
+        - name: size
+          in: query
+          schema: { type: integer, default: 20 }
+        - name: sort
+          in: query
+          schema: { type: string, default: "lastName,asc" }
+        - name: grade
+          in: query
+          required: false
+          schema: { type: string }
+        - name: schoolId
+          in: query
+          required: false
+          schema: { type: string, format: uuid }
+        - name: atRisk
+          in: query
+          required: false
+          schema: { type: boolean }
+        - name: hasIep
+          in: query
+          required: false
+          schema: { type: boolean }
+        - name: search # Generic search by name, ID etc.
+          in: query
+          required: false
+          schema: { type: string }
+      responses:
+        '200':
+          description: List of students retrieved
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PagedResult'
+                  - type: object
+                    properties:
+                      content:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Student'
+        '401':
+          description: Unauthorized
+        '43':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    post:
+      tags: [Students]
+      summary: Create a new student
+      description: Adds a new student record. Requires Admin or potentially Teacher role.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              # Schema for creating a student (might omit ID)
+              $ref: '#/components/schemas/Student'
+      responses:
+        '201':
+          description: Student created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+        '400':
+          description: Invalid input data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+
+  /students/{studentId}:
+    parameters:
+      - name: studentId
+        in: path
+        required: true
+        schema: { type: string, format: uuid }
+    get:
+      tags: [Students]
+      summary: Get student details
+      description: Retrieves detailed information for a specific student. Access controlled by role (Admin, Teacher of student, Parent of student, Student themselves).
+      responses:
+        '200':
+          description: Student details retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student' # Potentially a more detailed DTO
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Student not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    put:
+      tags: [Students]
+      summary: Update student details
+      description: Updates information for a specific student. Requires Admin or Teacher role.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+               $ref: '#/components/schemas/Student' # Schema for updating (might omit ID)
+      responses:
+        '200':
+          description: Student updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+        '400':
+          description: Invalid input data
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Student not found
+
+  # Endpoints for Student Sub-Resources (Assessments, Grades, Interventions, Attendance, Behavior)
+  /students/{studentId}/grades:
+    parameters:
+      - name: studentId
+        in: path
+        required: true
+        schema: { type: string, format: uuid }
+    get:
+      tags: [Students]
+      summary: Get student's grades
+      description: Retrieves all course grades for a specific student, filterable by term.
+      parameters:
+        - name: schoolYear
+          in: query
+          schema: { type: string }
+        - name: semester
+          in: query
+          schema: { type: string }
+        - name: gradingPeriod
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: List of course grades
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CourseGrade'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Student not found
+
+  /students/{studentId}/assessments:
+    parameters:
+      - name: studentId
+        in: path
+        required: true
+        schema: { type: string, format: uuid }
+    get:
+      tags: [Students, Assessments]
+      summary: Get student's assessment results
+      description: Retrieves assessment results for a specific student, filterable by type, subject, date range.
+      parameters:
+        - name: assessmentType
+          in: query
+          schema: { type: string }
+        - name: subject
+          in: query
+          schema: { type: string }
+        - name: startDate
+          in: query
+          schema: { type: string, format: date }
+        - name: endDate
+          in: query
+          schema: { type: string, format: date }
+      responses:
+        '200':
+          description: List of assessment results
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StudentAssessmentResult'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Student not found
+
+  /students/{studentId}/interventions:
+    parameters:
+      - name: studentId
+        in: path
+        required: true
+        schema: { type: string, format: uuid }
+    get:
+      tags: [Students, Interventions]
+      summary: Get student's interventions
+      description: Retrieves all interventions for a specific student, filterable by status or type.
+      parameters:
+         - name: status
+           in: query
+           schema:
+             type: string
+             enum: [ON_TRACK, NOT_ON_TRACK, COMPLETED, CANCELLED]
+         - name: type
+           in: query
+           schema:
+             type: string
+             enum: [MATH, LITERACY, EMOTIONAL, ATTENDANCE]
+      responses:
+        '200':
+          description: List of interventions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Intervention'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Student not found
+
+  /students/{studentId}/attendance:
+    parameters:
+      - name: studentId
+        in: path
+        required: true
+        schema: { type: string, format: uuid }
+    get:
+      tags: [Students, Behavior & Attendance]
+      summary: Get student's attendance records
+      description: Retrieves attendance records for a specific student, filterable by date range.
+      parameters:
+         - name: startDate
+           in: query
+           schema: { type: string, format: date }
+         - name: endDate
+           in: query
+           schema: { type: string, format: date }
+      responses:
+        '200':
+          description: List of attendance records
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AttendanceRecord'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Student not found
+
+  /students/{studentId}/behavior:
+    parameters:
+      - name: studentId
+        in: path
+        required: true
+        schema: { type: string, format: uuid }
+    get:
+      tags: [Students, Behavior & Attendance]
+      summary: Get student's behavior incidents
+      description: Retrieves behavior incidents for a specific student, filterable by date range or type.
+      parameters:
+         - name: startDate
+           in: query
+           schema: { type: string, format: date }
+         - name: endDate
+           in: query
+           schema: { type: string, format: date }
+         - name: incidentType
+           in: query
+           schema: { type: string }
+      responses:
+        '200':
+          description: List of behavior incidents
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BehaviorIncident'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Student not found
+
+  /assessments:
+    get:
+      tags: [Assessments]
+      summary: List assessments
+      description: Retrieves a list of defined assessments (meta-data), filterable by type, subject, etc.
+      parameters:
+         - name: assessmentType
+           in: query
+           schema: { type: string }
+         - name: subject
+           in: query
+           schema: { type: string }
+         - name: schoolYear
+           in: query
+           schema: { type: string }
+      responses:
+        '200':
+          description: List of assessments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Assessment'
+        '401':
+          description: Unauthorized
+
+    post:
+      tags: [Assessments]
+      summary: Create assessment definition
+      description: Creates a new assessment definition (meta-data). Requires Admin role.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Assessment' # Schema for creation
+      responses:
+        '201':
+          description: Assessment definition created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Assessment'
+        '400':
+          description: Invalid input data
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+
+  /assessments/{assessmentId}/results:
+    parameters:
+      - name: assessmentId
+        in: path
+        required: true
+        schema: { type: string, format: uuid }
+    get:
+      tags: [Assessments]
+      summary: Get results for a specific assessment
+      description: Retrieves all student results for a given assessment. Filterable (e.g., by class).
+      parameters:
+        - name: classSectionId
+          in: query
+          schema: { type: string, format: uuid }
+        - name: page
+          in: query
+          schema: { type: integer, default: 0 }
+        - name: size
+          in: query
+          schema: { type: integer, default: 20 }
+      responses:
+        '200':
+          description: List of assessment results
+          content:
+            application/json:
+              schema:
+                 allOf:
+                  - $ref: '#/components/schemas/PagedResult'
+                  - type: object
+                    properties:
+                      content:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/StudentAssessmentResult'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Assessment not found
+
+    post:
+      tags: [Assessments]
+      summary: Add assessment result
+      description: Adds a single student's result for a specific assessment. Requires Teacher or Admin role.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StudentAssessmentResult' # Schema for creation
+      responses:
+        '201':
+          description: Assessment result added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudentAssessmentResult'
+        '400':
+          description: Invalid input data
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Assessment or Student not found
+
+  /interventions:
+    get:
+      tags: [Interventions]
+      summary: List interventions
+      description: Retrieves a list of interventions, filterable by student, type, status, etc.
+      parameters:
+        - name: studentId
+          in: query
+          schema: { type: string, format: uuid }
+        - name: type
+          in: query
+          schema: { type: string }
+        - name: status
+          in: query
+          schema: { type: string, enum: [ON_TRACK, NOT_ON_TRACK, COMPLETED, CANCELLED] }
+        - name: assignedToUserId
+          in: query
+          schema: { type: string, format: uuid }
+        - name: page
+          in: query
+          schema: { type: integer, default: 0 }
+        - name: size
+          in: query
+          schema: { type: integer, default: 20 }
+      responses:
+        '200':
+          description: List of interventions
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PagedResult'
+                  - type: object
+                    properties:
+                      content:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Intervention'
+        '401':
+          description: Unauthorized
+
+    post:
+      tags: [Interventions]
+      summary: Create intervention
+      description: Creates a new intervention plan for a student. Requires Teacher or Admin role.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Intervention' # Schema for creation
+      responses:
+        '201':
+          description: Intervention created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Intervention'
+        '400':
+          description: Invalid input data
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+
+  /interventions/{interventionId}:
+    parameters:
+      - name: interventionId
+        in: path
+        required: true
+        schema: { type: string, format: uuid }
+    get:
+      tags: [Interventions]
+      summary: Get intervention details
+      description: Retrieves details for a specific intervention.
+      responses:
+        '200':
+          description: Intervention details retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Intervention'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Intervention not found
+
+    put:
+      tags: [Interventions]
+      summary: Update intervention
+      description: Updates an existing intervention plan.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Intervention' # Schema for update
+      responses:
+        '200':
+          description: Intervention updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Intervention'
+        '400':
+          description: Invalid input data
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Intervention not found
+
+  /interventions/{interventionId}/progress:
+    parameters:
+      - name: interventionId
+        in: path
+        required: true
+        schema: { type: string, format: uuid }
+    post:
+      tags: [Interventions]
+      summary: Add intervention progress update
+      description: Records a progress update for an intervention, recalculating status.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InterventionProgressUpdate'
+      responses:
+        '200': # Or 201 if creating a new progress record
+          description: Progress update recorded, returns updated intervention
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Intervention'
+        '400':
+          description: Invalid input data
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Intervention not found
+
+  /classes:
+    get:
+      tags: [Classes & Courses]
+      summary: List classes
+      description: Retrieves a list of class sections, filterable by teacher, course, term.
+      parameters:
+        - name: teacherId
+          in: query
+          schema: { type: string, format: uuid }
+        - name: courseId
+          in: query
+          schema: { type: string, format: uuid }
+        - name: schoolYear
+          in: query
+          schema: { type: string }
+        - name: semester
+          in: query
+          schema: { type: string }
+        - name: page
+          in: query
+          schema: { type: integer, default: 0 }
+        - name: size
+          in: query
+          schema: { type: integer, default: 20 }
+      responses:
+        '200':
+          description: List of class sections
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PagedResult'
+                  - type: object
+                    properties:
+                      content:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/ClassSection'
+        '401':
+          description: Unauthorized
+
+  /classes/{classSectionId}:
+    parameters:
+      - name: classSectionId
+        in: path
+        required: true
+        schema: { type: string, format: uuid }
+    get:
+      tags: [Classes & Courses]
+      summary: Get class section details
+      description: Retrieves details for a specific class section, including roster.
+      responses:
+        '200':
+          description: Class section details
+          content:
+            application/json:
+              schema:
+                # Potentially a DTO combining ClassSection and list of Student IDs/Names
+                allOf:
+                  - $ref: '#/components/schemas/ClassSection'
+                  - type: object
+                    properties:
+                      students:
+                        type: array
+                        items:
+                           $ref: '#/components/schemas/Student' # Or a simpler StudentSummary
+        '401':
+          description: Unauthorized
+        '404':
+          description: Class section not found
+
+  /reports:
+    post:
+      tags: [Reports]
+      summary: Request report generation
+      description: Initiates the generation of a report based on specified type and filters. Returns a status object with a report ID.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReportRequest'
+      responses:
+        '202':
+          description: Report generation accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportStatus' # Initial status PENDING
+        '400':
+          description: Invalid report request parameters
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden (User role cannot request this report type)
+
+  /reports/{reportId}:
+    parameters:
+      - name: reportId
+        in: path
+        required: true
+        schema: { type: string, format: uuid }
+    get:
+      tags: [Reports]
+      summary: Get report status and download URL
+      description: Checks the status of a report generation request. If completed, provides a download URL.
+      responses:
+        '200':
+          description: Report status retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportStatus'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Report ID not found
+
+  # Add endpoints for Users, Courses, Behavior, Attendance CRUD/Listing as needed, following similar patterns.
+  # Ensure Role-Based Access Control is considered for each endpoint.
+
+2. Backend Developer Guide: Plugins & Integrations
+
+This guide focuses on how to integrate external school systems (SIS, Assessment Platforms, etc.) into the InteGrade backend.
+
+2.1 Integration Philosophy
+
+The backend is designed to be extensible through a plugin-like architecture for data source integration. Each external system integration should be treated as a modular component responsible for:
+
+Connecting: Handling authentication and communication with the external system's API, database, or file exports.
+
+Fetching: Retrieving data (e.g., students, grades, assessments, attendance).
+
+Mapping: Transforming the external system's data format into InteGrade's internal domain models (defined in the API and Data Model).
+
+Error Handling: Managing connection issues, API errors, and data inconsistencies gracefully.
+
+Synchronization: Implementing strategies to keep InteGrade's data up-to-date (scheduled jobs, webhooks, change data capture if possible).
+
+2.2 Core Integration Interface (Conceptual / Example)
+
+While the specific implementation depends on the chosen backend language (e.g., Java/Spring as per artifacts), the core concept involves defining a common interface for all integrations.
+
+// Example Interface (adapt to your language/framework)
+public interface SchoolSystemIntegrationPlugin {
+
+    /** Get the unique identifier for this system type (e.g., "POWERSCHOOL", "STAR_RENAISSANCE"). */
+    String getSystemType();
+
+    /** Check if the integration is configured and reachable for a given tenant/district. */
+    boolean isAvailable(TenantContext tenantContext);
+
+    /** Fetch students based on filters. */
+    List<Student> fetchStudents(TenantContext tenantContext, Map<String, Object> filters);
+
+    /** Fetch grades for a specific student or class. */
+    List<CourseGrade> fetchGrades(TenantContext tenantContext, Map<String, Object> filters);
+
+    /** Fetch assessment results. */
+    List<StudentAssessmentResult> fetchAssessmentResults(TenantContext tenantContext, Map<String, Object> filters);
+
+    /** Fetch attendance records. */
+    List<AttendanceRecord> fetchAttendance(TenantContext tenantContext, Map<String, Object> filters);
+
+    /** Fetch behavioral incidents. */
+    List<BehaviorIncident> fetchBehaviorIncidents(TenantContext tenantContext, Map<String, Object> filters);
+
+    // Add methods for other relevant data types (Classes, Courses, etc.)
+
+    // Optional methods for pushing data back (if supported/required)
+    // boolean pushData(TenantContext tenantContext, String dataType, List<?> data);
+}
+IGNORE_WHEN_COPYING_START
+content_copy
+download
+Use code with caution.
+Java
+IGNORE_WHEN_COPYING_END
+2.3 Implementing a New Integration Plugin
+
+Create Service Implementation:
+
+Create a new class/service that implements the SchoolSystemIntegrationPlugin interface (or its equivalent).
+
+Inject necessary dependencies (e.g., HttpClient, RestTemplate, configuration properties).
+
+Example: PowerSchoolIntegrationService, StarRenaissanceIntegrationService.
+
+Configuration:
+
+Define configuration properties required for the integration (e.g., API base URL, client ID/secret, API key, DB connection string).
+
+Use the application's configuration mechanism (e.g., application.yml, environment variables) to load these settings. Consider multi-tenant configurations if credentials vary per district. The DistrictIntegrationConfig mentioned in the multi-tenant guide is relevant here.
+
+Store sensitive credentials securely (e.g., using environment variables, secrets management tools).
+
+Connection & Authentication:
+
+Implement logic to connect to the external system.
+
+Handle authentication (OAuth2, API Keys, Basic Auth, etc.). Implement token caching and renewal where applicable.
+
+Data Fetching:
+
+Implement methods to query the external system's API or database based on provided filters.
+
+Handle pagination if the external API supports it.
+
+Data Mapping:
+
+Create mapper functions or classes to convert the raw data from the external system into the corresponding InteGrade domain models (e.g., Student, CourseGrade).
+
+Handle potential data type mismatches, missing fields, and inconsistencies. Log warnings or errors as appropriate.
+
+Error Handling:
+
+Implement robust error handling for network issues, API rate limits, authentication failures, and invalid data.
+
+Use custom exceptions (e.g., IntegrationException) to signal problems upstream.
+
+Implement retry logic for transient network errors if appropriate.
+
+Registration (Dependency Injection):
+
+Register the new integration service with the application's dependency injection container.
+
+Consider using a factory pattern (IntegrationFactory from the multi-tenant guide) to retrieve the correct integration instance based on the system type and tenant context.
+
+Synchronization Strategy:
+
+Determine the best way to keep data synchronized:
+
+Scheduled Jobs: Use a scheduler (e.g., Spring Scheduler, Quartz) to run the fetch and map process periodically (daily, hourly). Suitable for most batch-oriented systems.
+
+Webhooks/Events: If the external system supports webhooks or event streams, implement listeners to receive real-time updates. This is more efficient but depends on the source system's capabilities.
+
+Manual Trigger: Provide an administrative interface to trigger synchronization manually.
+
+Implement logic to handle inserts, updates, and potentially deletes (or soft deletes/inactive flags). Use external IDs for matching records.
+
+2.4 Key Systems & Considerations
+
+Student Information System (SIS - e.g., PowerSchool, Infinite Campus, Skyward):
+
+Data: Core student demographics, enrollment, course/class schedules, grades, attendance, potentially basic behavior.
+
+Integration: Usually robust APIs (REST/SOAP), sometimes direct DB access (less common/recommended), or file exports (e.g., OneRoster CSV). Authentication often involves OAuth2.
+
+Learning Management System (LMS - e.g., Schoology, Canvas, Google Classroom, Clever):
+
+Data: Course materials, assignments, grades (often syncs to SIS), student activity. Clever acts as an aggregator/SSO.
+
+Integration: Typically REST APIs (LTI standard is also relevant). Clever provides its own API for roster data.
+
+Assessment Platforms (e.g., STAR Renaissance, Smarter Balance, NWEA MAP, Zearn, iReady):
+
+Data: Standardized test scores, benchmark results, diagnostic data, proficiency levels, percentiles, growth metrics.
+
+Integration: Varies widely. Some have APIs, others rely heavily on SFTP/CSV file exports. Data formats can be complex.
+
+Specialized Systems (Clinic/Health, Cafeteria, Bus/Transportation - Tyler):
+
+Data: Nurse visits, allergies, meal purchases/balances, bus routes, bus attendance.
+
+Integration: Highly variable. Might be APIs, direct DB access, or file exports. Often less standardized than SIS/LMS. Requires careful mapping.
+
+State Assessment Data:
+
+Data: Official state test results (e.g., SCREADY, EOCEP from Integrade.pptx).
+
+Integration: Usually provided via secure file transfers (CSV, fixed-width) from the state department of education or their testing vendor. Requires robust parsing and validation.
+
+2.5 Best Practices
+
+Isolate Integrations: Keep integration logic separate from core business logic.
+
+Use External IDs: Rely on the source system's unique identifiers for students, courses, etc., to reliably match records during synchronization. Store these in external_id fields.
+
+Log Extensively: Log connection attempts, data fetched, mapping errors, and synchronization results for troubleshooting.
+
+Monitor Performance: Track the duration and success rate of integration jobs.
+
+Handle Rate Limits: Respect API rate limits imposed by external systems. Implement throttling or backoff strategies.
+
+Data Validation: Validate incoming data against expected formats and constraints.
+
+Tenant Context: Ensure all integration operations are performed within the correct tenant/district context, using appropriate credentials and fetching tenant-specific data.
+
+3. Frontend Developer Guide
+
+This guide details the structure, conventions, and key aspects of the InteGrade Angular frontend application.
+
+3.1 Overview
+
+The frontend provides the user interface for teachers, students, parents, and administrators to interact with the educational data aggregated by the backend. It's built using Angular, leveraging NgRx for state management and Angular Material for UI components.
+
+3.2 Technology Stack
+
+Framework: Angular (v17+ recommended, check package.json)
+
+State Management: NgRx (Store, Effects, Entity, Selectors)
+
+UI Components: Angular Material, Angular CDK
+
+Layout: Angular Flex Layout (or potentially CSS Grid/Flexbox directly)
+
+Data Visualization: D3.js (wrapped in custom Angular components)
+
+HTTP Client: Angular HttpClient
+
+Routing: Angular Router
+
+Styling: SCSS (following a modular approach, often scoped to components)
+
+Testing: Jasmine, Karma (Unit Tests), Protractor/Cypress (E2E Tests - check package.json)
+
+3.3 Project Structure
+
+The project is organized into core, shared, and feature modules:
+
+src/app/
+├── core/             # Singleton services, guards, interceptors, main layout
+│   ├── auth/         # AuthService, AuthGuard, JwtInterceptor
+│   ├── layout/       # MainLayoutComponent (header, sidebar, content area)
+│   └── ...
+├── shared/           # Reusable UI components, pipes, directives
+│   ├── components/   # e.g., DataTableComponent, MetricCardComponent, ChartComponentWrapper
+│   ├── pipes/
+│   ├── directives/
+│   └── shared.module.ts
+├── features/         # Application feature modules (lazy-loaded)
+│   ├── dashboard/
+│   ├── students/
+│   ├── teachers/
+│   ├── assessment/
+│   ├── intervention/
+│   ├── parent-portal/
+│   ├── student-portal/
+│   └── auth/         # Login component, etc.
+├── models/           # TypeScript interfaces for data structures (match API spec)
+├── state/            # NgRx root state and feature state definitions
+│   ├── app.state.ts
+│   └── index.ts      # Root reducers/meta-reducers
+├── environments/     # API URLs and build-specific settings
+└── ...
+IGNORE_WHEN_COPYING_START
+content_copy
+download
+Use code with caution.
+IGNORE_WHEN_COPYING_END
+3.4 Architecture & Patterns
+
+Smart/Dumb Components:
+
+Containers (containers/): Smart components connect to the NgRx store, dispatch actions, subscribe to selectors, and pass data down to presentational components. They handle the "how things work."
+
+Presentational (components/): Dumb components receive data via @Input(), emit events via @Output(), and focus solely on rendering the UI. They handle the "how things look."
+
+NgRx State Management:
+
+State: Define the shape of your application state using interfaces. Normalize data where appropriate (e.g., using NgRx Entity for collections).
+
+Actions: Describe unique events happening in the application (e.g., [Students API] Load Students Success). Use createAction and define props.
+
+Reducers: Pure functions that take the current state and an action, returning a new state object (createReducer, on). Use Immer for easier immutable updates if configured.
+
+Effects: Handle side effects like API calls. Listen for actions (ofType), interact with services, and dispatch new success/failure actions (createEffect). Use operators like switchMap, mergeMap, map, catchError.
+
+Selectors: Create memoized functions (createSelector, createFeatureSelector) to query and derive data from the store state. Components subscribe to selectors using the async pipe or store.select.
+
+Lazy Loading: Feature modules are loaded on demand using the Angular Router's loadChildren property to reduce the initial application bundle size.
+
+Routing: Define routes within feature modules (feature-routing.module.ts) and register lazy-loaded routes in the main app-routing.module.ts. Use AuthGuard to protect routes based on user roles.
+
+HTTP Communication: Use HttpClient within services. An AuthInterceptor adds JWT tokens, and an ErrorInterceptor handles global HTTP errors.
+
+Forms: Use Angular's Reactive Forms (FormBuilder, FormGroup, FormControl) for complex forms with validation.
+
+3.5 Key Modules & Features
+
+Core Module: Provides essential services (AuthService), interceptors, guards, and the main application layout (MainLayoutComponent). Imported only once in AppModule.
+
+Shared Module: Contains reusable UI components (MetricCard, DataTable, Chart Wrappers), pipes, and directives. Imported by feature modules that need these shared elements.
+
+Feature Modules (Dashboard, Students, Teachers, etc.): Encapsulate specific application functionalities. Each typically includes:
+
+Routing configuration.
+
+Container components connected to the NgRx store.
+
+Presentational components for UI rendering.
+
+Feature-specific services (if any logic doesn't belong in containers or NgRx effects).
+
+NgRx state slice (*.actions.ts, *.reducer.ts, *.effects.ts, *.selectors.ts, *.state.ts).
+
+3.6 State Management (/state)
+
+Root State (app.state.ts): Defines the top-level state structure, often including slices for router state, user/auth state, and placeholders for feature states.
+
+Feature State: Each lazy-loaded feature module typically registers its own state slice using StoreModule.forFeature() and EffectsModule.forFeature(). This keeps the state modular.
+
+Selectors: Define selectors within feature state files and potentially combine them at a higher level if cross-feature data is needed. Use createFeatureSelector to get the feature slice and createSelector for specific data points.
+
+3.7 UI & Styling
+
+Angular Material: Provides a rich set of pre-built UI components (buttons, forms, tables, dialogs, etc.).
+
+Custom Components: Build custom, reusable components in the SharedModule for application-specific UI elements (e.g., KPI cards, D3 chart wrappers).
+
+SCSS: Use SCSS for styling, leveraging variables, mixins, and nested rules. Scope styles to components to avoid global conflicts. Follow a consistent naming convention (e.g., BEM).
+
+3.8 Getting Started
+
+Prerequisites: Node.js (LTS), npm/yarn, Angular CLI (npm install -g @angular/cli).
+
+Clone: git clone <repository-url>
+
+Install: cd <project-directory> and run npm install (or yarn install).
+
+Configure Environment: Copy src/environments/environment.ts to src/environments/environment.local.ts (if needed) and update the apiUrl to point to your local backend instance.
+
+Run: npm start or ng serve. The application will be available at http://localhost:4200.
+
+Build: npm run build or ng build --configuration production for a production build.
+
+3.9 Development Workflow
+
+Create/Select Issue: Pick a task or bug from the issue tracker.
+
+Create Branch: git checkout -b feature/<feature-name> or fix/<bug-name>.
+
+Implement:
+
+Define necessary data models.
+
+Update/Create NgRx state (actions, reducer, effects, selectors).
+
+Create/Update services for API calls (handled in effects).
+
+Build container components to connect to state.
+
+Build presentational components for UI.
+
+Add/Update routes.
+
+Test: Write unit tests (.spec.ts files) for components, services, reducers, and effects. Run npm test. Consider adding E2E tests for critical user flows.
+
+Lint: Run ng lint to check code style.
+
+Commit & Push: Commit changes with clear messages and push the branch.
+
+Pull Request: Create a PR for review.
+
+3.10 Best Practices & Performance
+
+OnPush Change Detection: Use changeDetection: ChangeDetectionStrategy.OnPush in components to improve performance. Ensure @Input() references change immutably for detection to trigger.
+
+Async Pipe: Prefer the async pipe in templates to subscribe to observables from the store. It handles subscription and unsubscription automatically.
+
+TrackBy: Use trackBy function with *ngFor for efficient list rendering, especially for large lists.
+
+Memoized Selectors: Always use createSelector to prevent unnecessary recomputation of derived state.
+
+Lazy Loading: Ensure all major features are implemented as lazy-loaded modules.
+
+Bundle Analysis: Periodically use tools like webpack-bundle-analyzer (ng build --stats-json followed by npx webpack-bundle-analyzer path/to/stats.json) to inspect bundle sizes and identify optimization opportunities.
+
+Pure Pipes: Use pure pipes for data transformations in templates.
+
+4. Backend Developer Guide (General)
+
+This guide provides an overview of the backend architecture, development practices, and key components for the InteGrade application, assuming a Java/Spring Boot stack as indicated by the artifacts.
+
+4.1 Overview
+
+The InteGrade backend serves as the central hub for aggregating data from various school systems, processing it, providing a secure and unified API for the frontend, handling business logic (like risk assessment), and managing user authentication/authorization.
+
+4.2 Technology Stack
+
+Framework: Spring Boot (v3.2+ recommended)
+
+Language: Java (v17+ recommended)
+
+Database: PostgreSQL (potentially using cloud provider managed instance like AWS RDS or Azure Database for PostgreSQL)
+
+Data Access: Spring Data JPA / Hibernate
+
+API: Spring Web MVC / WebFlux (for RESTful APIs)
+
+Authentication/Authorization: Spring Security (with JWT support)
+
+Integration: Spring Integration, RestTemplate/WebClient
+
+Asynchronous Operations/Messaging: Apache Kafka (optional, for notifications, report generation)
+
+Caching: Redis / Caffeine (optional, for performance)
+
+Scheduling: Spring Scheduler (@Scheduled)
+
+API Documentation: SpringDoc OpenAPI (auto-generates spec from code)
+
+Build Tool: Maven or Gradle
+
+Containerization: Docker
+
+Testing: JUnit 5, Mockito, Spring Boot Test, Testcontainers
+
+Monitoring: Spring Boot Actuator, Micrometer (for Prometheus/Grafana)
+
+4.3 Architecture
+
+The backend follows a standard layered architecture:
+
+Controller Layer (controller/ packages):
+
+Handles incoming HTTP requests (REST API endpoints).
+
+Maps request paths and parameters.
+
+Validates input DTOs (Data Transfer Objects).
+
+Delegates business logic execution to the Service Layer.
+
+Maps results from the Service Layer back to response DTOs.
+
+Uses annotations like @RestController, @RequestMapping, @GetMapping, @PostMapping, etc.
+
+Handles API-level exception handling via @RestControllerAdvice.
+
+Service Layer (service/ packages):
+
+Contains the core business logic of the application.
+
+Orchestrates calls to repositories and other services (including integration services).
+
+Manages transactions (@Transactional).
+
+Implements logic for data aggregation, risk assessment, intervention status updates, etc.
+
+Uses DTOs for communication with the Controller Layer and domain models internally and with the Repository Layer.
+
+Repository Layer (repository/ packages):
+
+Responsible for data access and persistence.
+
+Uses Spring Data JPA interfaces extending JpaRepository or similar.
+
+Defines query methods (derived queries, @Query annotation with JPQL or native SQL).
+
+Interacts with domain entity classes (@Entity).
+
+Integration Layer (integration/ or client/ packages):
+
+Contains services responsible for communicating with external systems (SIS, Assessment Platforms, etc.).
+
+Implements the "Plugin" pattern described in the Backend Developer Guide: Plugins & Integrations.
+
+Handles external API calls, data fetching, and mapping to internal domain models.
+
+Domain/Model Layer (model/ or domain/ packages):
+
+Contains Plain Old Java Objects (POJOs) representing the core entities of the application (e.g., Student, Assessment, Intervention).
+
+Often annotated with JPA annotations (@Entity, @Table, @Id, @Column, relationships like @ManyToOne, @OneToMany).
+
+Configuration Layer (config/ packages):
+
+Contains Spring configuration classes (@Configuration).
+
+Sets up beans, security, scheduling, caching, etc.
+
+Loads external configuration properties (@Value, @ConfigurationProperties).
+
+Security Layer (security/ packages):
+
+Implements Spring Security configuration (SecurityFilterChain).
+
+Manages JWT generation, validation (JwtService), and filtering (JwtAuthenticationFilter).
+
+Provides user details service (UserDetailsService) and authentication provider (AuthenticationProvider).
+
+Handles authorization logic (method security with @PreAuthorize or configuration-based).
+
+4.4 Data Modeling & Persistence
+
+Refer to the Educational Dashboard Data Model & Developer Guide and Multi-Tenant Data Model artifacts for detailed PostgreSQL schema design.
+
+Use JPA entities (@Entity) to map database tables to Java objects.
+
+Leverage Spring Data JPA repositories for simplified data access. Define custom queries where needed.
+
+Consider database migrations using tools like Flyway or Liquibase to manage schema changes across environments and potentially across tenant schemas.
+
+Implement indexing strategies outlined in the data model guide for performance.
+
+4.5 API Implementation
+
+Design RESTful endpoints following standard conventions (use HTTP verbs correctly, resource-based URLs).
+
+Use DTOs (Data Transfer Objects) for request bodies and responses to decouple the API from internal domain models.
+
+Implement validation for request DTOs (e.g., using Jakarta Bean Validation annotations like @NotNull, @Size, @Email).
+
+Use SpringDoc OpenAPI (springdoc-openapi-starter-webmvc-ui) to automatically generate the OpenAPI specification from your controllers and DTOs (using annotations like @Operation, @Parameter, @Schema).
+
+Implement global exception handling (@RestControllerAdvice) to provide consistent error responses (matching the ErrorResponse schema in the OpenAPI spec).
+
+4.6 Authentication & Authorization
+
+Implement JWT-based authentication using Spring Security.
+
+The JwtAuthenticationFilter intercepts requests, validates the token using JwtService, and sets the Authentication context.
+
+Use SecurityFilterChain bean in @Configuration to define security rules (which endpoints require authentication, which roles are needed).
+
+Implement UserDetailsService to load user data (including roles/authorities) by username/email for authentication.
+
+Use role-based authorization (e.g., .requestMatchers("/api/admin/**").hasRole("ADMIN")) in the security configuration or @PreAuthorize("hasRole('TEACHER')") on service methods.
+
+Ensure tenant context is considered during authorization checks if applicable (e.g., a teacher can only access data for their assigned school/district).
+
+4.7 Data Processing & Business Logic
+
+Aggregation: Services responsible for combining data from multiple sources (fetched via integration plugins) into unified views for the dashboard or reports.
+
+Risk Assessment: Implement the logic described in the RiskAssessmentService example – fetching relevant data (grades, attendance, behavior) and applying rules/scoring to determine atRisk status and riskScore.
+
+Intervention Tracking: Implement logic to update intervention status (ON_TRACK, NOT_ON_TRACK) based on progress updates relative to goals and timelines, as shown in the InterventionService example.
+
+4.8 Testing
+
+Unit Tests: Use JUnit 5 and Mockito to test individual classes (services, controllers, utilities) in isolation. Mock dependencies.
+
+Integration Tests: Use @SpringBootTest to test the interaction between different layers (e.g., controller -> service -> repository). Use an in-memory database (like H2) or Testcontainers (preferred for realistic testing against PostgreSQL/Redis/Kafka) to provide dependencies. Mock external integration services.
+
+API/Contract Tests: Test the REST API endpoints directly using MockMvc or WebTestClient. Verify request handling, responses, status codes, and basic validation.
+
+4.9 Deployment
+
+Containerization: Use the provided Dockerfile to build a container image.
+
+Configuration: Manage environment-specific settings (database URLs, API keys, JWT secrets) using environment variables, external configuration files (mounted into the container), or a configuration server (like Spring Cloud Config). See application.yml examples.
+
+CI/CD: Use pipelines (Jenkins, GitHub Actions, GitLab CI) to automate building, testing, container image creation, and deployment to different environments (Dev, Staging, Prod).
+
+4.10 Monitoring & Logging
+
+Logging: Use a standard logging framework (SLF4j with Logback/Log4j2). Configure appropriate log levels for different environments. Log key events, errors, integration calls, and request handling. Use structured logging (e.g., JSON format) for easier parsing by log aggregation tools.
+
+Health Checks: Expose health endpoints using Spring Boot Actuator (/actuator/health). Implement custom HealthIndicators for critical dependencies like the database and external integrations.
+
+Metrics: Use Actuator and Micrometer to expose application metrics (JVM stats, HTTP request timings, custom business metrics) in a format consumable by Prometheus (/actuator/prometheus). Visualize metrics using Grafana.
+
+Tracing: Consider implementing distributed tracing (e.g., using OpenTelemetry or Spring Cloud Sleuth) if the architecture involves multiple microservices.
+
+4.11 Getting Started
+
+Prerequisites: Java JDK (17+), Maven or Gradle, Docker (optional, for running DB/dependencies or building image).
+
+Clone: git clone <repository-url>
+
+Configure: Set up necessary environment variables or configuration files (e.g., for database connection, JWT secret). You might need to run dependent services like PostgreSQL locally or via Docker Compose.
+
+Build: mvn clean install or gradle clean build.
+
+Run: mvn spring-boot:run or gradle bootRun or run the main application class from your IDE.
+
+API Spec: Access the auto-generated OpenAPI UI (usually at /swagger-ui.html or /v3/api-docs).

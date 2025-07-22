@@ -1,0 +1,151 @@
+{
+  "proficiencyOverview": {
+    "advanced": {
+      "percentage": 28,
+      "students": 12,
+      "color": "#4caf50"
+    },
+    "proficient": {
+      "percentage": 45,
+      "students": 19,
+      "color": "#3f51b5"
+    },
+    "basic": {
+      "percentage": 20,
+      "students": 8,
+      "color": "#ff9800"
+    },
+    "belowBasic": {
+      "percentage": 7,
+      "students": 3,
+      "color": "#f44336"
+    }
+  },
+  "courseBreakdown": {
+    "mathematics": {
+      "name": "Mathematics",
+      "advanced": 32,
+      "proficient": 53,
+      "basic": 10,
+      "belowBasic": 5
+    },
+    "science": {
+      "name": "Science",
+      "advanced": 28,
+      "proficient": 50,
+      "basic": 15,
+      "belowBasic": 7
+    },
+    "english": {
+      "name": "English",
+      "advanced": 25,
+      "proficient": 47,
+      "basic": 20,
+      "belowBasic": 8
+    },
+    "history": {
+      "name": "History",
+      "advanced": 22,
+      "proficient": 46,
+      "basic": 23,
+      "belowBasic": 9
+    }
+  },
+  "historicalTrend": {
+    "fall2024": {
+      "name": "Fall 2024",
+      "advanced": 28,
+      "proficient": 45,
+      "basic": 20,
+      "belowBasic": 7
+    },
+    "winter2024": {
+      "name": "Winter 2024",
+      "advanced": 32,
+      "proficient": 48,
+      "basic": 15,
+      "belowBasic": 5
+    },
+    "spring2025": {
+      "name": "Spring 2025",
+      "advanced": 35,
+      "proficient": 50,
+      "basic": 12,
+      "belowBasic": 3
+    }
+  },
+  "studentDetails": [
+    {
+      "id": 1,
+      "name": "Sarah Johnson",
+      "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg",
+      "course": "Mathematics",
+      "proficiency": "Advanced",
+      "grade": 95,
+      "trend": "up"
+    },
+    {
+      "id": 2,
+      "name": "Michael Chen",
+      "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-4.jpg",
+      "course": "Science",
+      "proficiency": "Proficient",
+      "grade": 88,
+      "trend": "stable"
+    },
+    {
+      "id": 3,
+      "name": "Emily Rodriguez",
+      "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg",
+      "course": "English",
+      "proficiency": "Advanced",
+      "grade": 92,
+      "trend": "up"
+    },
+    {
+      "id": 4,
+      "name": "James Wilson",
+      "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg",
+      "course": "Mathematics",
+      "proficiency": "Proficient",
+      "grade": 86,
+      "trend": "stable"
+    },
+    {
+      "id": 5,
+      "name": "Olivia Taylor",
+      "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg",
+      "course": "History",
+      "proficiency": "Basic",
+      "grade": 75,
+      "trend": "down"
+    },
+    {
+      "id": 6,
+      "name": "David Martinez",
+      "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-6.jpg",
+      "course": "Science",
+      "proficiency": "Proficient",
+      "grade": 84,
+      "trend": "up"
+    },
+    {
+      "id": 7,
+      "name": "Sophia Lee",
+      "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-7.jpg",
+      "course": "English",
+      "proficiency": "Basic",
+      "grade": 78,
+      "trend": "stable"
+    },
+    {
+      "id": 8,
+      "name": "Ethan Johnson",
+      "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg",
+      "course": "Mathematics",
+      "proficiency": "Below Basic",
+      "grade": 65,
+      "trend": "down"
+    }
+  ]
+} 

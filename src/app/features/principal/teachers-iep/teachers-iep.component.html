@@ -1,0 +1,188 @@
+<app-header></app-header>
+
+<div class="min-h-screen bg-[#F5F7FA] pt-2">
+    <div class="page-layout-container flex flex-col lg:flex-row">
+        <!-- Sidebar -->
+        <app-sidebar title="Quick Links" [menuItems]="sidebarMenuItems" [useCustomIcons]="true">
+        </app-sidebar>
+
+        <main class="flex-1 px-4 sm:px-6 pt-5 overflow-x-auto">
+            <!-- Page Title and Export -->
+            <div class="flex justify-between items-center mb-6 mt-10">
+                <h1 class="page-title text-xl md:text-2xl">IEP Students Progress</h1>
+                <div class="relative space-x-4">
+                    <button mat-raised-button class="relative bg-[#FF881F]" (click)="exportToExcel()">
+                        <span class="text-[#FFFFFF]">Export</span>
+                    </button>
+                </div>
+            </div>
+            <!-- Filters -->
+            <div class="filters-bar px-2 sm:px-4 md:px-6 mb-6">
+                <div class="flex flex-col lg:flex-row flex-wrap gap-4 w-full">
+                    <mat-form-field appearance="outline" class="w-full sm:w-48 md:w-60 lg:flex-1">
+                        <mat-label>Grade</mat-label>
+                        <mat-select [(ngModel)]="currentFilters.grade" (selectionChange)="applyFilters()">
+                            <mat-option value="all">All Grades</mat-option>
+                            <mat-option *ngFor="let grade of (grades$ | async)" [value]="grade">{{ grade
+                                }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <!-- IEP Category -->
+                    <mat-form-field appearance="outline" class="w-full sm:w-48 md:w-60 lg:flex-1">
+                        <mat-label>IEP Category</mat-label>
+                        <mat-select [(ngModel)]="currentFilters.iepCategory" (selectionChange)="applyFilters()">
+                            <mat-option value="all">All Category</mat-option>
+                            <mat-option *ngFor="let iep of (iepCategoryList$ | async)" [value]="iep">{{ iep
+                                }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <!-- Progress Status -->
+                    <mat-form-field appearance="outline" class="w-full sm:w-48 md:w-60 lg:flex-1">
+                        <mat-label>Progress Status</mat-label>
+                        <mat-select [(ngModel)]="currentFilters.progressStatus" (selectionChange)="applyFilters()">
+                            <mat-option value="all">All Status</mat-option>
+                            <mat-option *ngFor="let progStatus of (progressStatusList$ | async)" [value]="progStatus">{{
+                                progStatus }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <div class="flex flex-col sm:flex-row gap-4 w-full lg:flex-[2]">
+                        <!-- Search Teacher -->
+                        <mat-form-field appearance="outline" class="w-full sm:w-1/2">
+                            <mat-label>Search Teacher...</mat-label>
+                            <input matInput #searchTeacher [(ngModel)]="currentFilters.searchTeacher"
+                                (input)="onSearchTermChange($event)" placeholder="Enter name..." />
+                            <div matSuffix class="icon-container">
+                                <button *ngIf="searchTeacher.value" mat-icon-button aria-label="Clear"
+                                    (click)="clearSearch('searchTeacher')">
+                                    <mat-icon>close</mat-icon>
+                                </button>
+                                <button *ngIf="!searchTeacher.value" mat-icon-button aria-label="search">
+                                    <mat-icon>search</mat-icon>
+                                </button>
+                            </div>
+                        </mat-form-field>
+                        <!-- Student Search -->
+                        <mat-form-field appearance="outline" class="w-full sm:w-1/2">
+                            <mat-label>Search Student...</mat-label>
+                            <input matInput #searchStudentInput [(ngModel)]="currentFilters.searchStudent"
+                                (input)="onSearchTermChange($event)" placeholder="Enter name..." />
+                            <div matSuffix class="icon-container">
+                                <button *ngIf="searchStudentInput.value" mat-icon-button aria-label="Clear"
+                                    (click)="clearSearch('studentSearch')">
+                                    <mat-icon>close</mat-icon>
+                                </button>
+                                <button *ngIf="!searchStudentInput.value" mat-icon-button aria-label="search">
+                                    <mat-icon>search</mat-icon>
+                                </button>
+                            </div>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <!-- KPI Grid -->
+            <ng-container *ngIf="teachersIepData$ | async as data; else loadingOrError">
+                <div class="kpi-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                    <app-kpi-card *ngFor="let kpi of data.kpis" [kpi]="kpi"></app-kpi-card>
+                </div>
+                <!-- Data Table -->
+                <div class="behavior-content">
+                    <mat-card>
+                        <mat-card-content>
+                            <div class="responsive-table-wrapper overflow-auto">
+                                <table mat-table [dataSource]="dataSource" class="teacher-behavior-table min-w-[768px]">
+                                    <!-- Columns defined here -->
+                                    <!-- Student Name -->
+                                    <ng-container matColumnDef="studentName">
+                                        <th mat-header-cell *matHeaderCellDef> Student Name </th>
+                                        <td mat-cell *matCellDef="let element" style="text-align: left;">
+                                            <div>{{element.studentName}}</div>
+                                        </td>
+                                    </ng-container>
+                                    <!-- Teacher Name -->
+                                    <ng-container matColumnDef="teacherName">
+                                        <th mat-header-cell *matHeaderCellDef> Teacher Name </th>
+                                        <td mat-cell *matCellDef="let element" style="text-align: left;">
+                                            <div>{{element.teacherName}}</div>
+                                        </td>
+                                    </ng-container>
+                                    <!-- Grade Level -->
+                                    <ng-container matColumnDef="gradeLevel">
+                                        <th mat-header-cell *matHeaderCellDef> Grade Level </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.gradeLevel ?? '-'}} </td>
+                                    </ng-container>
+                                    <!-- Category -->
+                                    <ng-container matColumnDef="category">
+                                        <th mat-header-cell *matHeaderCellDef> Category </th>
+                                        <td mat-cell *matCellDef="let element" style="text-align: left;">
+                                            <div>{{element.category}}</div>
+                                        </td>
+                                    </ng-container>
+                                    <!-- progress -->
+                                    <ng-container matColumnDef="progress">
+                                        <th mat-header-cell *matHeaderCellDef> Progress </th>
+                                        <td mat-cell *matCellDef="let element">
+                                            <div class="progress-bar-bg table-progress">
+                                                <div class="progress-bar" [style.width.%]="element.progress || 0"
+                                                    [ngClass]="element.progressClass">
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </ng-container>
+                                    <!-- Goals Met -->
+                                    <ng-container matColumnDef="goalsMet">
+                                        <th mat-header-cell *matHeaderCellDef> Goals Met </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.goalsMet ?? '-'}} </td>
+                                    </ng-container>
+                                    <!-- Next Review -->
+                                    <ng-container matColumnDef="nextReview">
+                                        <th mat-header-cell *matHeaderCellDef> Next Review</th>
+                                        <td mat-cell *matCellDef="let element"> {{element.nextReview ?? '-'}} </td>
+                                    </ng-container>
+                                    <!-- Status -->
+                                    <ng-container matColumnDef="status">
+                                        <th mat-header-cell *matHeaderCellDef> Status </th>
+                                        <td mat-cell *matCellDef="let element">{{element.status}}
+                                    </ng-container>
+
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                    <tr class="mat-row" *matNoDataRow>
+                                        <td class="mat-cell" [attr.colspan]="displayedColumns.length">No IEP data
+                                            found.
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="w-full overflow-x-auto mt-4">
+                                <mat-paginator #teacherIepPagination [length]="data?.records?.length" [pageSize]="5"
+                                    [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons>
+                                </mat-paginator>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </ng-container>
+
+            <!-- Loading & Error Template -->
+            <ng-template #loadingOrError>
+                <div *ngIf="isLoading"
+                    class="loading-container flex flex-col items-center justify-center py-12 text-center">
+                    <mat-spinner diameter="50"></mat-spinner>
+                    <p>Loading teachers behavior data...</p>
+                </div>
+                <div *ngIf="!isLoading && error"
+                    class="error-container flex flex-col items-center justify-center py-12 text-center">
+                    <mat-icon color="warn">error</mat-icon>
+                    <p>{{error}}</p>
+                    <button mat-raised-button color="primary" (click)="loadData()">Retry</button>
+                </div>
+                <div *ngIf="!isLoading && !error"
+                    class="error-container flex flex-col items-center justify-center py-12 text-center">
+                    <mat-icon color="warn">error</mat-icon>
+                    <p>Failed to load teachers behavior data. Please try again later.</p>
+                    <button mat-raised-button color="primary" (click)="loadData()">Retry</button>
+                </div>
+            </ng-template>
+        </main>
+    </div>
+</div>

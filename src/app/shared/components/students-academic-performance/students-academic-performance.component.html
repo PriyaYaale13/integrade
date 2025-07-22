@@ -1,0 +1,61 @@
+<section id="academic-performance" class="bg-white rounded-lg shadow p-6">
+  <h2 class="text-lg font-medium text-[#212121] mb-4">Academic Performance</h2>
+  <div class="justify-between mb-4 overflow-x-auto">
+  <table class="w-full min-w-[600px] text-sm text-left text-[#212121]">
+    <thead>
+      <tr class="border-b border-[#EEEEEE]">
+        <th class="text-left py-3 text-[#757575] font-medium">Subject</th>
+        <th class="text-left py-3 text-[#757575] font-medium">Current Grade</th>
+        <th class="text-left py-3 text-[#757575] font-medium">Previous Grade</th>
+        <th class="text-left py-3 text-[#757575] font-medium">Trend</th>
+        <th class="text-left py-3 text-[#757575] font-medium">Proficiency</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tbody>
+          <tr *ngFor="let subject of studentAcademicPerformance" class="border-b border-[#EEEEEE]">
+            <!-- Subject -->
+            <td class="py-4">{{ subject.subject }}</td>
+        
+            <!-- Current Grade (with color) -->
+            <td class="py-4">
+              <span [ngClass]="getGradeColor(subject.currentGrade)">
+                {{ subject.currentGrade }}
+              </span>
+            </td>
+        
+            <!-- Previous Grade -->
+            <td class="py-4">
+              {{ subject.previousGrade }}
+            </td>
+        
+            <!-- Trend (icon + text + color) -->
+            <td class="py-4">
+              <span [ngClass]="getTrendColor(subject.trend)">
+                <i [class]="getTrendIcon(subject.trend)" class="mr-1"></i>
+                {{ subject.trend }}
+              </span>
+            </td>
+        
+            <!-- Proficiency Bar -->
+            <td class="py-4">
+              <div class="w-24 bg-[#e0e0e0] rounded-full h-2">
+                <div
+                  class="h-2 rounded-full"
+                  [ngStyle]="{
+                    width: subject.proficiencyPercent + '%',
+                    backgroundColor: getGradeColorCode(subject.currentGrade)
+                  }"
+                ></div>
+              </div>
+            </td>
+            <tr *ngIf="studentAcademicPerformance.length === 0" class="border-b border-[#EEEEEE]">
+            <td colspan="5" class="py-4 text-center text-[#757575]">No data available</td>
+
+            
+          </tr>
+        </tbody>
+        
+  </table>
+  </div>
+</section>

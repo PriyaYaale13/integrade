@@ -1,0 +1,10 @@
+.score-band-pie-chart-container {
+    display: flex; // Allow centering content if needed
+    flex-direction: column;
+    align-items: center;
+    position: relative; // For absolute positioning if ever needed
+  
+    svg text {
+       pointer-events: none; // Prevent text blocking tooltips on arcs
+    }
+  }

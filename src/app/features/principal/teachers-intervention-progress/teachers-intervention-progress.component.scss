@@ -1,0 +1,30 @@
+@use '../../../features/teacher/intervention-progress/intervention-progress.component.scss' as intervention-progress;
+
+.page-layout-container {
+    display: flex;
+    min-height: calc(100vh - 90px); // Adjusted to account for taller header
+}
+
+
+// Responsive Layout Fixes
+@media (max-width: 768px) {
+    .page-layout-container {
+        flex-direction: column;
+        padding: 10px; // Less padding on mobile
+    }
+
+    .app-main-content {
+        padding: 10px;
+        overflow-x: auto; // Allow inner content to scroll if needed
+    }
+
+    .filters-bar {
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 0.5rem;
+    }
+
+    .grid-cols-3 {
+        grid-template-columns: 1fr !important; // 1 column on mobile for your charts
+    }
+}

@@ -1,0 +1,78 @@
+<app-header></app-header>
+
+<div *ngIf="student; else notFound">
+  <div class="min-h-screen bg-[#F5F7FA]">
+    <div class="page-layout-container">
+      <app-sidebar title="Quick Links" [menuItems]="sidebarMenuItems" [useCustomIcons]="true"></app-sidebar>
+
+      <main class="app-main-content">
+      
+        <div class="flex justify-between items-center ">
+         
+          <h1 _ngcontent-ng-c3925825219 class="page-title text-left" id="page-title">Welcome {{ student.parent_name! ? student.full_name : student.parent_name }}</h1>
+        
+      
+          <h6 class="flex items-center text-orange-500 cursor-pointer" [routerLink]="''">
+            <span class="material-icons text-orange-500 text-lg">arrow_back</span>
+            <span class="ml-2 text-lg">Back</span>
+          </h6>
+        </div>
+        
+
+        <!-- Filters -->
+        <section class="bg-white rounded-xl p-4 mb-9 shadow-sm">
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            
+            <!-- Semester Filter -->
+            <mat-form-field appearance="outline" class="w-full filter-field">
+              <mat-label>Semester</mat-label>
+              <mat-select [(ngModel)]="selectedSemester" (selectionChange)="emitFilters()">
+                <mat-option value="">All Semester</mat-option>
+                <mat-option *ngFor="let semester of semesters" [value]="semester">{{ semester }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <!-- Year Filter -->
+            <mat-form-field appearance="outline" class="w-full filter-field">
+              <mat-label>Year</mat-label>
+             
+              <mat-select [(ngModel)]="selectedYear" (selectionChange)="emitFilters()">
+                <mat-option value="">All Year</mat-option>
+                <mat-option *ngFor="let year of years" [value]="year">{{ year }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <!-- Subject Filter -->
+            <mat-form-field appearance="outline" class="w-full filter-field">
+              <mat-label>Subject</mat-label>
+              <mat-select [(ngModel)]="selectedSubject" (selectionChange)="emitFilters()">
+                <mat-option value="">All Subject</mat-option>
+                <mat-option *ngFor="let subject of subjects" [value]="subject">{{ subject }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </section>
+
+        <!-- Academic Performance -->
+        <div class="mt-7">
+          <app-student-academic-performance
+            [studentAcademicPerformance]="filteredAcademicPerformance">
+          </app-student-academic-performance>
+        </div>
+
+        <!-- State Assessment Grid -->
+        <ng-container *ngIf="assessments?.length">
+          <h2 class="section-title mt-8 mb-4">State Assessment Performance</h2>
+          <app-state-assessment-grid [assessments]="assessments"></app-state-assessment-grid>
+        </ng-container>
+      </main>
+    </div>
+  </div>
+</div>
+
+<ng-template #notFound>
+  <div class="bg-white rounded-xl shadow-lg p-8 flex flex-col items-center justify-center min-h-[300px]">
+    <mat-spinner diameter="40" class="mb-4"></mat-spinner>
+    <p class="text-[#757575]">Loading dashboard data...</p>
+  </div>
+</ng-template>

@@ -1,0 +1,35 @@
+@use '../../../shared/components/charts/state-assessment-chart/state-assessment-chart.component.scss' as state-chart; // Import common styles
+
+.overview-bars {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: space-around;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    app-state-assessment-chart {
+        min-width: 250px;
+        flex: 1;
+    }
+}
+
+.distribution-charts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: space-around;
+    margin-bottom: 1.5rem;
+
+    .distribution-card {
+        flex: 1;
+        min-width: 300px;
+        max-width: 400px; // Limit pie chart card width
+         mat-card-content {
+            display: flex;
+            justify-content: center; // Center the pie chart
+         }
+    }
+}

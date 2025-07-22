@@ -1,0 +1,128 @@
+<app-header></app-header>
+
+<div class="min-h-screen bg-[#F5F7FA] pt-2">
+  <div class="page-layout-container">
+    <!-- Use the reusable Sidebar component -->
+    <app-sidebar 
+      title="Quick Links" 
+      [menuItems]="sidebarMenuItems" 
+      [useCustomIcons]="true">
+    </app-sidebar>
+
+    <!-- Main Content using Global Class -->
+    <main class="app-main-content">
+      <!-- Page Title and Notifications -->
+      <div class="flex justify-between items-center mb-6 mt-8">
+        <h1 class="page-title">My Classroom</h1>
+        <div class="relative">
+          <button mat-icon-button class="relative">
+            <i class="fa-regular fa-bell text-[#757575] text-xl"></i>
+            <span *ngIf="hasNotification" class="absolute -top-1 -right-1 bg-[#f44336] text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">!</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Filters Section -->
+      <div class="filters-bar mb-6">
+        <div class="flex w-full items-center">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 flex-grow">
+            <mat-form-field appearance="outline" class="w-full filter-field">
+              <mat-label>Semester</mat-label>
+              <mat-select [(ngModel)]="currentFilters.semester" (selectionChange)="applyFilters()">
+                <mat-option *ngFor="let sem of (semesters$ | async)" [value]="sem">{{ sem }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-full filter-field">
+              <mat-label>Courses</mat-label>
+              <mat-select [(ngModel)]="currentFilters.course" (selectionChange)="applyFilters()">
+                <mat-option *ngFor="let course of (courses$ | async)" [value]="course">{{ course }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-full filter-field">
+              <mat-label>Program</mat-label>
+              <mat-select [(ngModel)]="currentFilters.program" (selectionChange)="applyFilters()">
+                <mat-option *ngFor="let prog of (programs$ | async)" [value]="prog">{{ prog }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <mat-form-field appearance="outline" class="ml-4 w-64">
+              <mat-label>Search Students</mat-label>
+              <input matInput #searchInput [ngModel]="currentFilters.searchTerm" (input)="onSearchTermChange($event)" placeholder="Enter name...">
+              <button *ngIf="searchInput.value" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
+                <mat-icon>close</mat-icon>
+              </button>
+              <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+            
+            <!-- Search Results Dropdown -->
+            <div *ngIf="showSearchResults" class="absolute z-10 w-full bg-white rounded-md shadow-lg max-h-60 overflow-auto">
+              <div *ngFor="let student of searchResults" 
+                   class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center border-b border-gray-100 last:border-b-0"
+                   (click)="navigateToStudentDetails(student)">
+                <img [src]="student.image" class="w-8 h-8 rounded-full mr-3" alt="Student photo" 
+                     onerror="this.src='assets/images/profile-placeholder.png'">
+                <div class="flex-1">
+                  <div class="font-medium text-gray-800">{{student.displayName}}</div>
+                  <div class="text-xs text-gray-600">{{student.displayInfo}}</div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-gray-400 text-xs"></i>
+              </div>
+              <div *ngIf="searchResults.length === 0" class="px-4 py-2 text-gray-500 text-center">
+                No students found
+              </div>
+            </div>
+          </div>
+        </div>
+      
+
+      <!-- Data Loading Area -->
+      <ng-container *ngIf="dashboardData$ | async as data; else loadingOrError">
+        <!-- Class Report Section -->
+        <h2 class="section-title">Class Report</h2>
+
+        <!-- KPI Cards -->
+        <div class="kpi-grid">
+          <div *ngFor="let kpi of data.kpis" (click)="onKpiClick(kpi)">
+            <div class="flex justify-between items-start mb-3">
+              <div class="flex items-start gap-3 flex-1">
+                <div [ngClass]="'w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ' + getKpiIconClass(kpi)">
+                  <i [ngClass]="getKpiIcon(kpi)"></i>
+                </div>
+                <h3 class="text-[#757575] font-medium break-words">{{kpi.title}}</h3>
+              </div>
+              <span [ngClass]="getTrendClass(kpi)" class="flex flex-col items-end flex-shrink-0 ml-2">
+                <span class="flex items-center gap-1">
+                  <i [ngClass]="getTrendIcon(kpi)" class="text-sm"></i>
+                  <span class="text-sm">{{getTrendValue(kpi)}}</span>
+                </span>
+                <span class="text-xs text-[#757575]">{{getComparison(kpi)}}</span>
+              </span>
+            </div>
+            <div class="flex flex-col">
+              <div class="text-3xl font-medium text-[#212121]">{{kpi.value}}{{kpi.unit}}</div>
+            </div>
+            <div class="mt-4 w-full bg-gray-100 rounded-full h-1.5">
+              <div [ngClass]="getProgressBarClass(kpi)" class="h-1.5 rounded-full" [style.width]="getProgressWidth(kpi)"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <!-- State Assessment Performance -->
+          <ng-container *ngIf="data.assessments as assessments">
+            <h2 class="section-title">State Assessment Performance</h2>
+            <app-state-assessment-grid [assessments]="assessments"></app-state-assessment-grid>
+          </ng-container>
+        </div>
+      </ng-container>
+
+      <!-- Loading/Error Template -->
+      <ng-template #loadingOrError>
+        <div class="loading-error-container">
+          <mat-spinner diameter="40" class="mb-4"></mat-spinner>
+          <p class="text-[#757575]">Loading dashboard data...</p>
+        </div>
+      </ng-template>
+    </main>
+  </div>
+</div>

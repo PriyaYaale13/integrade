@@ -1,0 +1,142 @@
+// src/app/features/dashboard/containers/at-risk-students/at-risk-students.component.scss
+.at-risk-students-container {
+    padding: 20px;
+    
+    .at-risk-content {
+      .overview-section {
+        margin-bottom: 24px;
+        
+        .chart-wrapper {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          
+          .chart-title {
+            font-size: 18px;
+            font-weight: 500;
+            color: #37474f;
+            margin-bottom: 16px;
+            text-align: center;
+          }
+        }
+        
+        .filters-section {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 16px;
+          margin-bottom: 16px;
+          
+          mat-form-field {
+            flex: 1;
+            min-width: 200px;
+          }
+        }
+        
+        .risk-factors-legend {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 24px;
+          justify-content: center;
+          
+          .legend-item {
+            display: flex;
+            align-items: center;
+            
+            .legend-color {
+              width: 16px;
+              height: 16px;
+              border-radius: 4px;
+              margin-right: 8px;
+              
+              &.academic {
+                background-color: #f44336;
+              }
+              
+              &.attendance {
+                background-color: #ff9800;
+              }
+              
+              &.behavior {
+                background-color: #9c27b0;
+              }
+            }
+            
+            span {
+              font-size: 14px;
+              color: #546e7a;
+            }
+          }
+        }
+      }
+      
+      .students-section {
+        .table-wrapper {
+          overflow-x: auto;
+          
+          table {
+            width: 100%;
+            
+            .mat-mdc-header-row {
+              background-color: #f5f5f5;
+            }
+            
+            .interventions-list {
+              mat-chip {
+                min-height: 24px;
+                font-size: 12px;
+              }
+            }
+            
+            .score-danger {
+              color: #f44336;
+              font-weight: 500;
+            }
+            
+            .score-warning {
+              color: #ff9800;
+              font-weight: 500;
+            }
+            
+            .attendance-issue {
+              background-color: rgba(255, 152, 0, 0.1);
+              color: #ff9800;
+              font-weight: 500;
+            }
+            
+            .behavior-issue {
+              background-color: rgba(156, 39, 176, 0.1);
+              color: #9c27b0;
+              font-weight: 500;
+            }
+            
+            .risk-high {
+              color: #f44336;
+              font-weight: 700;
+            }
+            
+            .risk-medium {
+              color: #ff9800;
+              font-weight: 700;
+            }
+            
+            .risk-low {
+              color: #4caf50;
+              font-weight: 700;
+            }
+          }
+        }
+      }
+    }
+    
+    .loading-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 0;
+      
+      p {
+        margin-top: 16px;
+        color: #78909c;
+      }
+    }
+  }

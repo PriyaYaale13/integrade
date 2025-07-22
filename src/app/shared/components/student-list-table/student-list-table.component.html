@@ -1,0 +1,64 @@
+<div id="student-list" class="bg-white rounded-xl shadow-sm">
+    <div class="p-6 border-b">
+        <h2 class="text-xl font-semibold">At-Risk Students</h2>
+    </div>
+    <div class="overflow-x-auto">
+        <table class="w-full">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">Student</th>
+                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">Risk Level</th>
+                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">Risk Factors</th>
+                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">Current GPA</th>
+                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">Attendance</th>
+                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+                <tr *ngFor="let details of  studentList">
+                    <td class="px-6 py-4">
+                        <div class="flex items-center">
+                            <img src={{details.image}} class="w-8 h-8 rounded-full mr-3" alt="Avatar of Sarah Johnson">
+                            <div>
+                                <div class="font-medium">{{details.name}}</div>
+                                <div class="text-sm text-gray-500" [ngClass]="details.grade.toLowerCase">
+                                    {{details.grade}}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="px-3 py-1  text-red-600 rounded-full text-sm"
+                            [ngClass]="details.riskLevel.toLocaleLowerCase"
+                            [class.bg-red-100]="details.riskLevel === 'High Risk'"
+                            [class.text-red-600]="details.riskLevel === 'High Risk'"
+                            [class.bg-orange-100]="details.riskLevel === 'Medium Risk'"
+                            [class.text-orange-600]="details.riskLevel === 'Medium Risk'"
+                            [class.bg-green-100]="details.riskLevel === 'Low Risk'"
+                            [class.text-green-600]="details.riskLevel === 'Low Risk'">{{details.riskLevel}}</span>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-gray-100 rounded text-sm">{{details.riskFactors[0]}}</span>
+                            <span class="px-2 py-1 bg-gray-100 rounded text-sm">{{details.riskFactors[1]}}</span>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 " [ngClass]="{
+                        ' text-red-600': details.riskLevel === 'High Risk',
+                        ' text-orange-600': details.riskLevel === 'Medium Risk',
+                        ' text-green-600': details.riskLevel === 'Low Risk',
+                        
+                      }">{{details.gpa}}</td>
+                    <td class="px-6 py-4">{{details.attendance}}</td>
+                    <td class="px-6 py-4">
+                        <a href="javascript:void(0)" class="text-[#FFAE00] font-bold"
+                            (click)="viewStudent(details.student_id)">View Details</a>
+                    </td>
+                </tr>
+
+                <tr *ngIf="studentList.length === 0">
+                    <td colspan="7" class="text-center px-6 py-10 text-gray-500">No matching students found.</td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>

@@ -1,0 +1,322 @@
+[
+  {
+    "id": "t1",
+    "studentId": "s1",
+    "studentName": "Sophia Williams",
+    "gradeLevel": "6th Grade",
+    "semester":"Fall",
+    "gender":"male",
+    "data": [
+      {
+        "month": "2025-04",
+        "attendance": 95,
+        "absentDays": 2,
+        "tardinessCount": 2,
+        "disciplinaryActions": 1,
+        "suspensionCount": 1,
+        "status": "Good",
+        "interventionCount": 3,
+        "warnings": 1
+      },
+      {
+        "month": "2025-05",
+        "attendance": 96,
+        "absentDays": 1,
+        "tardinessCount": 1,
+        "disciplinaryActions": 7,
+        "suspensionCount": 2,
+        "status": "Excellent",
+        "interventionCount": 2,
+        "warnings": 0
+      }
+    ]
+  },
+  {
+    "id": "t2",
+    "studentId": "s2",
+    "studentName": "Liam Smith",
+    "gradeLevel": "7th Grade",
+    "semester": "Fall",
+    "gender":"male",
+    "data": [
+      {
+        "month": "2025-04",
+        "attendance": 97,
+        "absentDays": 3,
+        "tardinessCount": 4,
+        "disciplinaryActions": 8,
+        "suspensionCount": 0,
+        "status": "Excellent",
+        "interventionCount": 0,
+        "warnings": 2
+      },
+      {
+        "month": "2025-05",
+        "attendance": 98,
+        "absentDays": 2,
+        "tardinessCount": 3,
+        "disciplinaryActions": 1,
+        "suspensionCount": 0,
+        "status": "Excellent",
+        "interventionCount": 1,
+        "warnings": 1
+      }
+    ]
+  },
+  {
+    "id": "t3",
+    "studentId": "s3",
+    "studentName": "Olivia Brown",
+    "gradeLevel": "8th Grade",
+    "semester": "Spring",
+    "gender":"male",
+    "data": [
+      {
+        "month": "2025-04",
+        "attendance": 92,
+        "absentDays": 1,
+        "tardinessCount": 1,
+        "disciplinaryActions": 1,
+        "suspensionCount": 1,
+        "status": "Average",
+        "interventionCount": 2,
+        "warnings": 3
+      },
+      {
+        "month": "2025-05",
+        "attendance": 93,
+        "absentDays": 0,
+        "tardinessCount": 2,
+        "disciplinaryActions": 0,
+        "suspensionCount": 8,
+        "status": "Good",
+        "interventionCount": 1,
+        "warnings": 1
+      }
+    ]
+  },
+  {
+    "id": "t4",
+    "studentId": "s4",
+    "studentName": "James Davis",
+    "gradeLevel": "9th Grade",
+    "semester":"Winter",
+    "gender":"male",
+    "data": [
+      {
+        "month": "2025-04",
+        "attendance": 87,
+        "absentDays": 2,
+        "tardinessCount": 3,
+        "disciplinaryActions": 3,
+        "suspensionCount": 1,
+        "status": "Poor",
+        "interventionCount": 4,
+        "warnings": 4
+      },
+      {
+        "month": "2025-05",
+        "attendance": 89,
+        "absentDays": 1,
+        "tardinessCount": 2,
+        "disciplinaryActions": 2,
+        "suspensionCount": 9,
+        "status": "Average",
+        "interventionCount": 5,
+        "warnings": 2
+      }
+    ]
+  },
+  {
+    "id": "t5",
+    "studentId": "s5",
+    "studentName": "Isabella Garcia",
+    "gradeLevel": "10th Grade",
+    "semester":"Spring",
+    "gender":"male",
+    "data": [
+      {
+        "month": "2025-04",
+        "attendance": 91,
+        "absentDays": 7,
+        "tardinessCount": 1,
+        "disciplinaryActions": 0,
+        "suspensionCount": 1,
+        "status": "Excellent",
+        "interventionCount": 1,
+        "warnings": 1
+      },
+      {
+        "month": "2025-05",
+        "attendance": 92,
+        "absentDays": 6,
+        "tardinessCount": 2,
+        "disciplinaryActions": 0,
+        "suspensionCount": 0,
+        "status": "Excellent",
+        "interventionCount": 1,
+        "warnings": 1
+      }
+    ]
+  },
+  {
+    "id": "t6",
+    "studentId": "s6",
+    "studentName": "Ethan Martin",
+    "gradeLevel": "11th Grade",
+    "semester":"Winter",
+    "gender":"male",
+    "data": [
+      {
+        "month": "2025-04",
+        "attendance": 95,
+        "absentDays": 1,
+        "tardinessCount": 4,
+        "disciplinaryActions": 0,
+        "suspensionCount": 0,
+        "status": "Good",
+        "interventionCount": 1,
+        "warnings": 2
+      },
+      {
+        "month": "2025-05",
+        "attendance": 97,
+        "absentDays": 0,
+        "tardinessCount": 3,
+        "disciplinaryActions": 0,
+        "suspensionCount": 0,
+        "status": "Excellent",
+        "interventionCount": 2,
+        "warnings": 0
+      }
+    ]
+  },
+  {
+    "id": "t7",
+    "studentId": "s7",
+    "studentName": "Mia Thompson",
+    "gradeLevel": "12th Grade",
+    "semester":"Spring",
+    "gender":"male",
+    "data": [
+      {
+        "month": "2025-04",
+        "attendance": 97,
+        "absentDays": 4,
+        "tardinessCount": 7,
+        "disciplinaryActions": 2,
+        "suspensionCount": 0,
+        "status": "Average",
+        "interventionCount": 2,
+        "warnings": 3
+      },
+      {
+        "month": "2025-05",
+        "attendance": 94,
+        "absentDays": 3,
+        "tardinessCount": 4,
+        "disciplinaryActions": 1,
+        "suspensionCount": 0,
+        "status": "Average",
+        "interventionCount": 3,
+        "warnings": 2
+      }
+    ]
+  },
+  {
+    "id": "t8",
+    "studentId": "s8",
+    "studentName": "Lilly Marran",
+    "gradeLevel": "6th Grade",
+    "semester":"Spring",
+    "gender":"Female",
+    "data": [
+      {
+        "month": "2025-04",
+        "attendance": 93,
+        "absentDays": 3,
+        "tardinessCount": 6,
+        "disciplinaryActions": 1,
+        "suspensionCount": 3,
+        "status": "Good",
+        "interventionCount": 3,
+        "warnings": 0
+      },
+      {
+        "month": "2025-05",
+        "attendance": 94,
+        "absentDays": 2,
+        "tardinessCount": 5,
+        "disciplinaryActions": 1,
+        "suspensionCount": 1,
+        "status": "Good",
+        "interventionCount": 4,
+        "warnings": 1
+      }
+    ]
+  },
+  {
+    "id": "t9",
+    "studentId": "s9",
+    "studentName": "Rose Marrin",
+    "gradeLevel": "7th Grade",
+    "semester":"Fall",
+    "gender":"Female",
+    "data": [
+      {
+        "month": "2025-04",
+        "attendance": 91,
+        "absentDays": 8,
+        "tardinessCount": 2,
+        "disciplinaryActions": 2,
+        "suspensionCount": 1,
+        "status": "Poor",
+        "interventionCount": 5,
+        "warnings": 5
+      },
+      {
+        "month": "2025-05",
+        "attendance": 92,
+        "absentDays": 5,
+        "tardinessCount": 3,
+        "disciplinaryActions": 1,
+        "suspensionCount": 0,
+        "status": "Poor",
+        "interventionCount": 6,
+        "warnings": 3
+      }
+    ]
+  },
+  {
+    "id": "t10",
+    "studentId": "s10",
+    "studentName": "Amelia Martinez",
+    "gradeLevel": "8th Grade",
+    "semester":"Winter",
+    "gender": "Female",
+    "data": [
+      {
+        "month": "2025-04",
+        "attendance": 95,
+        "absentDays": 4,
+        "tardinessCount": 9,
+        "disciplinaryActions": 0,
+        "suspensionCount": 0,
+        "status": "Good",
+        "interventionCount": 0,
+        "warnings": 1
+      },
+      {
+        "month": "2025-05",
+        "attendance": 97,
+        "absentDays": 3,
+        "tardinessCount": 8,
+        "disciplinaryActions": 1,
+        "suspensionCount": 1,
+        "status": "Good",
+        "interventionCount": 1,
+        "warnings": 1
+      }
+    ]
+  }
+]

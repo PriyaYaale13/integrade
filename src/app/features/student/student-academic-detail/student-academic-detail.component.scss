@@ -1,0 +1,66 @@
+.academic-detail-page {
+    h1 {
+      font-weight: 400;
+      color: #333;
+      margin-bottom: 1rem;
+    }
+    .back-button { margin-bottom: 1rem; }
+  }
+  
+  .comparison-card {
+      margin-bottom: 1.5rem;
+  }
+  
+  .assessment-group {
+      margin-bottom: 1.5rem;
+      h2 {
+          font-size: 1.2rem;
+          font-weight: 500;
+          color: #444;
+          margin-bottom: 1rem;
+      }
+      .comparison-charts {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 1.5rem;
+          justify-content: space-around; // Or start
+          margin-bottom: 1rem;
+      }
+      .comparison-chart-item {
+          // Styling for individual chart wrapper if needed
+          min-width: 250px; // Ensure charts have some minimum width
+          flex: 1;
+      }
+       mat-divider { margin-top: 1.5rem; }
+  }
+  
+  
+  .schoology-table {
+     th, td {
+        text-align: center !important;
+        padding: 8px 10px !important;
+        border-right: 1px solid #eee;
+        &:last-child { border-right: none; }
+     }
+      th {
+        font-weight: 500;
+        background-color: #f0f0f0;
+        font-size: 0.8rem; // Smaller font for many columns
+      }
+      td {
+          font-size: 0.9rem;
+      }
+  }
+  
+  
+  .loading-container, .error-card {
+      /* Styles from student-detail */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem;
+      color: #666;
+      mat-card-title { color: red; }
+      p { margin-top: 1rem; }
+  }

@@ -1,0 +1,19 @@
+[
+    {
+      "id": 1,
+      "date": "2025-04-15",
+      "teacher": "Mrs. Anderson",
+      "subject": "Algebra II",
+      "content": "Sarah is struggling with quadratic equations. Recommended additional practice problems and tutoring sessions.",
+      "type": "Academic"
+    },
+    {
+      "id": 2,
+      "date": "2025-04-16",
+      "teacher": "Mr. Thompson",
+      "subject": "English Literature",
+      "content": "Sarah has shown improvement in her writing skills. Encouraged to participate in class discussions.",
+      "type": "Academic"
+    }
+  ]
+  

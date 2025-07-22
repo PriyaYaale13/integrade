@@ -1,0 +1,52 @@
+<div class="filter-bar" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="16px">
+    <ng-container *ngFor="let filter of filters; trackBy: trackByFn">
+      <!-- Select Filter -->
+      <mat-form-field *ngIf="filter.type === 'select'" appearance="outline" class="filter-field">
+        <mat-label>{{ filter.label }}</mat-label>
+        <mat-select 
+          [placeholder]="filter.placeholder || ''"
+          [multiple]="filter.multiple" 
+          [(ngModel)]="activeFilters[filter.key]"
+          (selectionChange)="onFilterChange(filter.key, activeFilters[filter.key])">
+          <mat-option *ngFor="let option of filter.options" [value]="option.value">
+            {{ option.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+      <!-- Date Filter -->
+      <mat-form-field *ngIf="filter.type === 'date'" appearance="outline" class="filter-field">
+        <mat-label>{{ filter.label }}</mat-label>
+        <input 
+          matInput 
+          [matDatepicker]="picker" 
+          [placeholder]="filter.placeholder || ''"
+          [(ngModel)]="activeFilters[filter.key]"
+          (dateChange)="onFilterChange(filter.key, activeFilters[filter.key])">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      
+      <!-- Search Filter -->
+      <mat-form-field *ngIf="filter.type === 'search'" appearance="outline" class="filter-field">
+        <mat-label>{{ filter.label }}</mat-label>
+        <input 
+          matInput 
+          type="text" 
+          [placeholder]="filter.placeholder || 'Search...'"
+          [(ngModel)]="activeFilters[filter.key]"
+          (input)="onFilterChange(filter.key, activeFilters[filter.key])">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </ng-container>
+    
+    <!-- Clear Button -->
+    <button 
+      *ngIf="showClearButton && Object.keys(activeFilters).length > 0" 
+      mat-stroked-button 
+      color="warn"
+      (click)="onClearFilters()">
+      <mat-icon>clear</mat-icon>
+      Clear Filters
+    </button>
+  </div>

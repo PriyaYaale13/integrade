@@ -1,0 +1,77 @@
+.chart-container {
+    position: relative;
+    
+    .line-chart {
+      display: block;
+      
+      .chart-title {
+        font-size: 16px;
+        font-weight: 500;
+      }
+      
+      .axis-label {
+        font-size: 12px;
+        fill: #666;
+      }
+      
+      .grid-lines line {
+        stroke: #e0e0e0;
+        stroke-opacity: 0.7;
+        shape-rendering: crispEdges;
+      }
+      
+      .line {
+        &:hover {
+          stroke-width: 3;
+        }
+      }
+      
+      .point {
+        &:hover {
+          r: 6;
+        }
+      }
+      
+      .x-axis path,
+      .y-axis path {
+        stroke: #ccc;
+      }
+      
+      .x-axis text,
+      .y-axis text {
+        font-size: 12px;
+        fill: #666;
+      }
+      
+      .legend {
+        text {
+          font-size: 12px;
+          fill: #333;
+        }
+      }
+    }
+  }
+  
+  :host ::ng-deep {
+    .chart-tooltip {
+      position: absolute;
+      padding: 8px;
+      background-color: #333;
+      color: white;
+      border-radius: 4px;
+      pointer-events: none;
+      font-size: 12px;
+      z-index: 1000;
+      
+      &:after {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: #333 transparent transparent transparent;
+      }
+    }
+  }

@@ -1,0 +1,38 @@
+.growth-page { /* Basic styles */
+    .back-button { margin-bottom: 1rem; }
+    h1 { font-weight: 400; color: #333; margin-bottom: 1rem; }
+  }
+  
+   .filters-bar { /* Styles from teacher-landing */
+      display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; padding: 0.75rem 1rem;
+      background-color: #fff; border-radius: 8px; margin-bottom: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      .search-field { margin-left: auto; min-width: 250px; }
+  }
+  
+  .chart-card { margin-bottom: 1.5rem; }
+  
+  .table-card { overflow-x: auto; } // Essential for wide table
+  
+  .academic-growth-table {
+     min-width: 1500px; // Ensure minimum width for horizontal scrolling
+     td, th {
+        text-align: center !important;
+        white-space: nowrap; // Prevent wrapping
+        padding: 8px 10px !important;
+        font-size: 0.85rem;
+        border-right: 1px solid #eee;
+         &:last-child { border-right: none; }
+     }
+     th { font-size: 0.75rem; text-transform: uppercase; }
+      td:nth-child(2), th:nth-child(2) { text-align: left !important; } // Align name left
+  }
+  
+  
+   .loading-container { /* Styles from teacher-landing */
+      display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 3rem; color: #666;
+      p { margin-top: 1rem; }
+  }
+
+
+
+  

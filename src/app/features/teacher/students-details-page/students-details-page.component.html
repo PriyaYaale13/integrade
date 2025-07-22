@@ -1,0 +1,159 @@
+<app-header></app-header> <!-- Header -->
+
+<div *ngIf="student; else notFound" class="mt-20">
+    <div class="min-h-screen bg-[#F5F7FA]">
+        <!-- Main Layout with side bar and contents -->
+        <div class="page-layout-container ">
+
+
+            <!-- Use the reusable Sidebar component -->
+            <app-sidebar title="Quick Links" [menuItems]="sidebarMenuItems" [useCustomIcons]="true">
+
+            </app-sidebar>
+
+
+            <!-- Students Details Container -->
+            <main class="app-main-content">
+
+
+                <app-student-details-card [student]="student"></app-student-details-card>
+
+
+
+                <!-- Widgets -->
+                <section id="student-widgets" class="grid grid-cols-1 sm:grid-cols-3 gap-4 flex-grow">
+                    <!-- Intrervention Section -->
+                    <div class="bg-white rounded-lg shadow p-4 mb-4 hover:bg-gray-100 cursor-pointer">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-medium">Intervention Status</h3>
+                            <span class="bg-[#4caf50] text-white text-xs px-2 py-1 rounded">On Track</span>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="border-l-4 border-[#3f51b5] pl-3">
+                                <p class="font-medium">Reading Comprehension</p>
+                                <div class="flex items-center gap-2 text-sm text-[#757575]">
+                                    <i class="fa-regular fa-clock"></i>
+                                    <span>Started: Jan 15, 2025</span>
+                                </div>
+                                <div class="mt-2 flex items-center gap-2">
+                                    <div class="flex-1 h-2 bg-[#e0e0e0] rounded-full">
+                                        <div class="w-[75%] h-2 bg-[#4caf50] rounded-full"></div>
+                                    </div>
+                                    <span class="text-sm font-medium">75%</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between text-sm pt-2">
+                                <span class="text-[#757575]">Next Review:</span>
+                                <span class="font-medium">Mar 15, 2025</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Attendance -->
+                    <div class="bg-white rounded-lg shadow p-4 mb-4 hover:bg-gray-100 cursor-pointer">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-medium">Attendance</h3>
+                            <i class="fa-solid fa-calendar text-[#757575] size-5"></i>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="flex justify-between">
+                                <span class="text-[#757575]">Present</span>
+                                <span class="font-medium text-[#4caf50]">85%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-[#757575]">Tardy</span>
+                                <span class="font-medium text-[#ff9800]">8%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-[#757575]">Absent</span>
+                                <span class="font-medium text-[#f44336]">7%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Disciplinary Actions -->
+                    <div class="bg-white rounded-lg shadow p-4 mb-4 hover:bg-gray-100 cursor-pointer">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-medium">Disciplinary Actions</h3>
+                            <i class="fa-solid fa-triangle-exclamation text-[#f44336] size-5"></i>
+                        </div>
+                        <p class="text-2xl font-medium">2</p>
+                        <p class="text-[#757575] text-sm">Minor Incidents</p>
+                    </div>
+
+                    <!-- Warnings -->
+                    <div class="bg-white rounded-lg shadow p-4 mb-4 hover:bg-gray-100 cursor-pointer">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-medium">Warnings</h3>
+                            <i class="fa-solid fa-bell text-[#ff9800] size-5"></i>
+                        </div>
+                        <p class="text-2xl font-medium">1</p>
+                        <p class="text-[#757575] text-sm">Academic Warning</p>
+                    </div>
+
+                    <!-- Awards -->
+                    <div class="bg-white rounded-lg shadow p-4 mb-4 hover:bg-gray-100 cursor-pointer">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-medium">Awards</h3>
+                            <i class="fa-solid fa-medal text-[#ffd700] size-5"></i>
+                        </div>
+                        <p class="text-2xl font-medium">5</p>
+                        <p class="text-[#757575] text-sm">Academic Awards</p>
+                    </div>
+
+                    <!-- Cafetaria Balance -->
+                    <div class="bg-white rounded-lg shadow p-4 mb-4 hover:bg-gray-100 cursor-pointer">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-medium">Cafeteria Balance</h3>
+                            <i class="fa-solid fa-utensils text-[#3f51b5] size-5"></i>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="flex justify-between">
+                                <span class="text-[#757575]">Balance</span>
+                                <span class="font-medium text-[#4caf50]">$125.75</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-[#757575]">Total Spent</span>
+                                <span class="font-medium">$45.50</span>
+                            </div>
+                        </div>
+                        <p class="text-[#757575] text-xs mt-2">Last updated: Today</p>
+                    </div>
+                </section>
+
+                <!-- State Test Chart -->
+                <ng-container *ngIf="assessments as assessments">
+                    <h2 class="section-title">State Assessment Performance</h2>
+                    <app-state-assessment-grid [assessments]="assessments"></app-state-assessment-grid>
+                </ng-container>
+                <div class="mt-7 ">
+                    <app-student-academic-performance
+                        [studentAcademicPerformance]="studentAcademicPerformance"></app-student-academic-performance>
+
+                </div>
+                <!-- Loading/Error Template -->
+                <ng-template #loadingOrError>
+                    <div
+                        class="bg-white rounded-xl shadow-lg p-8 flex flex-col items-center justify-center min-h-[300px]">
+                        <mat-spinner diameter="40" class="mb-4"></mat-spinner>
+                        <p class="text-[#757575]">Loading dashboard data...</p>
+                    </div>
+                </ng-template>
+            </main>
+
+
+
+
+        </div>
+    </div>
+
+</div>
+
+
+
+<ng-template #notFound>
+    <div class="bg-white rounded-xl shadow-lg p-8 flex flex-col items-center justify-center min-h-[300px] ">
+        <mat-spinner diameter="40" class="mb-4"></mat-spinner>
+        <p class="text-[#757575]">Loading dashboard data...</p>
+    </div>
+</ng-template>

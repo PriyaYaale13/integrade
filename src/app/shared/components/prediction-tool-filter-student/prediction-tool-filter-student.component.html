@@ -1,0 +1,35 @@
+<div class="p-4 space-y-4 bg-white rounded shadow">
+    <!-- Header row with title and select filters -->
+    <div class="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
+        <h3 class="text-lg font-semibold text-gray-800">Student Performance Prediction</h3>
+
+        <div class="flex flex-col sm:flex-row sm:space-x-4 w-full sm:w-auto space-y-4 sm:space-y-0">
+            <!-- Grade Select -->
+            <select id="grades"
+                class="border border-gray-300 rounded px-4 py-2 text-xs w-full sm:w-40 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                <option>All Grades</option>
+                <option>Grade 1</option>
+                <option>Grade 2</option>
+                <option>Grade 3</option>
+            </select>
+
+            <!-- Class Select -->
+            <select id="classes"
+                class="border border-gray-300 rounded px-4 py-2 text-xs w-full sm:w-40 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                <option>Select Class</option>
+                <option>Class A</option>
+                <option>Class B</option>
+                <option>Class C</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Search bar -->
+    <div class="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4 w-full">
+        <input type="text" placeholder="Search by student by name..."
+            class="flex-1 border-gray-00 rounded bg-gray-100 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
+            [(ngModel)]="searchQuery" (input)="onSearch()" />
+        <button
+            class="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 text-sm w-full sm:w-auto">Predict</button>
+    </div>
+</div>

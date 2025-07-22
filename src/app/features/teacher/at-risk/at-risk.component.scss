@@ -1,0 +1,37 @@
+* {
+  font-family: "Inter", sans-serif;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.highlighted-section {
+  outline: 2px solid #3F20FB;
+  background-color: rgba(63, 32, 251, 0.1);
+}
+
+.edit-button {
+  position: absolute;
+  z-index: 1000;
+}
+
+.bg-custom-bg {
+  background-color: var(--color-background);
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.page-title {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #212121;
+  margin-top: 10px;
+  margin-left: 4px; 
+}

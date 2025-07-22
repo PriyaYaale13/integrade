@@ -1,0 +1,15 @@
+[
+
+  { "subject": "ELA", "currentGrade": "A-", "previousGrade": "B+", "trend": "Stable", "proficiencyPercent": 95, "semester": "Fall", "year": "2024" },
+  { "subject": "Math", "currentGrade": "A", "previousGrade": "A-", "trend": "Improving", "proficiencyPercent": 70, "semester": "Fall", "year": "2024" },
+  { "subject": "Science", "currentGrade": "B-", "previousGrade": "C+", "trend": "Improving", "proficiencyPercent": 70, "semester": "Spring", "year": "2023" },
+  { "subject": "Music", "currentGrade": "C-", "previousGrade": "B+", "trend": "Improving", "proficiencyPercent": 70, "semester": "Spring", "year": "2024" },
+  { "subject": "Social Studies", "currentGrade": "A", "previousGrade": "A", "trend": "Stable", "proficiencyPercent": 70, "semester": "Fall", "year": "2023" },
+  { "subject": "Dance", "currentGrade": "B+", "previousGrade": "B", "trend": "Improving", "proficiencyPercent": 70, "semester": "Summer", "year": "2025" },
+  { "subject": "Art", "currentGrade": "A", "previousGrade": "A-", "trend": "Improving", "proficiencyPercent": 70, "semester": "Summer", "year": "2023" },
+  { "subject": "Computer", "currentGrade": "A", "previousGrade": "A", "trend": "Stable", "proficiencyPercent": 70, "semester": "Fall", "year": "2024" },
+  { "subject": "Physical Education", "currentGrade": "A", "previousGrade": "A-", "trend": "Improving", "proficiencyPercent": 70, "semester": "Spring", "year": "2025" }
+
+
+  ]
+  

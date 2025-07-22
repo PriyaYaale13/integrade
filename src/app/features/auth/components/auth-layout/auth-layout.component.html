@@ -1,0 +1,22 @@
+// src/app/features/auth/components/auth-layout/auth-layout.component.html
+<div class="auth-layout">
+  <div class="auth-container mat-elevation-z8">
+    <div class="auth-brand">
+      <div class="logo">
+        <mat-icon class="logo-icon">school</mat-icon>
+        <h1 class="logo-text">Eduboard</h1>
+      </div>
+      <div class="tagline">Educational Dashboard System</div>
+    </div>
+    
+    <div class="auth-content">
+      <router-outlet></router-outlet>
+    </div>
+    
+    <div class="auth-footer">
+      <div class="copyright">
+        &copy; {{ currentYear }} Eduboard. All rights reserved.
+      </div>
+    </div>
+  </div>
+</div>

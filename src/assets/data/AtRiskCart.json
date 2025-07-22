@@ -1,0 +1,21 @@
+[
+    {
+      "riskLevel": "High Risk",
+      "count": 24,
+      "text": "Students requiring immediate attention",
+      "month": "12% from last month"
+    },
+    {
+      "riskLevel": "Medium Risk",
+      "count": 56,
+      "text": "Students needing monitoring",
+      "month": "Stable from last month"
+    },
+    {
+      "riskLevel": "Low Risk",
+      "count": 128,
+      "text": "Students on watch",
+      "month": "8% from last month"
+    }
+  ]
+  

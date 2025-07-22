@@ -1,0 +1,76 @@
+<div class="at-risk-container">
+  <div class="dashboard-layout">
+    <!-- Sidebar -->
+    <app-sidebar></app-sidebar>
+    
+    <!-- Main content -->
+    <div class="main-content">
+      <!-- Header with Back and Search buttons -->
+      <div class="header-actions">
+        <button mat-raised-button color="primary" class="back-button" (click)="navigateBack()">
+          Back
+        </button>
+        
+        <div class="search-area">
+          <mat-form-field appearance="outline">
+            <mat-label>SEARCH</mat-label>
+            <input matInput type="text" placeholder="Search students..." (input)="onSearch($event)">
+            <mat-icon matSuffix>search</mat-icon>
+          </mat-form-field>
+        </div>
+      </div>
+      
+      <!-- Title Banner -->
+      <div class="title-banner">
+        <h1>At Risk Students</h1>
+      </div>
+      
+      <!-- Content Grid -->
+      <div class="content-grid">
+        <!-- Left column - Risk Score Chart -->
+        <div class="risk-score-section">
+          <div class="section-title">Risk Score</div>
+          <div class="chart-container">
+            <app-pie-chart 
+              [data]="riskDistributionData" 
+              [width]="300" 
+              [height]="300" 
+              [showLegend]="true" 
+              [showLabels]="false"
+              [innerRadius]="80"
+              centerText="Risk Distribution">
+            </app-pie-chart>
+          </div>
+          
+          <!-- Legend displayed separately for better control -->
+          <div class="risk-legend">
+            <div class="legend-item">
+              <div class="legend-color high-risk"></div>
+              <div class="legend-label">High Risk</div>
+            </div>
+            <div class="legend-item">
+              <div class="legend-color medium-risk"></div>
+              <div class="legend-label">Medium Risk</div>
+            </div>
+            <div class="legend-item">
+              <div class="legend-color low-risk"></div>
+              <div class="legend-label">Low Risk</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Right column - Student Table -->
+        <div class="student-table-section">
+          <app-data-table 
+            [data]="atRiskStudents" 
+            [columns]="tableColumns" 
+            [showPaginator]="false"
+            [highlightRows]="true"
+            [highlightCondition]="highRiskCondition"
+            (rowClicked)="onRowClick($event)">
+          </app-data-table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

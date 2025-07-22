@@ -1,0 +1,56 @@
+@use '../../../features/principal//behavior-assessment//teacher-behavior-assessment//teacher-behavior-assessment.component.scss' as teacher-behavior-assessment;
+
+.page-layout-container {
+    display: flex;
+    min-height: calc(100vh - 90px); // Adjusted to account for taller header
+}
+
+
+// Responsive Layout Fixes
+@media (max-width: 768px) {
+    .page-layout-container {
+        flex-direction: column;
+        padding: 10px; // Less padding on mobile
+    }
+
+    .app-main-content {
+        padding: 10px;
+        overflow-x: auto; // Allow inner content to scroll if needed
+    }
+
+    .filters-bar {
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 0.5rem;
+    }
+
+    .grid-cols-3 {
+        grid-template-columns: 1fr !important; // 1 column on mobile for your charts
+    }
+}
+
+.progress-bar-bg {
+    width: 100%;
+    height: 8px;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    transition: width 0.3s ease;
+    border-radius: 4px;
+}
+
+.progress-low {
+    background-color: #D32F2F;
+}
+
+.progress-medium {
+    background-color: #FF5722;
+}
+
+.progress-high {
+    background-color: #4caf50;
+}

@@ -1,0 +1,40 @@
+<div id="filters" class="bg-white rounded-xl p-6 shadow-sm mb-6">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div>
+            <label for="grade-level-select" class="block text-sm text-gray-600 mb-2">Grade Level</label>
+            <select id="grade-level-select" class="w-full rounded-lg border border-gray-200 p-2.5" [(ngModel)]="selectedGrade" (change)="onFilterUpdated()">
+                <option>All Grades</option>
+                <option>Grade 9</option>
+                <option>Grade 10</option>
+                <option>Grade 11</option>
+                <option>Grade 12</option>
+            </select>
+        </div>
+        <div>
+            <label for="subject-select" class="block text-sm text-gray-600 mb-2">Subject</label>
+            <select id="subject-select" class="w-full rounded-lg border border-gray-200 p-2.5">
+                <option>All Subjects</option>
+                <option>Mathematics</option>
+                <option>Science</option>
+                <option>English</option>
+            </select>
+        </div>
+        <div>
+            <label for="risk-level-select" class="block text-sm text-gray-600 mb-2">Risk Level</label>
+            <select id="risk-level-select" class="w-full rounded-lg border border-gray-200 p-2.5"  [(ngModel)]="selectedRiskLevel" (change)="onFilterUpdated()">
+                <option>All Levels</option>
+                <option>High Risk</option>
+                <option>Medium Risk</option>
+                <option>Low Risk</option>
+            </select>
+        </div>
+        <div>
+            <label for="time-period-select" class="block text-sm text-gray-600 mb-2">Time Period</label>
+            <select id="time-period-select" class="w-full rounded-lg border border-gray-200 p-2.5">
+                <option>Current Quarter</option>
+                <option>Last Quarter</option>
+                <option>Current Year</option>
+            </select>
+        </div>
+    </div>
+</div>

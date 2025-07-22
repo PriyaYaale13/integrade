@@ -1,0 +1,133 @@
+// src/app/features/student-portal/containers/student-dashboard/student-dashboard.component.html
+<div class="student-dashboard-container">
+  <div class="dashboard-header">
+    <h1 class="welcome-message" *ngIf="currentUser$ | async as user">
+      Hello, {{ user.firstName }}!
+    </h1>
+    <p class="date-display">{{ date | date:'EEEE, MMMM d, y' }}</p>
+  </div>
+
+  <div class="dashboard-content">
+    <div class="main-content">
+      <mat-card class="schedule-card">
+        <mat-card-header>
+          <mat-card-title>Today's Schedule</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <app-schedule></app-schedule>
+        </mat-card-content>
+      </mat-card>
+
+      <div class="dashboard-cards">
+        <mat-card class="dashboard-card">
+          <mat-card-header>
+            <mat-card-title>Assignments</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <app-assignments></app-assignments>
+          </mat-card-content>
+        </mat-card>
+        
+        <mat-card class="dashboard-card">
+          <mat-card-header>
+            <mat-card-title>Grades</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <app-grades></app-grades>
+          </mat-card-content>
+        </mat-card>
+        
+        <mat-card class="dashboard-card">
+          <mat-card-header>
+            <mat-card-title>Messages</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <app-messages></app-messages>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+    
+    <div class="sidebar">
+      <mat-card class="profile-card">
+        <mat-card-content>
+          <div class="profile-section">
+            <div class="student-avatar">
+              <div *ngIf="!student.photo" class="avatar-placeholder">
+                {{ student.name.charAt(0) }}
+              </div>
+              <img *ngIf="student.photo" [src]="student.photo" alt="{{ student.name }}" class="avatar-image">
+            </div>
+            
+            <div class="student-info">
+              <h2 class="student-name">{{ student.name }}</h2>
+              <div class="student-details">
+                <div class="detail-item">
+                  <mat-icon>school</mat-icon>
+                  <span>{{ student.grade }} Grade</span>
+                </div>
+                <div class="detail-item">
+                  <mat-icon>account_balance</mat-icon>
+                  <span>{{ student.school }}</span>
+                </div>
+                <div class="detail-item">
+                  <mat-icon>person</mat-icon>
+                  <span>{{ student.teacher }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      
+      <mat-card class="upcoming-card">
+        <mat-card-header>
+          <mat-card-title>Upcoming</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="upcoming-list">
+            <div *ngFor="let item of upcomingItems" class="upcoming-item">
+              <div class="item-icon" [ngClass]="getStatusClass(item.status)">
+                <mat-icon>{{ getTypeIcon(item.type) }}</mat-icon>
+              </div>
+              
+              <div class="item-content">
+                <div class="item-title">{{ item.title }}</div>
+                <div class="item-details">
+                  <span class="item-subject">{{ item.subject }}</span>
+                  <span class="item-due-date">Due: {{ item.dueDate | date:'MMM d, y' }}</span>
+                </div>
+                <div class="item-status" [ngClass]="getStatusClass(item.status)">
+                  <mat-icon>{{ getStatusIcon(item.status) }}</mat-icon>
+                  <span>{{ item.status | titlecase }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      
+      <mat-card class="quick-links-card">
+        <mat-card-header>
+          <mat-card-title>Quick Links</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="quick-links">
+            <a mat-flat-button color="primary" class="quick-link">
+              <mat-icon>book</mat-icon>
+              <span>Learning Resources</span>
+            </a>
+            <a mat-flat-button color="accent" class="quick-link">
+              <mat-icon>event</mat-icon>
+              <span>School Calendar</span>
+            </a>
+            <a mat-flat-button color="warn" class="quick-link">
+              <mat-icon>contact_support</mat-icon>
+              <span>Help Center</span>
+            </a>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,78 @@
+@use './theme-variables.scss' as vars;
+
+/* Fix for Font Awesome icons */
+.fas, .fa-regular {
+  font-family: 'Font Awesome 6 Free' !important;
+  font-weight: 900;
+}
+
+.fa-regular {
+  font-weight: 400;
+}
+
+/* This file is now mostly empty as we're using Tailwind CSS classes directly in the template */
+/* Any specific styles that can't be achieved with Tailwind can be added here */
+
+/* Properly style Font Awesome icons in input fields */
+.input-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #757575;
+  font-size: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+}
+
+/* Fix for error icon alignment */
+.text-\[\#f44336\] i {
+  font-size: 16px;
+  margin-top: 1px;
+}
+
+/* Fix button icon alignment */
+button i {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+}
+
+/* Fix for input fields to ensure consistent appearance */
+input[type="text"], input[type="password"] {
+  line-height: normal;
+  height: 48px; /* Fixed height for all inputs */
+  box-sizing: border-box;
+}
+
+/* Ensure input fields don't shrink */
+.relative {
+  display: block;
+}
+
+/* Ensure SVG icons are properly positioned */
+.absolute.left-3 svg {
+  vertical-align: middle;
+}
+
+.logo-image {
+  height: 302px;
+  width: auto;
+  transition: all 0.2s ease;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+  
+  &:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.2));
+  }
+}
+
+/* Custom spinner color override */
+::ng-deep .mat-mdc-progress-spinner.mdc-circular-progress--indeterminate .mdc-circular-progress__indeterminate-circle-graphic {
+  stroke: white !important;
+}

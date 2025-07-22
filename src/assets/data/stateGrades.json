@@ -1,0 +1,21 @@
+[
+    {
+      "subject": "Algebra II",
+      "period": "Period 1",
+      "grade": "D",
+      "percentage": 62,
+      "teacher": "Mrs. Anderson",
+      "assignments": 3,
+      "trend": "down"
+    },
+    {
+      "subject": "English Literature",
+      "period": "Period 2",
+      "grade": "C",
+      "percentage": 73,
+      "teacher": "Mr. Thompson",
+      "assignments": 2,
+      "trend": "up"
+    }
+  ]
+  

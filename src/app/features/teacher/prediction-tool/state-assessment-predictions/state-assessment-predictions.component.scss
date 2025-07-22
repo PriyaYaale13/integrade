@@ -1,0 +1,14 @@
+.page-title {
+    font-size: 1.5rem; // text-2xl
+    font-weight: 500; // font-medium
+    color: #212121;
+    margin-top: 10px; // Add margin for better header spacing
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+}

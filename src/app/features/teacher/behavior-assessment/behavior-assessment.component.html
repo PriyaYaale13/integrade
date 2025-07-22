@@ -1,0 +1,61 @@
+<app-header></app-header>
+
+<div class="min-h-screen bg-[#F5F7FA] pt-2">
+    <div class="page-layout-container">
+        <!-- Sidebar (Can be similar to Teacher or specific to Principal) -->
+        <app-sidebar title="Quick Links" [menuItems]="sidebarMenuItems" [useCustomIcons]="true">
+        </app-sidebar>
+        <main class="app-main-content">
+            <!-- Page Title -->
+            <div class="flex justify-between items-center mb-6 mt-20">
+                <h1 class="page-title">Student Behavior Overview</h1>
+                <div class="relative space-x-4">
+                    <button mat-raised-button class="relative bg-[#FF881F]" (click)="exportToExcel()">
+                        <span class="text-[#FFFFFF]">Export </span>
+                    </button>
+                </div>
+            </div>
+            <!-- Filters -->
+            <app-behavior-assessment-filter-table [grades]="(grades$ | async) ?? []"
+                [semesters]="(semesters$ | async) ?? []" [currentFilters]="currentFilters"
+                (filtersChanged)="onFiltersChanged($event)"
+                (searchCleared)="clearSearch()"></app-behavior-assessment-filter-table>
+
+            <!-- Debug info -->
+            <div style="display: none;">Loading state: {{isLoading}}</div>
+            <ng-container *ngIf="teachersBehaviorData$ | async as data; else loadingOrError">
+
+                <app-behavior-assessment-kpi-card [totalStudents]="totalStudents" [totalAttendance]="totalAttendance"
+                    [totalTardiness]="totalTardiness" [totalWarnings]="totalWarnings"
+                    [totalAbsentDays]="totalabsentDays" [totalEarlyDismissalCount]="totalerlyDismissalCount"
+                    [attendanceComparison]="attendanceComparison" [tardinessComparison]="tardinessComparison"
+                    [warningsComparison]="warningsComparison" [absentDaysComparison]="absentDaysComparison"
+                    [earlyDismissalComparison]="earlyDismissalComparison" [totalmales]="totalmales"
+                    [totalfemales]="totalfemales">
+                </app-behavior-assessment-kpi-card>
+
+
+            </ng-container>
+            <ng-container *ngIf="teachersBehaviorData$ | async as data; else loadingOrError">
+                <app-behavior-assessment-table-charts [dataSource]="dataSource" [displayedColumns]="displayedColumns
+               "></app-behavior-assessment-table-charts>
+            </ng-container>
+            <ng-template #loadingOrError>
+                <div *ngIf="isLoading" class="loading-container">
+                    <mat-spinner diameter="50"></mat-spinner>
+                    <p>Loading teachers behavior data...</p>
+                </div>
+                <div *ngIf="!isLoading && error" class="error-container">
+                    <mat-icon color="warn">error</mat-icon>
+                    <p>{{error}}</p>
+                    <button mat-raised-button color="primary" (click)="loadData()">Retry</button>
+                </div>
+                <div *ngIf="!isLoading && !error" class="error-container">
+                    <mat-icon color="warn">error</mat-icon>
+                    <p>Failed to load teachers behavior data. Please try again later.</p>
+                    <button mat-raised-button color="primary" (click)="loadData()">Retry</button>
+                </div>
+            </ng-template>
+        </main>
+    </div>
+</div>

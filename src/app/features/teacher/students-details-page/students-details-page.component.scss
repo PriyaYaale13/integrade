@@ -1,0 +1,50 @@
+@use '@angular/material' as mat;
+
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+
+:host {
+  font-family: 'Inter', sans-serif;
+  display: block;
+  min-height: 100vh;
+}
+
+.container-fluid {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+// Layout styles to work with full-height sidebar
+.page-layout-container {
+  display: flex;
+  min-height: calc(100vh - 90px); // Adjusted to account for taller header
+  padding-top: 10px; // Add some padding at the top for visual separation from header
+}
+
+.app-main-content {
+  flex: 1;
+  padding: 20px;
+  overflow-x: hidden;
+}
+  
+  // Ensure main content takes full available width
+main.flex-1 {
+  width: 100%;
+  min-width: 0; // Prevent overflow
+}
+
+.highlighted-section {
+  outline: 2px solid #3F20FB;
+  background-color: rgba(63, 32, 251, 0.1);
+}
+
+.edit-button {
+  position: absolute;
+  z-index: 1000;
+}

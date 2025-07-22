@@ -1,0 +1,93 @@
+.metric-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.3s ease;
+  
+    &.clickable {
+      cursor: pointer;
+      
+      &:hover {
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      }
+    }
+  
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+  
+      .card-title {
+        font-size: 16px;
+        margin: 0;
+        color: #546e7a;
+        font-weight: 500;
+      }
+  
+      .card-icon {
+        color: #78909c;
+      }
+    }
+  
+    .card-content {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      justify-content: space-between;
+  
+      .value-container {
+        display: flex;
+        flex-direction: column;
+        
+        .value {
+          font-size: 32px;
+          font-weight: 700;
+          margin-bottom: 4px;
+          
+          &.success {
+            color: #43a047;
+          }
+          
+          &.warning {
+            color: #fb8c00;
+          }
+          
+          &.danger {
+            color: #e53935;
+          }
+        }
+  
+        .target {
+          font-size: 12px;
+          color: #78909c;
+        }
+      }
+  
+      .trend {
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        font-weight: 500;
+        margin-top: 8px;
+        
+        &.positive {
+          color: #43a047;
+        }
+        
+        &.negative {
+          color: #e53935;
+        }
+        
+        .trend-icon {
+          font-size: 18px;
+          margin-right: 4px;
+        }
+      }
+    }
+  }
+  

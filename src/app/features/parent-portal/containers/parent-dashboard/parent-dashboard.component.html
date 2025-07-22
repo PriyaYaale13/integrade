@@ -1,0 +1,93 @@
+// src/app/features/parent-portal/containers/parent-dashboard/parent-dashboard.component.html
+<div class="parent-dashboard-container">
+  <div class="dashboard-header">
+    <h1 class="welcome-message" *ngIf="currentUser$ | async as user">
+      Welcome, {{ user.firstName }} {{ user.lastName }}
+    </h1>
+    <p class="date-display">{{ date | date:'EEEE, MMMM d, y' }}</p>
+  </div>
+
+  <div class="dashboard-content">
+    <div class="sidebar">
+      <app-student-select 
+        [students]="students" 
+        [selectedStudentId]="selectedStudentId"
+        (studentSelected)="onStudentSelected($event)">
+      </app-student-select>
+      
+      <mat-nav-list class="nav-menu">
+        <h3 matSubheader>Menu</h3>
+        <a mat-list-item routerLink="/parent-portal" [class.active]="true">
+          <mat-icon matListItemIcon>dashboard</mat-icon>
+          Dashboard
+        </a>
+        <a mat-list-item>
+          <mat-icon matListItemIcon>calendar_today</mat-icon>
+          Calendar
+        </a>
+        <a mat-list-item>
+          <mat-icon matListItemIcon>message</mat-icon>
+          Messages
+        </a>
+        <a mat-list-item>
+          <mat-icon matListItemIcon>assignment</mat-icon>
+          Assignments
+        </a>
+        <a mat-list-item>
+          <mat-icon matListItemIcon>event</mat-icon>
+          Events
+        </a>
+        <a mat-list-item>
+          <mat-icon matListItemIcon>settings</mat-icon>
+          Settings
+        </a>
+      </mat-nav-list>
+      
+      <div class="support-section">
+        <h3>Need Help?</h3>
+        <p>Contact your school administrator or tech support.</p>
+        <button mat-raised-button color="primary">
+          <mat-icon>contact_support</mat-icon>
+          Get Support
+        </button>
+      </div>
+    </div>
+    
+    <div class="main-content">
+      <mat-card class="student-overview-card">
+        <mat-card-content>
+          <app-student-overview [studentId]="selectedStudentId"></app-student-overview>
+        </mat-card-content>
+      </mat-card>
+      
+      <div class="dashboard-cards">
+        <mat-card class="dashboard-card">
+          <mat-card-header>
+            <mat-card-title>Academic Performance</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <app-academic-progress [studentId]="selectedStudentId"></app-academic-progress>
+          </mat-card-content>
+        </mat-card>
+        
+        <mat-card class="dashboard-card">
+          <mat-card-header>
+            <mat-card-title>Attendance Report</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <app-attendance-report [studentId]="selectedStudentId"></app-attendance-report>
+          </mat-card-content>
+        </mat-card>
+        
+        <mat-card class="dashboard-card">
+          <mat-card-header>
+            <mat-card-title>Behavior Report</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <app-behavior-report [studentId]="selectedStudentId"></app-behavior-report>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

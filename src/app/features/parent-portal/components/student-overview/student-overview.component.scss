@@ -1,0 +1,177 @@
+// src/app/features/parent-portal/components/student-overview/student-overview.component.scss
+.student-overview-container {
+    .student-basic-info {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 24px;
+      
+      .student-avatar {
+        width: 80px;
+        height: 80px;
+        
+        .avatar-placeholder {
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+          background-color: #3f51b5;
+          color: white;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 36px;
+          font-weight: 500;
+        }
+        
+        .avatar-image {
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+      }
+      
+      .student-details {
+        .student-name {
+          font-size: 24px;
+          font-weight: 500;
+          margin: 0 0 8px 0;
+          color: #37474f;
+        }
+        
+        .student-metadata {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 16px;
+          
+          .metadata-item {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: #607d8b;
+            
+            mat-icon {
+              font-size: 18px;
+              height: 18px;
+              width: 18px;
+              margin-right: 4px;
+            }
+          }
+        }
+      }
+    }
+    
+    .student-status-cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 24px;
+      
+      .status-card {
+        flex: 1;
+        min-width: 120px;
+        background-color: #f5f5f5;
+        border-radius: 8px;
+        padding: 16px;
+        display: flex;
+        align-items: center;
+        
+        .status-icon {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-right: 12px;
+          
+          mat-icon {
+            color: white;
+          }
+        }
+        
+        .status-details {
+          .status-value {
+            font-size: 24px;
+            font-weight: 500;
+            line-height: 1;
+          }
+          
+          .status-label {
+            font-size: 14px;
+            color: #607d8b;
+            margin-top: 4px;
+          }
+        }
+        
+        &.gpa {
+          .status-icon {
+            background-color: #4caf50;
+          }
+          
+          .status-value {
+            color: #4caf50;
+          }
+        }
+        
+        &.attendance {
+          .status-icon {
+            background-color: #2196f3;
+          }
+          
+          .status-value {
+            color: #2196f3;
+          }
+        }
+        
+        &.behavior {
+          .status-icon {
+            background-color: #ff9800;
+          }
+          
+          .status-value {
+            color: #ff9800;
+          }
+        }
+        
+        &.interventions {
+          .status-icon {
+            background-color: #9c27b0;
+          }
+          
+          .status-value {
+            color: #9c27b0;
+          }
+        }
+      }
+    }
+    
+    .intervention-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+      
+      .intervention-badge {
+        padding: 4px 12px;
+        border-radius: 16px;
+        font-size: 14px;
+        font-weight: 500;
+        
+        &.on-track {
+          background-color: #e8f5e9;
+          color: #4caf50;
+        }
+        
+        &.not-on-track {
+          background-color: #ffebee;
+          color: #f44336;
+        }
+      }
+    }
+  }
+  
+  .loading-container {
+    display: flex;
+    justify-content: center;
+    padding: 40px 0;
+  }

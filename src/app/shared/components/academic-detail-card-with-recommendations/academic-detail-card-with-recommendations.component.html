@@ -1,0 +1,184 @@
+<div id="student-details" class="bg-white rounded-xl shadow-sm">
+
+  <div class="w-full rounded-xl">
+    <!-- Desktop Tabs -->
+    <div class="hidden sm:flex items-center flex-wrap p-4 sm:mb-6 gap-2 bg-white">
+      <button (click)="setActiveTab(0)" 
+        [class]="'text-xl px-6 py-2 bg-transparent border-0 hover:cursor-pointer ' +
+        (activeTabIndex === 0 ? 'border-b-2 border-orange-200 text-orange-400' : 'text-gray-500')">
+        Academic Progress
+      </button>
+
+      <button (click)="setActiveTab(1)" 
+        [class]="'text-xl px-6 py-2 bg-transparent border-0 hover:cursor-pointer ' +
+        (activeTabIndex === 1 ? 'border-b-2 border-orange-200 text-orange-400' : 'text-gray-500')">
+        Behavior
+      </button>
+
+      <button (click)="setActiveTab(2)" 
+        [class]="'text-xl px-6 py-2 bg-transparent border-0 hover:cursor-pointer ' +
+        (activeTabIndex === 2 ? 'border-b-2 border-orange-200 text-orange-400' : 'text-gray-500')">
+        Notes
+      </button>
+    </div>
+
+    <!-- Mobile Dropdown -->
+    <div class="block sm:hidden px-4 mb-4">
+      <select (change)="onMobileTabChange($event)"
+        class="w-full text-[18px] px-4 py-3 border border-gray-300 rounded-lg shadow-md bg-white 
+               text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 
+               transition-all appearance-none">
+        <option disabled selected class="text-gray-400">Select Category</option>
+        <option [selected]="activeTabIndex === 0" class="text-gray-800">Academic Progress</option>
+        <option [selected]="activeTabIndex === 1" class="text-gray-800">Behavior</option>
+        <option [selected]="activeTabIndex === 2" class="text-gray-800">Notes</option>
+      </select>
+    </div>
+  </div>
+
+  <div [ngSwitch]="activeTabIndex">
+    <!-- Academic Tab -->
+    <div id="academic-content" class="p-6" *ngSwitchCase="0">
+      <div class="mb-8">
+        <h3 class="text-lg font-semibold mb-4">Current Courses</h3>
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead class="bg-gray-50">
+              <tr>
+                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">Course</th>
+                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">Grade</th>
+                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">Teacher</th>
+                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">Missing Work</th>
+                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">Trend</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let grade of grades" class="border-b-2 border-gray-200">
+                <td class="px-6 py-4">
+                  <div class="font-medium">{{ grade.subject }}</div>
+                  <div class="text-sm text-gray-500">{{ grade.period }}</div>
+                </td>
+                <td class="px-6 py-4 font-medium" [ngStyle]="{ color: getGradeColor(grade.percentage) }">
+                  {{ grade.grade }} ({{ grade.percentage }}%)
+                </td>
+                <td class="px-6 py-4">{{ grade.teacher }}</td>
+                <td class="px-6 py-4">{{ grade.assignments }} assignments</td>
+                <td class="px-6 py-4">
+                  <i class="fa-solid" [ngClass]="getTrendIcon(grade.trend)"
+                    [ngStyle]="{ color: getTrendColor(grade.trend) }"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Behavior Tab -->
+    <div id="behavior-content" class="p-6" *ngSwitchCase="1">
+      <div class="mb-8">
+        <h3 class="text-lg font-semibold mb-4">Student Behavior</h3>
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead class="bg-gray-50">
+              <tr>
+                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600"></th>
+                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">Student Name</th>
+                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">Attendance</th>
+                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">Absent Days</th>
+                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">Tardiness</th>
+                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">Early Dismissal</th>
+                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">Disc. Actions</th>
+                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">Suspensions</th>
+                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">Intervention</th>
+                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">At Risk</th>
+                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">IEP</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let student of behaviors" class="border-b-2 border-gray-200">
+                <td class="px-6 py-4"><mat-checkbox></mat-checkbox></td>
+                <td class="px-6 py-4">{{ student.name }}</td>
+                <td class="px-6 py-4">{{ student.Attendance }}</td>
+                <td class="px-6 py-4">{{ student.Absent_Days }}</td>
+                <td class="px-6 py-4">{{ student.Tardiness }}</td>
+                <td class="px-6 py-4">{{ student.Early_Dismissal }}</td>
+                <td class="px-6 py-4">{{ student.Actions }}</td>
+                <td class="px-6 py-4">{{ student.Suspensions }}</td>
+                <td class="px-6 py-4">
+                  <i class="material-icons text-green-500">{{ student.Intervention }}</i>
+                </td>
+                <td class="px-6 py-4">
+                  <i class="material-icons text-amber-500">{{ student.At_Risk }}</i>
+                </td>
+                <td class="px-6 py-4">
+                  <i class="material-icons text-blue-500">{{ student.IEP }}</i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div id="notes-content" class="p-6" *ngSwitchCase="2">
+     
+          
+          <!-- Notes cards -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div *ngFor="let note of notes" class="bg-white border border-gray-200 rounded-lg shadow-sm p-4 hover:shadow-md transition-shadow">
+                  <div class="flex justify-between items-start mb-3">
+                      <div>
+                          <span [ngClass]="{
+                              'bg-blue-100 text-blue-800': note.type === 'Academic',
+                              'bg-green-100 text-green-800': note.type === 'Guidance',
+                              'bg-gray-100 text-gray-800': note.type === 'Administrative'
+                          }" class="text-xs font-medium px-2.5 py-0.5 rounded-full">
+                              {{ note.type }}
+                          </span>
+                          <h4 class="font-semibold mt-2">{{ note.subject }}</h4>
+                      </div>
+                      <div class="text-sm text-gray-500">{{ note.date }}</div>
+                  </div>
+                  <p class="text-sm text-gray-700 mb-3">{{ note.content }}</p>
+                  <div class="flex justify-between items-center">
+                      <div class="text-sm text-gray-600">
+                          <i class="material-icons text-sm mr-1 align-middle">person</i>
+                          <span class="align-middle">{{ note.teacher }}</span>
+                      </div>
+                    
+                  </div>
+              </div>
+          </div>
+          
+          <!-- Empty state (if no notes) -->
+          <div *ngIf="notes.length === 0" class="text-center py-10">
+              <div class="text-gray-400 mb-3">
+                  <i class="material-icons text-5xl">note_alt</i>
+              </div>
+              <p class="text-gray-500">No notes available for this student</p>
+              <button class="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors">
+                  Create First Note
+              </button>
+          </div>
+      </div>
+    
+
+  <!-- Academic Recommendations -->
+  <div id="academic-recommendations" class="px-6 mb-8 mt-8">
+    <h3 class="text-lg font-semibold mb-4">Academic Recommendations</h3>
+    <div class="bg-blue-50 border border-blue-100 rounded-lg p-4">
+      <div class="flex items-start space-x-3">
+        <i class="fa-solid fa-lightbulb text-[#3f51b5] mt-1"></i>
+        <div>
+          <div class="font-medium text-[#3f51b5] mb-2">Recommended Actions</div>
+          <ul class="text-sm text-gray-600 space-y-2">
+            <li>Schedule after-school tutoring for Algebra II</li>
+            <li>Weekly progress check-ins with Math teacher</li>
+            <li>Parent conference to discuss attendance issues</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

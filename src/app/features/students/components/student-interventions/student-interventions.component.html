@@ -1,0 +1,179 @@
+<app-header></app-header>
+
+<div class="min-h-screen bg-[#F5F7FA] pt-2">
+  <div class="page-layout-container pt-10">
+    <app-sidebar title="Quick Links" [menuItems]="sidebarMenuItems" [useCustomIcons]="true"></app-sidebar>
+
+    <!-- Main Content using Global Class -->
+    <main class="flex-1 px-6 pt-5 overflow-x-hidden">
+      <div class="mb-6 mt-2" *ngIf="studentDetails">
+        <!-- Header Section -->
+        <div
+          class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 bg-white rounded-lg shadow mb-6 p-6 mt-10">
+          <div class="flex items-center gap-4 w-full">
+            <!-- Avatar -->
+            <div>
+              <img [src]="studentDetails.imageUrl" alt="Student Photo"
+                class="w-24 h-24 rounded-lg object-cover border-4 border-[#b53f64] shadow-md">
+            </div>
+            <!-- Student Info -->
+            <div class="flex-grow">
+              <div class="flex items-center gap-2">
+                <h2 class="text-xl font-semibold">{{ studentDetails.studentName }}</h2>
+                <span class="px-2 py-1 text-xs text-white rounded"
+                  [ngClass]="studentDetails.isActive ? 'bg-green-600' : 'bg-gray-400'">
+                  {{ studentDetails.isActive ? 'Active' : 'Inactive' }}
+                </span>
+              </div>
+              <div class="text-gray-600">
+                <strong>Grade:</strong> {{ studentDetails.grade }}
+              </div>
+              <span class="text-sm text-gray-500">
+                <strong>Started: </strong>{{ studentInterventionType?.startDate | date:'mediumDate' }} •
+                <strong>Target End:</strong> {{ studentInterventionType?.targetEndDate | date:'mediumDate' }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Intervention Types (Responsive Dropdown, stacking on small screens) -->
+          <div class="mt-4 md:mt-0 w-full md:w-auto">
+            <mat-form-field appearance="outline" class="w-full">
+              <mat-label>Intervention Types</mat-label>
+              <mat-select [(ngModel)]="currentFilters.type" (selectionChange)="applyFilters()">
+                <mat-option *ngFor="let type of studentInterventionTypes" [value]="type">{{ type }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+
+        <ng-container *ngIf="studentInterventionType; else noInterventions">
+          <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+            <!-- Left: Progress Chart and Progress Notes stacked vertically -->
+            <div class="md:col-span-2 flex flex-col gap-6">
+              <!-- Progress Tracking Card -->
+              <div class="bg-white shadow rounded-lg p-4">
+                <div class="flex justify-between items-center mb-2">
+                  <h3 class="text-lg font-semibold">Progress Tracking</h3>
+                </div>
+                <app-progress-chart [student]="studentInterventionType"></app-progress-chart>
+                <div class="grid grid-cols-1 sm:grid-cols-3 mt-4 gap-6">
+                  <!-- Starting Score -->
+                  <div class="flex flex-col items-start">
+                    <div class="flex items-center gap-1">
+                      <span class="text-sm text-gray-500">Starting Score</span>
+                      <i class="fa-solid fa-circle-exclamation text-blue-600 text-sm"></i>
+                    </div>
+                    <div class="text-lg font-medium text-blue-600">{{ studentInterventionType.startScore }}</div>
+                  </div>
+                  <!-- Current Score -->
+                  <div class="flex flex-col items-start">
+                    <div class="flex items-center gap-1">
+                      <span class="text-sm text-gray-500">Current Score</span>
+                      <i class="fa-solid fa-chart-line text-green-600 text-sm"></i>
+                    </div>
+                    <div class="text-lg font-medium text-green-600">{{ studentInterventionType.currentScore }}</div>
+                  </div>
+                  <!-- Target Score -->
+                  <div class="flex flex-col items-start">
+                    <div class="flex items-center gap-1">
+                      <span class="text-sm text-gray-500">Target Score</span>
+                      <i class="fa-solid fa-bullseye text-orange-500 text-sm"></i>
+                    </div>
+                    <div class="text-lg font-medium text-orange-500">{{ studentInterventionType.targetScore }}</div>
+                  </div>
+                </div>
+              </div>
+              <!-- Progress Notes Card -->
+              <div class="bg-white shadow rounded-lg p-4">
+                <h3 class="text-md font-semibold mb-4">Progress Notes</h3>
+                <div
+                  *ngIf="studentInterventionType && studentInterventionType?.progressNotes && studentInterventionType.progressNotes.length > 0; else noNotes">
+                  <div *ngFor="let note of studentInterventionType?.progressNotes" class="border-b last:border-b-0">
+                    <!-- Row with date and status -->
+                    <div class="flex justify-between items-center">
+                      <p class="text-sm text-gray-500">{{ note.date }}</p>
+                      <p class="font-medium px-2 py-1 bg-gray-100 text-sm rounded-full" [ngClass]="{
+                          'text-green-600': note.status === 'On Track',
+                          'text-yellow-600': note.status === 'Needs Support',
+                          'text-red-600': note.status === 'Critical'
+                        }">
+                        {{ note.status }}
+                      </p>
+                    </div>
+                    <!-- Row with progress message -->
+                    <p class="mt-1 text-sm text-gray-700">{{ note.progressStatusMessages }}</p>
+                  </div>
+                </div>
+                <ng-template #noNotes>
+                  <p class="text-sm text-gray-500">No progress notes available.</p>
+                </ng-template>
+              </div>
+            </div>
+
+            <!-- Right: Intervention Info and Support Team -->
+            <div class="flex flex-col gap-6">
+              <!-- Intervention Info -->
+              <div class="bg-white shadow rounded-lg p-4">
+                <h3 class="text-md font-semibold mb-2">Intervention Details</h3>
+                <p class="text-gray-600"><strong>Type</strong></p>
+                <p>{{ studentInterventionType.type }}</p>
+                <p class="text-gray-600"><strong>Frequency:</strong></p>
+                <p>{{ studentInterventionType.frequency }}</p>
+                <p class="text-gray-600"><strong>Duration:</strong></p>
+                <p>{{ studentInterventionType.duration }}</p>
+                <div class="mt-2">
+                  <p class="text-gray-600"><strong>Focus Areas:</strong></p>
+                  <p class="flex flex-wrap gap-2 mt-1">
+                    <span *ngFor="let area of studentInterventionType?.focusAreas"
+                      class="px-2 py-1 bg-gray-100 text-sm rounded-full">
+                      {{ area }}
+                    </span>
+                  </p>
+                </div>
+              </div>
+
+              <!-- Support Team -->
+              <div class="bg-white shadow rounded-lg p-4">
+                <h4 class="text-md font-semibold mb-2">Support Team</h4>
+                <div *ngFor="let member of studentInterventionType?.supportTeam" class="flex items-center gap-3 mb-3">
+                  <div
+                    class="w-8 h-8 rounded-full bg-blue-200 text-blue-800 flex items-center justify-center font-semibold">
+                    {{ member.teacherName[0] }}
+                  </div>
+                  <div>
+                    <div class="font-medium">{{ member.teacherName }}</div>
+                    <div class="text-sm text-gray-500">{{ member.department }}</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Next Steps -->
+              <div class="bg-white shadow rounded-lg p-4">
+                <h4 class="text-md font-semibold mb-2">Next Steps</h4>
+                <div class="flex flex-col gap-2 mb-3 text-sm text-gray-600">
+                  <!-- Progress Review Meeting -->
+                  <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-calendar text-[#FF881F]"></i>
+                    <span class="text-gray-600">Progress Review Meeting - {{ studentInterventionType.nextReview
+                      }}</span>
+                  </div>
+                  <!-- Reading Assessment Due -->
+                  <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-circle-exclamation text-blue-600"></i>
+                    <span class="text-gray-600">{{ studentInterventionType.type }} Due - {{
+                      studentInterventionType.assessmentDue }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-template #noInterventions>
+          <p class="text-sm text-gray-500">No Interventions Details available.</p>
+        </ng-template>
+      </div>
+    </main>
+  </div>
+</div>

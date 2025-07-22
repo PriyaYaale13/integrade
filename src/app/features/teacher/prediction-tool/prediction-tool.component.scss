@@ -1,0 +1,43 @@
+.prediction-page { /* Basic styles */
+    .back-button { margin-bottom: 1rem; }
+    h1 { font-weight: 400; color: #333; margin-bottom: 1rem; }
+  }
+  
+  .filters-bar { /* Styles from teacher-landing */
+      display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; padding: 0.75rem 1rem;
+      background-color: #fff; border-radius: 8px; margin-bottom: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      .predict-button { margin-left: auto; } // Push predict button to right
+  }
+  
+  .prediction-content {
+      display: grid;
+      grid-template-columns: 320px 1fr; // Fixed width summary, flexible table
+      gap: 1.5rem;
+      align-items: start;
+      @media (max-width: 900px) { grid-template-columns: 1fr; } // Stack
+  }
+  
+  .summary-card {
+      @media (max-width: 900px) { order: -1; } // Show summary first when stacked
+      p { margin-bottom: 0.5rem; font-size: 0.9rem; }
+      ul { list-style: none; padding-left: 10px; margin: 0.5rem 0 1rem 0; li { margin-bottom: 4px; } }
+      mat-chip-listbox { margin-top: 0.5rem; }
+  }
+  
+  .table-card {
+     overflow-x: auto;
+     td, th { text-align: center; padding: 8px 12px !important; }
+     td:first-child, th:first-child { text-align: left; }
+  }
+  
+  .loading-container { /* Styles from teacher-landing */
+      display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 3rem; color: #666;
+      p { margin-top: 1rem; }
+  }
+
+.page-title {
+font-size: 1.5rem; // text-2xl
+font-weight: 500; // font-medium
+color: #212121;
+margin-top: 10px; // Add margin for better header spacing
+}

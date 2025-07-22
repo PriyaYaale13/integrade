@@ -1,0 +1,6 @@
+@use '../../../features/principal/behavior-assessment/teacher-behavior-assessment/teacher-behavior-assessment.component.scss' as teacher-behavior-assessment;
+
+.page-layout-container {
+    display: flex;
+    min-height: calc(100vh - 90px); // Adjusted to account for taller header
+}

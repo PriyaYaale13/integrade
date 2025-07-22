@@ -1,0 +1,10 @@
+/* Hover Effect for Cards */
+#risk-summary .bg-white {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover effect */
+#risk-summary .bg-white:hover {
+  transform: scale(1.05); /* Slightly scale the card */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Add shadow for hover effect */
+}

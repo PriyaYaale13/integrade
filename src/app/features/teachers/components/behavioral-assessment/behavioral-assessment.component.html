@@ -1,0 +1,185 @@
+<div class="behavioral-assessment-container">
+  <!-- Sidebar -->
+  <app-sidebar (collapsed)="onSidebarCollapsed($event)"></app-sidebar>
+
+  <div class="main-content" [class.sidebar-collapsed]="sidebarCollapsed">
+    <!-- Top Action Bar -->
+    <div class="action-bar">
+      <button mat-flat-button class="back-button" color="primary" (click)="goBack()">
+        Back
+      </button>
+      <button mat-flat-button class="date-button" color="primary">
+        DATE
+      </button>
+      <button mat-flat-button class="semester-button" color="primary">
+        SEMESTER
+      </button>
+      <div class="search-container">
+        <mat-form-field appearance="outline">
+          <input matInput placeholder="SEARCH" />
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- Content Area -->
+    <div class="content-area">
+      <!-- Behavior Assessment Table -->
+      <div class="table-section">
+        <h2>Behavior Assessment</h2>
+        <app-data-table 
+          [data]="students"
+          [columns]="tableColumns"
+          [showPaginator]="false"
+          [showFilter]="false">
+        </app-data-table>
+      </div>
+
+      <!-- Assessment Charts -->
+      <div class="assessment-charts">
+        <!-- State Assessment -->
+        <div class="assessment-section state-section">
+          <h2>State Assessment Average</h2>
+          <div class="charts-container">
+            <div class="chart-item">
+              <div class="chart-header">
+                <div class="scale-values">
+                  <span>58</span>
+                  <span>64</span>
+                  <span class="checkbox-label">□ EL</span>
+                  <span class="checkbox-label">□ MATH</span>
+                  <span>58</span>
+                  <span>64</span>
+                </div>
+                <div class="scale-values">
+                  <span>0</span>
+                  <span>0</span>
+                  <span>A</span>
+                  <span>S</span>
+                  <span>0</span>
+                  <span>0</span>
+                </div>
+              </div>
+              
+              <div class="charts-row">
+                <div class="chart-gauge">
+                  <div class="gauge-container">
+                    <div class="gauge-bar">
+                      <div class="gauge-fill state" [style.width.%]="stateAssessments.el.stateAvg / stateAssessments.el.max * 100"></div>
+                    </div>
+                    <div class="gauge-marker class" [style.left.%]="stateAssessments.el.classAvg / stateAssessments.el.max * 100"></div>
+                    <div class="gauge-marker value" [style.left.%]="stateAssessments.el.value / stateAssessments.el.max * 100"></div>
+                  </div>
+                  <div class="gauge-labels">
+                    <span>0</span>
+                    <span>80</span>
+                  </div>
+                  <div class="gauge-source">State<br/>Avg</div>
+                </div>
+                
+                <div class="gauge-spacer"></div>
+                
+                <div class="chart-gauge">
+                  <div class="gauge-container">
+                    <div class="gauge-bar">
+                      <div class="gauge-fill state" [style.width.%]="stateAssessments.math.stateAvg / stateAssessments.math.max * 100"></div>
+                    </div>
+                    <div class="gauge-marker class" [style.left.%]="stateAssessments.math.classAvg / stateAssessments.math.max * 100"></div>
+                    <div class="gauge-marker value" [style.left.%]="stateAssessments.math.value / stateAssessments.math.max * 100"></div>
+                  </div>
+                  <div class="gauge-labels">
+                    <span>0</span>
+                    <span>80</span>
+                  </div>
+                  <div class="gauge-source">State<br/>Avg</div>
+                </div>
+              </div>
+              
+              <div class="source-labels">
+                <div>
+                  <div>Class</div>
+                  <div>Avg</div>
+                </div>
+                <div>
+                  <div>Class</div>
+                  <div>Avg</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SAT Assessment -->
+        <div class="assessment-section sat-section">
+          <h2>SAT Assessment Average</h2>
+          <div class="charts-container">
+            <div class="chart-item">
+              <div class="chart-header">
+                <div class="scale-values">
+                  <span>58</span>
+                  <span>64</span>
+                  <span class="checkbox-label">□ VERBA</span>
+                  <span class="checkbox-label">□ MATHS</span>
+                  <span>58</span>
+                  <span>64</span>
+                </div>
+                <div class="scale-values">
+                  <span>0</span>
+                  <span>0</span>
+                  <span>L</span>
+                  <span></span>
+                  <span>0</span>
+                  <span>0</span>
+                </div>
+              </div>
+              
+              <div class="charts-row">
+                <div class="chart-gauge">
+                  <div class="gauge-container">
+                    <div class="gauge-bar">
+                      <div class="gauge-fill state" [style.width.%]="satAssessments.verbal.stateAvg / satAssessments.verbal.max * 100"></div>
+                    </div>
+                    <div class="gauge-marker class" [style.left.%]="satAssessments.verbal.classAvg / satAssessments.verbal.max * 100"></div>
+                    <div class="gauge-marker value" [style.left.%]="satAssessments.verbal.value / satAssessments.verbal.max * 100"></div>
+                  </div>
+                  <div class="gauge-labels">
+                    <span>0</span>
+                    <span>80</span>
+                  </div>
+                  <div class="gauge-source">State<br/>Avg</div>
+                </div>
+                
+                <div class="gauge-spacer"></div>
+                
+                <div class="chart-gauge">
+                  <div class="gauge-container">
+                    <div class="gauge-bar">
+                      <div class="gauge-fill state" [style.width.%]="satAssessments.maths.stateAvg / satAssessments.maths.max * 100"></div>
+                    </div>
+                    <div class="gauge-marker class" [style.left.%]="satAssessments.maths.classAvg / satAssessments.maths.max * 100"></div>
+                    <div class="gauge-marker value" [style.left.%]="satAssessments.maths.value / satAssessments.maths.max * 100"></div>
+                  </div>
+                  <div class="gauge-labels">
+                    <span>0</span>
+                    <span>80</span>
+                  </div>
+                  <div class="gauge-source">State<br/>Avg</div>
+                </div>
+              </div>
+              
+              <div class="source-labels">
+                <div>
+                  <div>Class</div>
+                  <div>Avg</div>
+                </div>
+                <div>
+                  <div>Class</div>
+                  <div>Avg</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

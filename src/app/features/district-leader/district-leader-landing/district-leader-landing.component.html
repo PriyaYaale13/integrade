@@ -1,0 +1,244 @@
+<app-header></app-header>
+<div class="min-h-screen   bg-[#f5f5f5]">
+
+  <div class="page-layout-container flex gap-6">
+    <app-sidebar title="Quick Links" [menuItems]="sidebarMenuItems" [useCustomIcons]="true">
+
+    </app-sidebar>
+
+    <!-- Main Content -->
+    <main class="flex-1 space-y-6 p-3">
+      <h1  _ngcontent-ng-c3925825219 class="page-title">District Overview</h1>
+
+
+
+      <!-- Filters -->
+      <section class="bg-white rounded-xl p-4 mb-6 shadow-sm">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <!-- Academic Year Filter -->
+          <mat-form-field appearance="outline" class="w-full filter-field">
+            <mat-label>Academic Year</mat-label>
+            <mat-select [(ngModel)]="academicYear" (selectionChange)="emitFilters()">
+            
+              <mat-option *ngFor="let year of academicYears" [value]="year">{{ year }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+      
+          <!-- Grade Level Filter -->
+          <mat-form-field appearance="outline" class="w-full filter-field">
+            <mat-label>Grade Level</mat-label>
+            <mat-select [(ngModel)]="grade" (selectionChange)="emitFilters()">
+       
+              <mat-option *ngFor="let grade of grades" [value]="grade">{{ grade }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+      
+          <!-- Subject Filter -->
+          <mat-form-field appearance="outline" class="w-full filter-field">
+            <mat-label>Subject</mat-label>
+            <mat-select [(ngModel)]="subject" (selectionChange)="emitFilters()">
+       
+              <mat-option *ngFor="let subject of subjects" [value]="subject">{{ subject }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+      
+          <!-- School Filter -->
+          <mat-form-field appearance="outline" class="w-full filter-field">
+            <mat-label>School</mat-label>
+            <mat-select [(ngModel)]="school" (selectionChange)="emitFilters()">
+     
+              <mat-option *ngFor="let school of schools" [value]="school">{{ school }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </section>
+      
+
+      <!-- distric Stats -->
+      <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6" id="award-stats">
+        <!-- Total Schools -->
+        <div class="hover:shadow-xl transition-shadow duration-300 shadow rounded-xl bg-white p-6">
+          <div class="flex items-center gap-3 mb-2">
+            <mat-icon class="text-[#8229ff] bg-violet-100 p-3 rounded-full" aria-hidden="false">domain</mat-icon>
+            <h3 class="text-[#757575] font-medium break-words">Total Schools</h3>
+          </div>
+          <div class="text-2xl font-bold">42</div>
+        </div>
+
+        <!-- Total Students -->
+        <div class="hover:shadow-xl transition-shadow duration-300 shadow rounded-xl bg-white p-6">
+          <div class="flex items-center gap-3 mb-2">
+            <mat-icon class=" text-[#4caf50] bg-green-100 p-3 rounded-full">groups</mat-icon>
+            <h3 class="text-[#757575] font-medium break-words">Total Students</h3>
+          </div>
+          <div class="text-2xl font-bold">24,521</div>
+        </div>
+
+        <!-- Average Attendance -->
+        <div class="hover:shadow-xl transition-shadow duration-300 shadow rounded-xl bg-white p-6">
+          <div class="flex items-center gap-3 mb-2">
+            <mat-icon class="text-[#ff9800] bg-orange-100 p-3 rounded-full">event_available</mat-icon>
+            <h3 class="text-[#757575] font-medium break-words">Average Attendance</h3>
+          </div>
+          <div class="text-2xl font-bold">94.2%</div>
+        </div>
+
+        <!-- Graduation Rate -->
+        <div class="hover:shadow-xl transition-shadow duration-300 shadow rounded-xl bg-white p-6">
+          <div class="flex items-center gap-3 mb-2">
+            <mat-icon class="text-[#3f51b5] bg-blue-100 p-3 rounded-full">school</mat-icon>
+            <h3 class="text-[#757575] font-medium break-words">Graduation Rate</h3>
+          </div>
+          <div class="text-2xl font-bold">89.5%</div>
+        </div>
+      </section>
+
+
+      <h2 class="text-xl font-medium">School Performance Tiers</h2>
+
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6" id="award-stats">
+        <!-- Tier 1 Card -->
+        <div class="hover:shadow-xl transition-shadow duration-300 shadow relative border-2 rounded-xl pt-2 p-6 border-green-400 bg-white overflow-hidden">
+          <!-- Top Colored Line -->
+          <div class="absolute top-0 left-0 w-full h-2 bg-green-400 rounded-t-xl"></div>
+      
+          <div class="flex justify-between items-center mb-2">
+            <h2 class="text-lg font-bold text-gray-800">Tier 1 Schools</h2>
+            <span class="text-green-500 font-bold text-lg">{{ tier1Count }} Schools</span>
+          </div>
+          <p class="text-gray-500 text-sm mb-4">90-100% Performance</p>
+          <div class="w-full bg-gray-200 rounded-full h-3">
+            <div
+              class="bg-green-400 h-3 rounded-full"
+              [style.width.%]="calculateTierPercentage(tier1Count)"
+            ></div>
+          </div>
+          <div class="text-right text-sm text-gray-600 mt-2">
+            {{ calculateTierPercentage(tier1Count) }}%
+          </div>
+        </div>
+      
+        <!-- Tier 2 Card -->
+        <div class="hover:shadow-xl transition-shadow duration-300 shadow  relative border-2 rounded-xl pt-2 p-6 border-yellow-400 bg-white overflow-hidden">
+          <!-- Top Colored Line -->
+          <div class="absolute top-0 left-0 w-full h-2 bg-yellow-400 rounded-t-xl"></div>
+      
+          <div class="flex justify-between items-center mb-2">
+            <h2 class="text-lg font-bold text-gray-800">Tier 2 Schools</h2>
+            <span class="text-yellow-500 font-bold text-lg">{{ tier2Count }} Schools</span>
+          </div>
+          <p class="text-gray-500 text-sm mb-4">70-89% Performance</p>
+          <div class="w-full bg-gray-200 rounded-full h-3">
+            <div
+              class="bg-yellow-400 h-3 rounded-full"
+              [style.width.%]="calculateTierPercentage(tier2Count)"
+            ></div>
+          </div>
+          <div class="text-right text-sm text-gray-600 mt-2">
+            {{ calculateTierPercentage(tier2Count) }}%
+          </div>
+        </div>
+      
+        <!-- Tier 3 Card -->
+        <div class="hover:shadow-xl transition-shadow duration-300 shadow   relative border-2 rounded-xl pt-2 p-6 border-red-400 bg-white  overflow-hidden">
+          <!-- Top Colored Line -->
+          <div class="absolute top-0 left-0 w-full h-2 bg-red-400 rounded-t-xl"></div>
+      
+          <div class="flex justify-between items-center mb-2">
+            <h2 class="text-lg font-bold text-gray-800">Tier 3 Schools</h2>
+            <span class="text-red-500 font-bold text-lg">{{ tier3Count }} Schools</span>
+          </div>
+          <p class="text-gray-500 text-sm mb-4">Below 70% Performance</p>
+          <div class="w-full bg-gray-200 rounded-full h-3">
+            <div
+              class="bg-red-400 h-3 rounded-full"
+              [style.width.%]="calculateTierPercentage(tier3Count)"
+            ></div>
+          </div>
+          <div class="text-right text-sm text-gray-600 mt-2">
+            {{ calculateTierPercentage(tier3Count) }}%
+          </div>
+        </div>
+      </div>
+      
+
+
+      <!-- School Performance Overview -->
+      <section class="bg-white rounded-xl shadow-sm">
+        <div class="p-6 border-b flex items-center justify-between">
+          <h2 class="text-xl font-medium">School Performance Overview</h2>
+          <button class="bg-white border border-gray-200 px-4 py-2 rounded-lg w-full sm:w-auto"
+            (click)="exportToExcel()">
+            <i class="fa-solid fa-download mr-2"></i>Export
+          </button>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead class="bg-gray-50 border-b border-gray-200">
+              <tr>
+                <th class="text-left px-6 py-4 text-sm font-semibold text-gray-600">School Name</th>
+                <th class="text-left px-6 py-4 text-sm font-semibold text-gray-600">Tier</th>
+                <th class="text-left px-6 py-4 text-sm font-semibold text-gray-600">Students</th>
+                <th class="text-left px-6 py-4 text-sm font-semibold text-gray-600">Attendance</th>
+                <th class="text-left px-6 py-4 text-sm font-semibold text-gray-600">Performance</th>
+                <th class="text-left px-6 py-4 text-sm font-semibold text-gray-600">Trend</th>
+                <th class="text-left px-6 py-4 text-sm font-semibold text-gray-600">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+              <tr *ngFor="let school of paginatedDistrictLeaders$ | async" class="hover:bg-gray-50">
+                <td class="px-6 py-4 font-medium">{{ school.name }}</td>
+                <td class="px-6 py-4">
+                  <span [ngClass]="{
+                'bg-green-100 text-green-800': school.tier === 'Tier 1',
+                'bg-orange-100 text-orange-800': school.tier === 'Tier 2',
+                'bg-red-100 text-red-800': school.tier === 'Tier 3'
+              }" class="px-2 py-1 rounded-full text-sm">
+                    {{ school.tier }}
+                  </span>
+                </td>
+                <td class="px-6 py-4">{{ school.students }}</td>
+                <td class="px-6 py-4">{{ school.attendance }}%</td>
+                <td class="px-6 py-4">{{ school.performance }}%</td>
+                <td class="px-6 py-4">
+                  <i *ngIf="school.trend === 'up'" class="fa-solid fa-arrow-trend-up text-green-500"></i>
+                  <i *ngIf="school.trend === 'neutral'" class="fa-solid fa-minus text-yellow-500"></i>
+                  <i *ngIf="school.trend === 'down'" class="fa-solid fa-arrow-trend-down text-red-500"></i>
+                </td>
+                <td class="px-6 py-4">
+                  <a class="text-blue-600 hover:underline cursor-pointer" tabindex="0" (click)="viewStudent(school.id)" (keydown.enter)="viewStudent(school.id)" (keydown.space)="viewStudent(school.id)">View Details</a>
+
+
+                </td>
+              </tr>
+
+              <tr *ngIf="(filteredDistrictLeaders$ | async)?.length === 0">
+                <td colspan="7" class="text-center px-6 py-4 text-gray-500">No matching schools found.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination -->
+        <div
+          class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 px-4 py-4 border-t border-gray-100 text-sm">
+          <div>
+            Showing
+            {{ (currentPage * pageSize) + 1 }}–{{ Math.min((currentPage + 1) * pageSize, (filteredDistrictLeaders$ |
+            async)?.length || 0) }}
+            of {{ (filteredDistrictLeaders$ | async)?.length || 0 }} schools
+          </div>
+
+          <mat-paginator [length]="(filteredDistrictLeaders$ | async)?.length || 0" [pageSize]="pageSize"
+            [pageSizeOptions]="[5, 10, 20]" (page)="onPageChange($event)" showFirstLastButtons
+            aria-label="School performance pagination">
+          </mat-paginator>
+        </div>
+      </section>
+
+
+    </main>
+  </div>
+</div>

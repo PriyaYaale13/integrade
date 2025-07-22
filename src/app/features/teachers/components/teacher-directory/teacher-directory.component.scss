@@ -1,0 +1,36 @@
+@use '../../../teacher/teacher-landing/teacher-landing.component.scss' as teacher-landing;
+
+.more-filter-btn {
+    background: #3f51b5;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.progress-bar-bg,
+.progress-bar {
+    height: .5rem;
+    border-radius: 9999px;
+}
+
+.progress-bar-bg {
+    width: 100%;
+    background: #e5e7eb;
+    overflow: hidden;
+}
+
+.progress-bar {
+    background: #4CAF50;
+}
+
+.student-avatar {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    object-fit: cover
+}
+
+.student-cell {
+    display: flex;
+    align-items: center;
+    gap: .5rem
+}

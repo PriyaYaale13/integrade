@@ -1,0 +1,104 @@
+.data-table-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    
+    .table-header {
+      padding: 8px 16px;
+      
+      mat-form-field {
+        width: 100%;
+        max-width: 400px;
+        font-size: 14px;
+      }
+    }
+    
+    .table-wrapper {
+      position: relative;
+      overflow: auto;
+      
+      &.loading {
+        min-height: 150px;
+        
+        .loading-overlay {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: rgba(255, 255, 255, 0.7);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          z-index: 1;
+        }
+      }
+    }
+    
+    table {
+      width: 100%;
+      
+      tr.highlighted {
+        background-color: rgba(33, 150, 243, 0.08);
+      }
+      
+      tr.expandable-row {
+        cursor: pointer;
+        
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.04);
+        }
+        
+        &.expanded-row {
+          background-color: rgba(0, 0, 0, 0.02);
+        }
+      }
+      
+      tr.expanded-detail-row {
+        height: 0;
+        
+        .expanded-detail {
+          overflow: hidden;
+          padding: 16px;
+        }
+      }
+      
+      .empty-state {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 32px 16px;
+        color: rgba(0, 0, 0, 0.54);
+        
+        mat-icon {
+          font-size: 48px;
+          width: 48px;
+          height: 48px;
+          margin-bottom: 16px;
+        }
+      }
+    }
+  }
+
+.profile-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  
+  .profile-image {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    overflow: hidden;
+    
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+  
+  .profile-name {
+    font-weight: 500;
+  }
+}

@@ -1,0 +1,99 @@
+// src/app/features/students/components/student-info-card/student-info-card.component.scss
+.student-info-card {
+    height: 100%;
+    
+    .student-profile {
+      display: flex;
+      align-items: center;
+      margin-bottom: 24px;
+      
+      .student-avatar {
+        margin-right: 16px;
+        
+        .avatar-placeholder {
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+          background-color: #2196f3;
+          color: white;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 24px;
+          font-weight: 500;
+        }
+      }
+      
+      .student-name {
+        h2 {
+          margin: 0 0 4px 0;
+          font-size: 20px;
+          font-weight: 500;
+        }
+        
+        .risk-status {
+          padding: 4px 8px;
+          border-radius: 4px;
+          font-size: 12px;
+          font-weight: 500;
+          
+          &.risk-status-at-risk {
+            background-color: #ffebee;
+            color: #f44336;
+          }
+          
+          &.risk-status-normal {
+            background-color: #e8f5e9;
+            color: #4caf50;
+          }
+        }
+      }
+    }
+    
+    .student-details {
+      margin-bottom: 24px;
+      
+      .detail-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        border-bottom: 1px solid #eeeeee;
+        
+        &:last-child {
+          border-bottom: none;
+        }
+        
+        .detail-label {
+          color: #757575;
+          font-weight: 500;
+        }
+        
+        .detail-value {
+          font-weight: 400;
+          
+          &.risk-score {
+            color: #f44336;
+            font-weight: 500;
+          }
+          
+          &.iep-status {
+            color: #ff9800;
+            font-weight: 500;
+          }
+        }
+      }
+    }
+    
+    .suggested-interventions {
+      h3 {
+        font-size: 16px;
+        font-weight: 500;
+        margin-bottom: 8px;
+        color: #37474f;
+      }
+      
+      mat-chip-list {
+        margin-bottom: 16px;
+      }
+    }
+  }

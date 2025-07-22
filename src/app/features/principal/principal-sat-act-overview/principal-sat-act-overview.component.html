@@ -1,0 +1,132 @@
+<app-header></app-header>
+
+<div class="min-h-screen bg-[#F5F7FA] pt-2">
+    <div class="page-layout-container">
+        <!-- Sidebar (Can be similar to Teacher or specific to Principal) -->
+        <app-sidebar title="Quick Links" [menuItems]="sidebarMenuItems" [useCustomIcons]="true">
+        </app-sidebar>
+
+        <main class="app-main-content">
+            <!-- Page Title and Notifications -->
+            <div class="flex justify-between items-center mb-6 mt-10">
+                <h1 class="page-title">SAT/ACT</h1>
+            </div>
+
+            <!-- Filters -->
+            <div class="filters-bar mb-6">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 flex-grow">
+                    <!-- Grades -->
+                    <mat-form-field appearance="outline" class="w-full filter-field">
+                        <mat-label>Grade</mat-label>
+                        <mat-select [(ngModel)]="currentFilters.grade" (selectionChange)="applyFilters()">
+                            <mat-option value="all">All Grades</mat-option> <!-- Add 'All' option -->
+                            <mat-option *ngFor="let grade of (grades$ | async)" [value]="grade">{{ grade
+                                }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <!-- Semester Dropdown -->
+                    <mat-form-field appearance="outline" class="w-full filter-field">
+                        <mat-label>Semester</mat-label>
+                        <mat-select [(ngModel)]="currentFilters.semester" (selectionChange)="applyFilters()">
+                            <mat-option value="all">All Semester</mat-option> <!-- Add 'All' option -->
+                            <mat-option *ngFor="let sem of (semesters$ | async)" [value]="sem">{{ sem }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <!-- Right: Search Field -->
+                    <mat-form-field appearance="outline" class="w-full filter-field">
+                        <mat-label>Search Student</mat-label>
+                        <input matInput #searchInput [(ngModel)]="currentFilters.searchStudent"
+                            (ngModelChange)="applyFilters()" placeholder="Enter name..." />
+                        <div matSuffix class="icon-container">
+                            <button *ngIf="searchInput.value" mat-icon-button aria-label="Clear"
+                                (click)="clearSearch()">
+                                <mat-icon>close</mat-icon>
+                            </button>
+                            <button *ngIf="!searchInput.value" mat-icon-button aria-label="search">
+                                <mat-icon *ngIf="!searchInput.value">search</mat-icon>
+                            </button>
+                        </div>
+                    </mat-form-field>
+                </div>
+                <div>
+                </div>
+            </div>
+            <ng-container *ngIf="satActBehaviourData$ | async as data; else loadingOrError">
+                <div *ngIf="data.performanceOverview && data.performanceOverview.length > 0"
+                    class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8 w-full">
+                    <app-state-assessment-chart *ngFor="let overview of data.performanceOverview"
+                        [data]="overview"></app-state-assessment-chart>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="satActBehaviourData$ | async as data; else loadingOrError">
+                <div class="behavior-content">
+                    <!-- Behavior Table -->
+                    <mat-card>
+                        <mat-card-content>
+                            <div class="responsive-table-wrapper">
+                                <table mat-table [dataSource]="dataSource" class="teacher-behavior-table">
+                                    <!-- Student Name -->
+                                    <ng-container matColumnDef="studentName">
+                                        <th mat-header-cell *matHeaderCellDef> Student Name </th>
+                                        <td mat-cell *matCellDef="let element" style="text-align: left;">
+                                            <div>{{element.studentName}}</div>
+                                        </td>
+                                    </ng-container>
+                                    <!-- Grade -->
+                                    <ng-container matColumnDef="grade">
+                                        <th mat-header-cell *matHeaderCellDef>Grade</th>
+                                        <td mat-cell *matCellDef="let element">{{ element.grade || 'N/A' }}</td>
+                                    </ng-container>
+                                    <!-- semester -->
+                                    <ng-container matColumnDef="semester">
+                                        <th mat-header-cell *matHeaderCellDef> Semester </th>
+                                        <td mat-cell *matCellDef="let element" style="text-align: left;">
+                                            <div>{{element.semester}}</div>
+                                        </td>
+                                    </ng-container>
+                                    <!-- Math -->
+                                    <ng-container matColumnDef="mathematics">
+                                        <th mat-header-cell *matHeaderCellDef> Math </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.mathScore ?? '-'}} </td>
+                                    </ng-container>
+                                    <!-- english -->
+                                    <ng-container matColumnDef="verbal">
+                                        <th mat-header-cell *matHeaderCellDef> Verbal </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.verbalScore ?? '-'}} </td>
+                                    </ng-container>
+                                    <!-- status -->
+                                    <ng-container matColumnDef="status">
+                                        <th mat-header-cell *matHeaderCellDef> Status </th>
+                                        <td mat-cell *matCellDef="let element">
+                                            <span [ngClass]="getStatusClass(element.status)"
+                                                class="inline-block px-4 py-2 rounded-full">
+                                                {{element.status}}
+                                            </span>
+                                        </td>
+                                    </ng-container>
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                    <tr class="mat-row" *matNoDataRow>
+                                        <td class="mat-cell" [attr.colspan]="displayedColumns.length">No behavior data
+                                            found.
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="w-full overflow-x-auto mt-4"> <mat-paginator #satActPagination
+                                    [length]="data.records.scores.length" [pageSize]="5" [pageSizeOptions]="[5, 10, 15]"
+                                    showFirstLastButtons>
+                                </mat-paginator>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </ng-container>
+            <ng-template #loadingOrError>
+                <div class="loading-container"> <mat-spinner diameter="50"></mat-spinner>
+                    <p>Loading dashboard data...</p>
+                </div>
+            </ng-template>
+        </main>
+    </div>
+</div>

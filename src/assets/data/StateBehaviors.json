@@ -1,0 +1,16 @@
+[
+    {
+      "id": 1,
+      "name": "Sarah Johnson",
+      "Attendance": "94%",
+      "Absent_Days": 2,
+      "Tardiness": 5,
+      "Early_Dismissal": 2,
+      "Actions": 5,
+      "Suspensions": 6,
+      "Intervention": "check_circle",
+      "At_Risk": "warning",
+      "IEP": "assignment_ind"
+    }
+  ]
+  

@@ -1,0 +1,120 @@
+<div class="special-intervention-container">
+  <!-- Sidebar -->
+  <app-sidebar></app-sidebar>
+
+  <!-- Main content -->
+  <div class="main-content">
+    <!-- Header with back button and search -->
+    <div class="page-header">
+      <div class="left-actions">
+        <button mat-raised-button color="primary" class="back-button" (click)="goBack()">Back</button>
+      </div>
+      <div class="right-actions">
+        <button mat-raised-button class="search-button">SEARCH</button>
+      </div>
+    </div>
+
+    <!-- Intervention Progress Table -->
+    <div class="section">
+      <h2 class="section-header">Intervention Progress</h2>
+      <div class="table-container">
+        <table class="intervention-table">
+          <thead>
+            <tr>
+              <th rowspan="2">Student /Semester</th>
+              <th colspan="3">Math intervention</th>
+              <th colspan="3">Literacy intervention</th>
+              <th colspan="3">Emotional management</th>
+              <th colspan="3">Attendance</th>
+            </tr>
+            <tr>
+              <th>Start</th>
+              <th>Current</th>
+              <th>Status</th>
+              <th>Start</th>
+              <th>Current</th>
+              <th>Status</th>
+              <th>Start</th>
+              <th>Current</th>
+              <th>Status</th>
+              <th>Start</th>
+              <th>Current</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of tableData">
+              <td>
+                <div>{{ row.student }}</div>
+                <div class="semester-text">{{ row.semester }}</div>
+              </td>
+              <td>{{ row.mathStart }}</td>
+              <td>{{ row.mathCurrent }}</td>
+              <td>
+                <div *ngIf="row.mathStatus" [ngClass]="row.mathStatus === 'On Track' ? 'status-on-track' : 'status-not-on-track'">
+                  {{ row.mathStatus }}
+                </div>
+              </td>
+              <td>{{ row.literacyStart }}</td>
+              <td>{{ row.literacyCurrent }}</td>
+              <td>
+                <div *ngIf="row.literacyStatus" [ngClass]="row.literacyStatus === 'On Track' ? 'status-on-track' : 'status-not-on-track'">
+                  {{ row.literacyStatus }}
+                </div>
+              </td>
+              <td>{{ row.emotionalStart }}</td>
+              <td>{{ row.emotionalCurrent }}</td>
+              <td>
+                <div *ngIf="row.emotionalStatus" [ngClass]="row.emotionalStatus === 'On Track' ? 'status-on-track' : 'status-not-on-track'">
+                  {{ row.emotionalStatus }}
+                </div>
+              </td>
+              <td>{{ row.attendanceStart }}</td>
+              <td>{{ row.attendanceCurrent }}</td>
+              <td>
+                <div *ngIf="row.attendanceStatus" [ngClass]="row.attendanceStatus === 'On Track' ? 'status-on-track' : 'status-not-on-track'">
+                  {{ row.attendanceStatus }}
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Intervention Summary Report Chart -->
+    <div class="section">
+      <h2 class="section-header">Intervention Summary Report</h2>
+      <div class="chart-container">
+        <div class="chart-title-container">
+          <h3>Intervention Performance</h3>
+        </div>
+        <app-bar-chart
+          [data]="chartData"
+          [width]="900"
+          [height]="320"
+          [margin]="{ top: 20, right: 40, bottom: 40, left: 70 }"
+          [stacked]="true"
+          [showLegend]="false"
+          [showXAxis]="true"
+          [showYAxis]="true"
+          [yAxisLabel]="'Percentage'"
+          [barPadding]="0.3"
+          [maxValue]="100"
+          [colors]="['#FF6347', '#228B22']"
+          [title]="''">
+        </app-bar-chart>
+        <div class="chart-legend">
+          <div class="legend-item">
+            <div class="legend-color not-on-track"></div>
+            <span>Not On Track</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-color on-track"></div>
+            <span>On Track</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

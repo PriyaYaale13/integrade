@@ -1,0 +1,19 @@
+// Reuse common page styles
+.assessment-view-page {
+    .back-button { margin-bottom: 1rem; }
+    h1 { font-weight: 400; color: #333; margin-bottom: 1rem; }
+  }
+  .filters-bar { /* Styles from teacher-landing */
+      display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; padding: 0.75rem 1rem;
+      background-color: #fff; border-radius: 8px; margin-bottom: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      .search-field { margin-left: auto; min-width: 250px; }
+  }
+  .table-card { overflow-x: auto; }
+  .assessment-table {
+      td, th { text-align: center; padding: 8px 12px !important; }
+      td:nth-child(2), th:nth-child(2) { text-align: left; } // Align name left
+  }
+  .loading-container { /* Styles from teacher-landing */
+      display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 3rem; color: #666;
+      p { margin-top: 1rem; }
+  }

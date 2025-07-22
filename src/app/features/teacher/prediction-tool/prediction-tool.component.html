@@ -1,0 +1,50 @@
+<app-header></app-header> <!-- Your header component -->
+<div class="min-h-screen pt-10 bg-custom-bg"> <!-- Custom background for the whole page -->
+
+    <div class="page-layout-container flex"> <!-- Flex container to structure the layout -->
+
+        <!-- Sidebar -->
+        <app-sidebar title="Quick Links" [menuItems]="sidebarMenuItems" [useCustomIcons]="true">
+        </app-sidebar>
+
+        <!-- Main Content -->
+        <main class="flex-1 space-y-6 pt-4 pl-4"> <!-- Main content area with spacing -->
+
+            <div style="display: none;">Loading state: {{isLoading}}</div>
+            <ng-container *ngIf="!isLoading; else loadingOrError">
+                <h1 class="page-title">Prediction Hub</h1>
+
+                <!-- Student Filter Section -->
+                <div>
+                    <app-prediction-tool-filter-student [studentDetails]="studentDetails"
+                        (searchQueryChange)="onSearchQueryChange($event)" (predictClick)="onPredictClick($event)"
+                        (studentSelect)="onStudentPredict($event)" (classChanged)="onClassChange($event)"
+                        (scoreFilterChange)="onScoreFilterChange($event)" [title]="title">
+                    </app-prediction-tool-filter-student>
+                </div>
+
+                <!-- Student Details Section -->
+                <div>
+                    <app-predictions-tool-student-table [title]="title" [studentDetails]="filteredStudents"
+                        [currentPage]="currentPage" [itemsPerPage]="itemsPerPage" [categoryCounts]="categoryCounts"
+                        [count]="studentDetails.length" (pageChange)="onPageChange($event)"
+                        (studentPredict)="onStudentPredict($event)" (filterCategory)="selectedCategory = $event">
+                    </app-predictions-tool-student-table>
+
+                </div>
+
+                <!-- Guide Cart Section -->
+                <div>
+                    <app-predictions-tool-factors-guide></app-predictions-tool-factors-guide>
+                </div>
+            </ng-container>
+            <ng-template #loadingOrError>
+                <div *ngIf="isLoading" class="loading-container">
+                    <mat-spinner diameter="100"></mat-spinner>
+                    <p>Loading teachers behavior data...</p>
+                </div>
+            </ng-template>
+        </main>
+
+    </div>
+</div>

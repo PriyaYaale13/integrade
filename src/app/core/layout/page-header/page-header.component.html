@@ -1,0 +1,22 @@
+// src/app/core/layout/page-header/page-header.component.html
+<div class="page-header">
+  <div class="header-left">
+    <button 
+      *ngIf="backRoute" 
+      mat-icon-button 
+      color="primary" 
+      class="back-button" 
+      [routerLink]="backRoute">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    
+    <div class="header-titles">
+      <h1 class="header-title">{{ title }}</h1>
+      <p class="header-subtitle" *ngIf="subtitle">{{ subtitle }}</p>
+    </div>
+  </div>
+  
+  <div class="header-actions">
+    <ng-content></ng-content>
+  </div>
+</div>

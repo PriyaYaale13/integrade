@@ -1,0 +1,15 @@
+<nav class="main-nav">
+    <ul>
+      <li><a routerLink="/dashboard" routerLinkActive="active">Dashboard</a></li>
+      <li><a routerLink="/students" routerLinkActive="active">Students</a></li>
+      <li><a routerLink="/teachers" routerLinkActive="active">Teachers</a></li>
+      <li><a routerLink="/assessment" routerLinkActive="active">Assessment</a></li>
+      <li><a routerLink="/intervention" routerLinkActive="active">Intervention</a></li>
+      <li><a routerLink="/parent-portal" routerLinkActive="active">Parent Portal</a></li>
+      
+      <li class="user-menu">
+        <span>Welcome, {{ userName }}</span>
+        <button (click)="logout()">Logout</button>
+      </li>
+    </ul>
+</nav>

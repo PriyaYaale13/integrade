@@ -1,0 +1,20 @@
+<div class="metric-card" [routerLink]="route" [class.clickable]="!!route">
+    <div class="card-header">
+      <h3 class="card-title">{{ title }}</h3>
+      <mat-icon *ngIf="icon" class="card-icon">{{ icon }}</mat-icon>
+    </div>
+    <div class="card-content">
+      <div class="value-container">
+        <span class="value" [ngClass]="valueClass">{{ displayValue }}</span>
+        
+        <div *ngIf="target" class="target">
+          Target: {{ isPercentage ? (target + '%') : target }}
+        </div>
+      </div>
+  
+      <div *ngIf="showTrend && trend !== undefined" class="trend" [ngClass]="trendClass">
+        <mat-icon class="trend-icon">{{ trendIcon }}</mat-icon>
+        <span class="trend-value">{{ trend | number: '1.1-1' }}%</span>
+      </div>
+    </div>
+  </div>

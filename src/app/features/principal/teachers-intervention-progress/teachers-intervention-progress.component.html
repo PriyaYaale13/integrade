@@ -1,0 +1,243 @@
+<app-header></app-header>
+
+<div class="min-h-screen bg-[#F5F7FA] pt-2">
+    <div class="page-layout-container pt-10">
+        <app-sidebar title="Quick Links" [menuItems]="sidebarMenuItems" [useCustomIcons]="true"></app-sidebar>
+        <main class="flex-1 px-6 pt-5 overflow-x-hidden">
+            <div class="flex justify-between items-center mb-6 mt-2">
+                <h1 class="text-2xl font-medium text-[#212121] mt-2.5">Intervention Tracking</h1>
+            </div>
+            <!-- Filter Section -->
+            <div class="filters-bar mb-6">
+                <div class="w-full flex flex-wrap lg:flex-nowrap gap-4">
+                    <!-- Semester -->
+                    <mat-form-field appearance="outline" class="min-w-[150px] flex-1">
+                        <mat-label>Semester</mat-label>
+                        <mat-select [(ngModel)]="currentFilters.semester" (selectionChange)="applyFilters()">
+                            <mat-option value="all">All Semesters</mat-option>
+                            <mat-option *ngFor="let sem of (semesters$ | async)" [value]="sem">{{ sem }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <!-- Intervention Type -->
+                    <mat-form-field appearance="outline" class="min-w-[150px] flex-1">
+                        <mat-label>Intervention Type</mat-label>
+                        <mat-select [(ngModel)]="currentFilters.interventionType" (selectionChange)="applyFilters()">
+                            <mat-option value="all">All Interventions</mat-option>
+                            <mat-option *ngFor="let type of (interventionTypes$ | async)" [value]="type">{{ type
+                                }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <!-- Grade -->
+                    <mat-form-field appearance="outline" class="min-w-[150px] flex-1">
+                        <mat-label>Grade</mat-label>
+                        <mat-select [(ngModel)]="currentFilters.grade" (selectionChange)="applyFilters()">
+                            <mat-option value="all">All Grades</mat-option>
+                            <mat-option *ngFor="let grade of (grades$ | async)" [value]="grade">{{ grade }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <!-- Search Teacher -->
+                    <mat-form-field appearance="outline" class="min-w-[150px] flex-1">
+                        <mat-label>Search Teacher...</mat-label>
+                        <input matInput #searchInput [(ngModel)]="currentFilters.searchTeacher"
+                            (input)="onSearchTermChange($event)" placeholder="Enter name..." />
+                        <div matSuffix>
+                            <button *ngIf="searchInput.value" mat-icon-button (click)="clearSearch('teacherSearch')">
+                                <mat-icon>close</mat-icon>
+                            </button>
+                            <button *ngIf="!searchInput.value" mat-icon-button>
+                                <mat-icon>search</mat-icon>
+                            </button>
+                        </div>
+                    </mat-form-field>
+                    <!-- Search Student -->
+                    <mat-form-field appearance="outline" class="min-w-[150px] flex-1">
+                        <mat-label>Search Student...</mat-label>
+                        <input matInput #searchStudentInput [(ngModel)]="currentFilters.searchStudent"
+                            (input)="onSearchTermChange($event)" placeholder="Enter name..." />
+                        <div matSuffix>
+                            <button *ngIf="searchStudentInput.value" mat-icon-button
+                                (click)="clearSearch('studentSearch')">
+                                <mat-icon>close</mat-icon>
+                            </button>
+                            <button *ngIf="!searchStudentInput.value" mat-icon-button>
+                                <mat-icon>search</mat-icon>
+                            </button>
+                        </div>
+                    </mat-form-field>
+                </div>
+            </div>
+            <!-- Main Content -->
+            <ng-container *ngIf="(interventionData$ | async) as data; else loadingOrError">
+                <!-- Effectiveness Cards -->
+                <div class="content-card">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Intervention Effectiveness</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <!-- High Impact -->
+                        <div class="bg-white shadow rounded-lg p-4 border-t-4 border-green-500">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-sm font-medium text-gray-700">High Impact</span>
+                                <span class="text-sm font-semibold text-gray-900">{{
+                                    effectivenessData.highImpact.percentage }}%</span>
+                            </div>
+                            <div class="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+                                <div class="h-full rounded-full"
+                                    [style.width.%]="effectivenessData.highImpact.percentage"
+                                    [style.backgroundColor]="effectivenessData.highImpact.color"></div>
+                            </div>
+                        </div>
+                        <!-- Medium Impact -->
+                        <div class="bg-white shadow rounded-lg p-4 border-t-4 border-yellow-400">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-sm font-medium text-gray-700">Medium Impact</span>
+                                <span class="text-sm font-semibold text-gray-900">{{
+                                    effectivenessData.mediumImpact.percentage }}%</span>
+                            </div>
+                            <div class="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+                                <div class="h-full rounded-full"
+                                    [style.width.%]="effectivenessData.mediumImpact.percentage"
+                                    [style.backgroundColor]="effectivenessData.mediumImpact.color"></div>
+                            </div>
+                        </div>
+                        <!-- Low Impact -->
+                        <div class="bg-white shadow rounded-lg p-4 border-t-4 border-red-400">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-sm font-medium text-gray-700">Low Impact</span>
+                                <span class="text-sm font-semibold text-gray-900">{{
+                                    effectivenessData.lowImpact.percentage }}%</span>
+                            </div>
+                            <div class="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+                                <div class="h-full rounded-full"
+                                    [style.width.%]="effectivenessData.lowImpact.percentage"
+                                    [style.backgroundColor]="effectivenessData.lowImpact.color"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Intervention Table -->
+                <div class="content-card">
+                    <h3 class="section-title">Intervention Progress</h3>
+                    <div class="table-container">
+                        <table mat-table [dataSource]="dataSource" class="intervention-table">
+                            <!-- Student Name -->
+                            <ng-container matColumnDef="studentName">
+                                <th mat-header-cell *matHeaderCellDef> Student Name </th>
+                                <td mat-cell *matCellDef="let element" style="text-align: left;">
+                                    <div>{{element.student.name}}</div>
+                                </td>
+                            </ng-container>
+                            <!-- Teacher Name -->
+                            <ng-container matColumnDef="teacher">
+                                <th mat-header-cell *matHeaderCellDef>Teacher Name</th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{ element.teacher?.name || 'N/A' }}
+                                    <div class="term-indicators">
+                                        <span class="text-xs text-gray-500 mr-1 inline-block"
+                                            *ngIf="element.teacher.isWinter">Winter</span>
+                                        <span class="text-xs text-gray-500 mr-1 inline-block"
+                                            *ngIf="element.teacher.isFall">Fall</span>
+                                        <span class="text-xs text-gray-500 mr-1 inline-block"
+                                            *ngIf="element.teacher.isSpring">Spring</span>
+                                    </div>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="grade">
+                                <th mat-header-cell *matHeaderCellDef>Grade</th>
+                                <td mat-cell *matCellDef="let element">{{ element.grade || 'N/A' }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="type">
+                                <th mat-header-cell *matHeaderCellDef>Type</th>
+                                <td mat-cell *matCellDef="let element">{{ element.type || 'N/A' }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="startDate">
+                                <th mat-header-cell *matHeaderCellDef>Start Date</th>
+                                <td mat-cell *matCellDef="let element">{{ element.originalData?.startDate |
+                                    date: 'MMM d, yyyy' }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="duration">
+                                <th mat-header-cell *matHeaderCellDef>Duration</th>
+                                <td mat-cell *matCellDef="let element">{{ element.originalData?.duration ?
+                                    element.originalData.duration + ' years' : 'N/A' }}
+                            </ng-container>
+                            <ng-container matColumnDef="status">
+                                <th mat-header-cell *matHeaderCellDef>Status</th>
+                                <td mat-cell *matCellDef="let element">
+                                    <span class="status-badge" [ngClass]="element.status?.badgeClass || ''">
+                                        {{ element.status?.text || 'N/A' }}
+                                    </span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="progress">
+                                <th mat-header-cell *matHeaderCellDef>Progress</th>
+                                <td mat-cell *matCellDef="let element">
+                                    <div class="progress-bar-bg table-progress">
+                                        <div class="progress-bar" [style.width.%]="element.progress || 0"
+                                            [ngClass]="element.status?.badgeClass || ''"></div>
+                                    </div>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="actions">
+                                <th mat-header-cell *matHeaderCellDef>Actions</th>
+                                <td mat-cell *matCellDef="let element">
+                                    <a href="#" class="text-sm text-[#FF881F] font-medium"
+                                        (click)="viewStudentDetails(element, $event);">
+                                        View Details
+                                    </a>
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="table-row"></tr>
+                            <tr class="mat-row" *matNoDataRow>
+                                <td class="mat-cell" [attr.colspan]="displayedColumns.length">No intervention
+                                    data found matching filters.</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <mat-paginator #teacherInterventionPagination [length]="data?.records?.length" [pageSize]="5"
+                        [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+                </div>
+                <!-- Summary Report -->
+                <div class="summary-report-section" *ngIf="data.summaryReport?.length">
+                    <h3 class="section-title">Intervention Summary Report</h3>
+                    <div class="summary-grid">
+                        <div *ngFor="let summaryItem of data.summaryReport" class="summary-card">
+                            <h4 class="summary-card-title">{{ summaryItem.title }}</h4>
+                            <div class="summary-item">
+                                <span class="summary-label on-track">On Track</span>
+                                <span>{{ summaryItem.onTrackPercent }}%</span>
+                            </div>
+                            <div class="progress-bar-bg mb-2">
+                                <div class="progress-bar on-track-bar" [style.width.%]="summaryItem.onTrackPercent">
+                                </div>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label not-on-track">Not On Track</span>
+                                <span>{{ summaryItem.notOnTrackPercent }}%</span>
+                            </div>
+                            <div class="progress-bar-bg">
+                                <div class="progress-bar not-on-track-bar"
+                                    [style.width.%]="summaryItem.notOnTrackPercent"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+
+            <!-- Fallback State -->
+            <ng-template #loadingOrError>
+                <div *ngIf="isLoading" class="loading-container">
+                    <mat-spinner diameter="50"></mat-spinner>
+                    <p>Loading intervention data...</p>
+                </div>
+                <div *ngIf="!isLoading && error" class="error-container">
+                    <mat-icon color="warn">error</mat-icon>
+                    <p>{{ error }}</p>
+                    <button mat-raised-button color="primary" (click)="loadData()">Retry</button>
+                </div>
+                <div *ngIf="!isLoading && !error && !(interventionData$ | async)" class="error-container">
+                    <mat-icon>info</mat-icon>
+                    <p>No intervention data available.</p>
+                </div>
+            </ng-template>
+        </main>
+    </div>
+</div>

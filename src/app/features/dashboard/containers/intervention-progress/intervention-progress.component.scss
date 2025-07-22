@@ -1,0 +1,165 @@
+// src/app/features/dashboard/containers/intervention-progress/intervention-progress.component.scss
+.intervention-progress-container {
+    padding: 20px;
+    
+    .intervention-content {
+      .summary-section {
+        margin-bottom: 24px;
+        
+        .section-title {
+          font-size: 18px;
+          font-weight: 500;
+          color: #37474f;
+          margin-bottom: 16px;
+          text-align: center;
+        }
+        
+        .chart-container {
+          display: flex;
+          justify-content: center;
+          margin-bottom: 24px;
+        }
+        
+        .summary-stats {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 16px;
+          
+          .stat-item {
+            flex: 1;
+            min-width: 200px;
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            overflow: hidden;
+            
+            .stat-header {
+              padding: 12px 16px;
+              background-color: #37474f;
+              
+              h3 {
+                margin: 0;
+                color: white;
+                font-size: 16px;
+                font-weight: 500;
+              }
+            }
+            
+            .stat-content {
+              padding: 16px;
+              
+              .progress-container {
+                .progress-label {
+                  display: flex;
+                  justify-content: space-between;
+                  margin-bottom: 8px;
+                  
+                  span {
+                    font-size: 14px;
+                    color: #546e7a;
+                    
+                    &:first-child {
+                      color: #4caf50;
+                      font-weight: 500;
+                    }
+                    
+                    &:last-child {
+                      color: #f44336;
+                      font-weight: 500;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      
+      .details-section {
+        .section-title {
+          font-size: 18px;
+          font-weight: 500;
+          color: #37474f;
+          margin-bottom: 16px;
+        }
+        
+        .filters-row {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 16px;
+          margin-bottom: 16px;
+          
+          mat-form-field {
+            flex: 1;
+            min-width: 200px;
+          }
+        }
+        
+        .interventions-table {
+          overflow-x: auto;
+          
+          table {
+            width: 100%;
+            
+            .mat-mdc-header-row {
+              background-color: #f5f5f5;
+            }
+            
+            .intervention-cell {
+              .intervention-status {
+                font-weight: 500;
+                padding: 2px 8px;
+                border-radius: 4px;
+                display: inline-block;
+                margin-bottom: 8px;
+                
+                &.status-on-track {
+                  background-color: #e8f5e9;
+                  color: #4caf50;
+                }
+                
+                &.status-not-on-track {
+                  background-color: #ffebee;
+                  color: #f44336;
+                }
+              }
+              
+              .intervention-progress {
+                .progress-values {
+                  display: flex;
+                  justify-content: space-between;
+                  margin-bottom: 4px;
+                  font-size: 12px;
+                  
+                  span {
+                    color: #546e7a;
+                    
+                    &.target-value {
+                      font-weight: 500;
+                      color: #2196f3;
+                    }
+                  }
+                }
+              }
+            }
+            
+            .no-intervention {
+              color: rgba(0, 0, 0, 0.38);
+            }
+          }
+        }
+      }
+    }
+    
+    .loading-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 0;
+      
+      p {
+        margin-top: 16px;
+        color: #78909c;
+      }
+    }
+  }
+  

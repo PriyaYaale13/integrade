@@ -1,0 +1,23 @@
+<div id="student-profile-header" class="bg-white rounded-xl p-4 sm:p-6 shadow-sm mb-6">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-4 w-full">
+        <div class="flex items-center space-x-4">
+          <img [src]="student.image" class="w-16 h-16 rounded-full object-cover" alt="Student Image" />
+          <div>
+            <h1 class="text-xl sm:text-2xl font-semibold">{{ student.name }}</h1>
+            <div class="flex flex-wrap items-center gap-x-4 gap-y-1 mt-1 text-sm text-gray-500">
+              <span>{{ title }}</span>|
+              <span>Student ID: {{ student.studentId }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="flex justify-end sm:justify-start">
+        <h6 class="flex text-orange-500 cursor-pointer" [routerLink]="'/teacher/predict'">
+          <span class="material-icons text-orange-500 text-lg">arrow_back</span> 
+          <span class="ml-2 text-lg">Back</span> 
+        </h6>
+      </div>
+    </div>
+  </div>

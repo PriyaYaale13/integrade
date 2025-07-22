@@ -1,0 +1,213 @@
+// src/app/core/layout/main-layout/main-layout.component.html
+<div class="app-container" [class.is-mobile]="isMobile" [class.sidebar-expanded]="isExpanded">
+  <!-- Header -->
+  <mat-toolbar class="app-header mat-elevation-z6">
+    <button mat-icon-button (click)="toggleSidebar()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    
+    <div class="app-title">
+      <span class="logo-text">Eduboard</span>
+    </div>
+    
+    <div class="toolbar-spacer"></div>
+    
+    <!-- Notifications -->
+    <button mat-icon-button [matMenuTriggerFor]="notificationsMenu" class="notification-button">
+      <mat-icon [matBadge]="'3'" matBadgeColor="warn">notifications</mat-icon>
+    </button>
+    <mat-menu #notificationsMenu="matMenu" class="notifications-menu">
+      <div class="notification-header">
+        <span>Notifications</span>
+        <button mat-button color="primary">Mark all as read</button>
+      </div>
+      
+      <mat-divider></mat-divider>
+      
+      <div class="notification-list">
+        <a mat-menu-item class="notification-item unread">
+          <div class="notification-icon warning">
+            <mat-icon>warning</mat-icon>
+          </div>
+          <div class="notification-content">
+            <div class="notification-title">At-risk student alert</div>
+            <div class="notification-message">James Kross has been flagged as at-risk.</div>
+            <div class="notification-time">2 hours ago</div>
+          </div>
+        </a>
+        
+        <a mat-menu-item class="notification-item unread">
+          <div class="notification-icon info">
+            <mat-icon>assessment</mat-icon>
+          </div>
+          <div class="notification-content">
+            <div class="notification-title">New assessment results</div>
+            <div class="notification-message">Math assessment results are now available.</div>
+            <div class="notification-time">5 hours ago</div>
+          </div>
+        </a>
+        
+        <a mat-menu-item class="notification-item unread">
+          <div class="notification-icon success">
+            <mat-icon>check_circle</mat-icon>
+          </div>
+          <div class="notification-content">
+            <div class="notification-title">Intervention milestone reached</div>
+            <div class="notification-message">Mark Felton reached his literacy intervention goal.</div>
+            <div class="notification-time">Yesterday</div>
+          </div>
+        </a>
+        
+        <a mat-menu-item class="notification-item">
+          <div class="notification-icon info">
+            <mat-icon>school</mat-icon>
+          </div>
+          <div class="notification-content">
+            <div class="notification-title">Grade reports ready</div>
+            <div class="notification-message">Q1 grade reports are ready for review.</div>
+            <div class="notification-time">2 days ago</div>
+          </div>
+        </a>
+      </div>
+      
+      <mat-divider></mat-divider>
+      
+      <a mat-menu-item class="notification-footer">
+        <span>View all notifications</span>
+      </a>
+    </mat-menu>
+    
+    <!-- User menu -->
+    <button mat-icon-button [matMenuTriggerFor]="userMenu" class="user-button">
+      <div class="user-avatar">
+        {{ (currentUser$ | async)?.firstName?.charAt(0) }}{{ (currentUser$ | async)?.lastName?.charAt(0) }}
+      </div>
+    </button>
+    <mat-menu #userMenu="matMenu">
+      <div class="user-menu-header">
+        <div class="user-info">
+          <div class="user-name">{{ (currentUser$ | async)?.firstName }} {{ (currentUser$ | async)?.lastName }}</div>
+          <div class="user-email">{{ (currentUser$ | async)?.email }}</div>
+        </div>
+      </div>
+      
+      <mat-divider></mat-divider>
+      
+      <button mat-menu-item>
+        <mat-icon>person</mat-icon>
+        <span>My Profile</span>
+      </button>
+      
+      <button mat-menu-item>
+        <mat-icon>settings</mat-icon>
+        <span>Settings</span>
+      </button>
+      
+      <mat-divider></mat-divider>
+      
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>exit_to_app</mat-icon>
+        <span>Logout</span>
+      </button>
+    </mat-menu>
+  </mat-toolbar>
+
+  <!-- Sidebar & Main Content Container -->
+  <mat-sidenav-container class="app-container-inner">
+    <!-- Sidebar -->
+    <mat-sidenav 
+      #sidenav 
+      class="app-sidebar"
+      [mode]="isMobile ? 'over' : 'side'"
+      [opened]="!isMobile || isExpanded" 
+      [disableClose]="!isMobile"
+      [class.expanded]="isExpanded">
+      
+      <div class="sidebar-content">
+        <div class="sidebar-user" *ngIf="currentUser$ | async as user">
+          <div class="user-avatar">
+            {{ user.firstName.charAt(0) }}{{ user.lastName.charAt(0) }}
+          </div>
+          <div class="user-info" *ngIf="isExpanded">
+            <div class="user-name">{{ user.firstName }} {{ user.lastName }}</div>
+            <div class="user-role">{{ user.roles[0] | titlecase }}</div>
+          </div>
+        </div>
+
+        <mat-nav-list class="sidebar-nav">
+          <a mat-list-item routerLink="/dashboard" [class.active]="isLinkActive('/dashboard')">
+            <mat-icon matListItemIcon>dashboard</mat-icon>
+            <span matListItemTitle *ngIf="isExpanded">Dashboard</span>
+          </a>
+          
+          <a mat-list-item routerLink="/students" [class.active]="isLinkActive('/students')">
+            <mat-icon matListItemIcon>people</mat-icon>
+            <span matListItemTitle *ngIf="isExpanded">Students</span>
+          </a>
+
+          <a mat-list-item routerLink="/teachers" [class.active]="isLinkActive('/teachers')">
+            <mat-icon matListItemIcon>school</mat-icon>
+            <span matListItemTitle *ngIf="isExpanded">Teachers</span>
+          </a>
+          
+          <mat-divider></mat-divider>
+          
+          <a mat-list-item routerLink="/dashboard/course-proficiency" [class.active]="isLinkActive('/dashboard/course-proficiency')">
+            <mat-icon matListItemIcon>bar_chart</mat-icon>
+            <span matListItemTitle *ngIf="isExpanded">Course Proficiency</span>
+          </a>
+          
+          <a mat-list-item routerLink="/dashboard/state-assessment" [class.active]="isLinkActive('/dashboard/state-assessment')">
+            <mat-icon matListItemIcon>assessment</mat-icon>
+            <span matListItemTitle *ngIf="isExpanded">State Assessment</span>
+          </a>
+          
+          <a mat-list-item routerLink="/dashboard/sat-act" [class.active]="isLinkActive('/dashboard/sat-act')">
+            <mat-icon matListItemIcon>school</mat-icon>
+            <span matListItemTitle *ngIf="isExpanded">SAT/ACT</span>
+          </a>
+          
+          <mat-divider></mat-divider>
+          
+          <a mat-list-item routerLink="/dashboard/at-risk-students" [class.active]="isLinkActive('/dashboard/at-risk-students')">
+            <mat-icon matListItemIcon>warning</mat-icon>
+            <span matListItemTitle *ngIf="isExpanded">At Risk Students</span>
+          </a>
+          
+          <a mat-list-item routerLink="/dashboard/intervention-progress" [class.active]="isLinkActive('/dashboard/intervention-progress')">
+            <mat-icon matListItemIcon>trending_up</mat-icon>
+            <span matListItemTitle *ngIf="isExpanded">Intervention Progress</span>
+          </a>
+          
+          <a mat-list-item routerLink="/dashboard/behavior-assessment" [class.active]="isLinkActive('/dashboard/behavior-assessment')">
+            <mat-icon matListItemIcon>psychology</mat-icon>
+            <span matListItemTitle *ngIf="isExpanded">Behavior Assessment</span>
+          </a>
+          
+          <mat-divider></mat-divider>
+          
+          <a mat-list-item routerLink="/dashboard/prediction" [class.active]="isLinkActive('/dashboard/prediction')">
+            <mat-icon matListItemIcon>insights</mat-icon>
+            <span matListItemTitle *ngIf="isExpanded">Prediction Analysis</span>
+          </a>
+          
+          <a mat-list-item routerLink="/dashboard/overall-assessment" [class.active]="isLinkActive('/dashboard/overall-assessment')">
+            <mat-icon matListItemIcon>summarize</mat-icon>
+            <span matListItemTitle *ngIf="isExpanded">Overall Report</span>
+          </a>
+        </mat-nav-list>
+      </div>
+      
+      <div class="sidebar-footer">
+        <button mat-icon-button (click)="toggleSidebar()" class="toggle-sidebar-button">
+          <mat-icon>{{ isExpanded ? 'chevron_left' : 'chevron_right' }}</mat-icon>
+        </button>
+      </div>
+    </mat-sidenav>
+
+    <!-- Main Content -->
+    <mat-sidenav-content class="app-content">
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

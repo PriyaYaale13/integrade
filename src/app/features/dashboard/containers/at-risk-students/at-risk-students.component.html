@@ -1,0 +1,202 @@
+// src/app/features/dashboard/containers/at-risk-students/at-risk-students.component.html
+<div class="at-risk-students-container">
+  <app-page-header title="At Risk Students" [backRoute]="'/dashboard'">
+    <button mat-raised-button color="primary">
+      <mat-icon>add</mat-icon>
+      Add Intervention
+    </button>
+    <button mat-raised-button color="accent">
+      <mat-icon>email</mat-icon>
+      Send Reports
+    </button>
+  </app-page-header>
+
+  <div class="at-risk-content" *ngIf="!(loading$ | async); else loading">
+    <div class="overview-section" fxLayout="row wrap" fxLayoutGap="24px grid">
+      <div fxFlex="100" fxFlex.gt-sm="30">
+        <mat-card>
+          <mat-card-content>
+            <div class="chart-wrapper">
+              <h2 class="chart-title">Risk Distribution</h2>
+              <app-pie-chart
+                [data]="pieChartData"
+                [width]="300"
+                [height]="300"
+                [innerRadius]="80"
+                [showLabels]="true"
+                [showLegend]="true"
+                [centerText]="'Risk Analysis'">
+              </app-pie-chart>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      
+      <div fxFlex="100" fxFlex.gt-sm="70">
+        <mat-card>
+          <mat-card-content>
+            <div class="filters-section">
+              <mat-form-field appearance="outline">
+                <mat-label>Search</mat-label>
+                <input matInput placeholder="Search students">
+                <mat-icon matSuffix>search</mat-icon>
+              </mat-form-field>
+              
+              <mat-form-field appearance="outline">
+                <mat-label>Risk Level</mat-label>
+                <mat-select>
+                  <mat-option value="all">All Levels</mat-option>
+                  <mat-option value="high">High Risk</mat-option>
+                  <mat-option value="medium">Medium Risk</mat-option>
+                  <mat-option value="low">Low Risk</mat-option>
+                </mat-select>
+              </mat-form-field>
+              
+              <mat-form-field appearance="outline">
+                <mat-label>Factors</mat-label>
+                <mat-select multiple>
+                  <mat-option value="academic">Academic</mat-option>
+                  <mat-option value="attendance">Attendance</mat-option>
+                  <mat-option value="behavior">Behavior</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            
+            <div class="risk-factors-legend">
+              <div class="legend-item">
+                <div class="legend-color academic"></div>
+                <span>Academic</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-color attendance"></div>
+                <span>Attendance</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-color behavior"></div>
+                <span>Behavior</span>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+
+    <div class="students-section">
+      <mat-card>
+        <mat-card-content>
+          <div class="table-wrapper">
+            <table mat-table [dataSource]="atRiskStudents$ | async" class="mat-elevation-z1">
+              <!-- Student Name Column -->
+              <ng-container matColumnDef="studentName">
+                <th mat-header-cell *matHeaderCellDef>Student Name</th>
+                <td mat-cell *matCellDef="let student">{{ getStudentName(student) }}</td>
+              </ng-container>
+              
+              <!-- Absenteeism Column -->
+              <ng-container matColumnDef="absenteeism">
+                <th mat-header-cell *matHeaderCellDef>Absenteeism</th>
+                <td mat-cell *matCellDef="let student" [ngClass]="{'attendance-issue': student.absenteeism > 5}">
+                  {{ formatAbsenteeism(student.absenteeism) }}
+                </td>
+              </ng-container>
+              
+              <!-- Tardiness Column -->
+              <ng-container matColumnDef="tardiness">
+                <th mat-header-cell *matHeaderCellDef>Tardiness</th>
+                <td mat-cell *matCellDef="let student" [ngClass]="{'attendance-issue': student.tardiness > 3}">
+                  {{ formatTardiness(student.tardiness) }}
+                </td>
+              </ng-container>
+              
+              <!-- ELA Score Column -->
+              <ng-container matColumnDef="elaScore">
+                <th mat-header-cell *matHeaderCellDef>ELA</th>
+                <td mat-cell *matCellDef="let student" [ngClass]="getScoreClass(student.elaScore)">
+                  {{ student.elaScore !== null ? student.elaScore : '-' }}
+                </td>
+              </ng-container>
+              
+              <!-- Math Score Column -->
+              <ng-container matColumnDef="mathsScore">
+                <th mat-header-cell *matHeaderCellDef>Math</th>
+                <td mat-cell *matCellDef="let student" [ngClass]="getScoreClass(student.mathsScore)">
+                  {{ student.mathsScore !== null ? student.mathsScore : '-' }}
+                </td>
+              </ng-container>
+              
+              <!-- Science Score Column -->
+              <ng-container matColumnDef="scienceScore">
+                <th mat-header-cell *matHeaderCellDef>Science</th>
+                <td mat-cell *matCellDef="let student" [ngClass]="getScoreClass(student.scienceScore)">
+                  {{ student.scienceScore !== null ? student.scienceScore : '-' }}
+                </td>
+              </ng-container>
+              
+              <!-- Disciplinary Actions Column -->
+              <ng-container matColumnDef="disciplinaryActions">
+                <th mat-header-cell *matHeaderCellDef>Disciplinary</th>
+                <td mat-cell *matCellDef="let student" [ngClass]="{'behavior-issue': student.disciplinaryActions > 2}">
+                  {{ student.disciplinaryActions !== null ? student.disciplinaryActions : '-' }}
+                </td>
+              </ng-container>
+              
+              <!-- Suspension Column -->
+              <ng-container matColumnDef="suspension">
+                <th mat-header-cell *matHeaderCellDef>Suspension</th>
+                <td mat-cell *matCellDef="let student" [ngClass]="{'behavior-issue': student.suspension > 0}">
+                  {{ student.suspension !== null ? student.suspension : '-' }}
+                </td>
+              </ng-container>
+              
+              <!-- Risk Score Column -->
+              <ng-container matColumnDef="riskScore">
+                <th mat-header-cell *matHeaderCellDef>Risk Score</th>
+                <td mat-cell *matCellDef="let student" [ngClass]="getRiskScoreClass(student.riskScore)">
+                  {{ student.riskScore !== null ? student.riskScore : '-' }}
+                </td>
+              </ng-container>
+              
+              <!-- Suggested Interventions Column -->
+              <ng-container matColumnDef="suggestedInterventions">
+                <th mat-header-cell *matHeaderCellDef>Suggested Interventions</th>
+                <td mat-cell *matCellDef="let student">
+                  <div class="interventions-list" *ngIf="student.suggestedInterventions && student.suggestedInterventions.length > 0">
+                    <mat-chip-list>
+                      <mat-chip *ngFor="let intervention of student.suggestedInterventions">
+                        {{ intervention }}
+                      </mat-chip>
+                    </mat-chip-list>
+                  </div>
+                  <span *ngIf="!student.suggestedInterventions || student.suggestedInterventions.length === 0">-</span>
+                </td>
+              </ng-container>
+              
+              <!-- Actions Column -->
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>Actions</th>
+                <td mat-cell *matCellDef="let student">
+                  <button mat-icon-button color="primary" [routerLink]="['/students', student.id]">
+                    <mat-icon>visibility</mat-icon>
+                  </button>
+                  <button mat-icon-button color="accent">
+                    <mat-icon>add_circle</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+              
+              <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+  <ng-template #loading>
+    <div class="loading-container">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>Loading at-risk student data...</p>
+    </div>
+  </ng-template>
+</div>

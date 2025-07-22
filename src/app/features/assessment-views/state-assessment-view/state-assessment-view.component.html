@@ -1,0 +1,207 @@
+<!-- Header -->
+<app-header></app-header>
+
+<!-- Main Content -->
+<div class="min-h-screen bg-[#f5f5f5]">
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Page Title -->
+        <div class="mb-8">
+            <button (click)="goBack()" class="mb-4 flex items-center text-gray-600 hover:text-[#3f51b5]">
+                <i class="fa-solid fa-arrow-left mr-2"></i> Back
+            </button>
+            <h1 class="text-2xl font-bold text-gray-800">State Assessment Overview</h1>
+            <p class="text-gray-600 mt-2">Track and analyze student performance in Mathematics and English Language Arts</p>
+        </div>
+
+        <!-- Loading and Error States -->
+        <div *ngIf="isLoading" class="flex justify-center items-center py-12">
+            <div class="flex flex-col items-center">
+                <mat-spinner diameter="50"></mat-spinner>
+                <p class="mt-4 text-gray-600">Loading state assessment data...</p>
+            </div>
+        </div>
+
+        <div *ngIf="!isLoading && error" class="flex justify-center items-center py-12">
+            <div class="flex flex-col items-center">
+                <i class="fa-solid fa-circle-exclamation text-4xl text-red-500 mb-4"></i>
+                <p class="text-gray-800">{{error}}</p>
+                <button (click)="loadData()" class="mt-4 bg-[#3f51b5] text-white py-2 px-4 rounded-lg hover:bg-[#303f9f] transition duration-200">
+                    Retry
+                </button>
+            </div>
+        </div>
+
+        <!-- Data Display Section -->
+        <ng-container *ngIf="!isLoading && !error">
+            <!-- Filters Section -->
+            <div class="bg-white rounded-xl shadow-sm p-6 mb-8">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div class="filter-group">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Grade Range</label>
+                        <select [(ngModel)]="currentFilters.gradeRange" (change)="applyFilters()" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3f51b5] focus:border-transparent">
+                            <option *ngFor="let range of (gradeRanges$ | async)" [value]="range">{{range}}</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Semester</label>
+                        <select [(ngModel)]="currentFilters.semester" (change)="applyFilters()" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3f51b5] focus:border-transparent">
+                            <option *ngFor="let sem of (semesters$ | async)" [value]="sem">{{sem | titlecase}}</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Search Student</label>
+                        <div class="relative">
+                            <input [(ngModel)]="currentFilters.searchTerm" (ngModelChange)="applyFilters()" type="text" placeholder="Enter name..." class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3f51b5] focus:border-transparent pl-10">
+                            <i class="fa-solid fa-search absolute left-3 top-3 text-gray-400"></i>
+                            <button *ngIf="currentFilters.searchTerm" (click)="clearSearch()" class="absolute right-3 top-3 text-gray-400 hover:text-gray-600">
+                                <i class="fa-solid fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <button (click)="applyFilters()" class="self-end bg-[#3f51b5] text-white py-2 px-4 rounded-lg hover:bg-[#303f9f] transition duration-200">
+                        Apply Filters
+                    </button>
+                </div>
+            </div>
+
+            <!-- No Data Message -->
+            <div *ngIf="(!assessmentScores || assessmentScores.length === 0) && 
+                        (!assessmentDistribution || assessmentDistribution.length === 0) && 
+                        (!performanceOverview || performanceOverview.length === 0)" 
+                class="bg-white rounded-xl shadow-sm p-12 text-center">
+                <i class="fa-solid fa-file-circle-exclamation text-4xl text-gray-400 mb-4"></i>
+                <h3 class="text-xl font-medium text-gray-700 mb-2">No Assessment Data Available</h3>
+                <p class="text-gray-600 mb-6">There is no state assessment data available for the selected filters.</p>
+                <button (click)="loadData()" class="bg-[#3f51b5] text-white py-2 px-4 rounded-lg hover:bg-[#303f9f] transition duration-200">
+                    Reset Filters & Try Again
+                </button>
+            </div>
+
+            <!-- Overview Bars (Only show if data exists) -->
+            <div *ngIf="performanceOverview && performanceOverview.length > 0" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div *ngFor="let overview of performanceOverview" class="bg-white rounded-xl shadow-sm p-6">
+                    <app-state-assessment-chart [data]="overview"></app-state-assessment-chart>
+                </div>
+            </div>
+
+            <!-- Charts Section (Only show if data exists) -->
+            <div *ngIf="assessmentDistribution && assessmentDistribution.length > 0" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <!-- Distribution Pie Charts -->
+                <div *ngFor="let dist of assessmentDistribution" class="bg-white rounded-xl shadow-sm p-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-lg font-semibold text-gray-800">{{dist.subject}} Performance</h3>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-sm text-gray-500">Class Average: {{dist.averageScore | number:'1.0-0'}}%</span>
+                            <i class="fa-solid" [ngClass]="dist.subject === 'ELA' ? 'fa-book' : 'fa-calculator'" class="text-[#3f51b5]"></i>
+                        </div>
+                    </div>
+                    <app-score-band-pie-chart [data]="dist"></app-score-band-pie-chart>
+                </div>
+            </div>
+
+            <!-- Students Performance Table (Only show if data exists) -->
+            <div *ngIf="assessmentScores && assessmentScores.length > 0" class="bg-white rounded-xl shadow-sm overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                    <h2 class="text-xl font-semibold text-gray-800">Student Assessment Results</h2>
+                    <button class="flex items-center text-[#3f51b5] hover:text-[#303f9f]">
+                        <i class="fa-solid fa-download mr-2"></i> Export Data
+                    </button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Student</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Semester</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Mathematics</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ELA</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr *ngFor="let student of assessmentScores">
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center">
+                                        <div class="bg-[#3f51b5] text-white flex items-center justify-center rounded-full w-8 h-8 mr-3">
+                                            {{student.studentName.charAt(0)}}
+                                        </div>
+                                        <div>
+                                            <div class="text-sm font-medium text-gray-900">{{student.studentName}}</div>
+                                            <div class="text-sm text-gray-500">ID: {{student.studentId}}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 text-sm text-gray-900">{{student.semester | titlecase}}</td>
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center" *ngIf="student.MATHS !== null">
+                                        <span class="text-sm font-medium" 
+                                              [ngClass]="{'text-[#4caf50]': student.MATHS >= 85, 
+                                                         'text-[#3f51b5]': student.MATHS >= 70 && student.MATHS < 85,
+                                                         'text-[#ff9800]': student.MATHS >= 60 && student.MATHS < 70,
+                                                         'text-[#f44336]': student.MATHS < 60}">
+                                            {{student.MATHS}}%
+                                        </span>
+                                        <span class="ml-2 px-2 py-1 text-xs rounded"
+                                              [ngClass]="{'bg-[#4caf50]/10 text-[#4caf50]': student.MATHS >= 85, 
+                                                         'bg-[#3f51b5]/10 text-[#3f51b5]': student.MATHS >= 70 && student.MATHS < 85,
+                                                         'bg-[#ff9800]/10 text-[#ff9800]': student.MATHS >= 60 && student.MATHS < 70,
+                                                         'bg-[#f44336]/10 text-[#f44336]': student.MATHS < 60}">
+                                            {{student.MATHS >= 85 ? 'Advanced' : 
+                                              student.MATHS >= 70 ? 'Proficient' : 
+                                              student.MATHS >= 60 ? 'Basic' : 'Below Basic'}}
+                                        </span>
+                                    </div>
+                                    <span *ngIf="student.MATHS === null" class="text-sm text-gray-500">N/A</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center" *ngIf="student.ELA !== null">
+                                        <span class="text-sm font-medium" 
+                                              [ngClass]="{'text-[#4caf50]': student.ELA >= 85, 
+                                                         'text-[#3f51b5]': student.ELA >= 70 && student.ELA < 85,
+                                                         'text-[#ff9800]': student.ELA >= 60 && student.ELA < 70,
+                                                         'text-[#f44336]': student.ELA < 60}">
+                                            {{student.ELA}}%
+                                        </span>
+                                        <span class="ml-2 px-2 py-1 text-xs rounded"
+                                              [ngClass]="{'bg-[#4caf50]/10 text-[#4caf50]': student.ELA >= 85, 
+                                                         'bg-[#3f51b5]/10 text-[#3f51b5]': student.ELA >= 70 && student.ELA < 85,
+                                                         'bg-[#ff9800]/10 text-[#ff9800]': student.ELA >= 60 && student.ELA < 70,
+                                                         'bg-[#f44336]/10 text-[#f44336]': student.ELA < 60}">
+                                            {{student.ELA >= 85 ? 'Advanced' : 
+                                              student.ELA >= 70 ? 'Proficient' : 
+                                              student.ELA >= 60 ? 'Basic' : 'Below Basic'}}
+                                        </span>
+                                    </div>
+                                    <span *ngIf="student.ELA === null" class="text-sm text-gray-500">N/A</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="px-2 py-1 text-xs rounded-full"
+                                          [ngClass]="{'bg-[#4caf50]/10 text-[#4caf50]': 
+                                                    (student.MATHS !== null && student.MATHS >= 70) &&
+                                                    (student.ELA !== null && student.ELA >= 70), 
+                                                    'bg-[#ff9800]/10 text-[#ff9800]': 
+                                                    (student.MATHS !== null && student.MATHS < 70) ||
+                                                    (student.ELA !== null && student.ELA < 70)}">
+                                        {{(student.MATHS !== null && student.MATHS >= 70) &&
+                                          (student.ELA !== null && student.ELA >= 70) ? 
+                                          'On Track' : 'Needs Review'}}
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="px-6 py-4 border-t border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <div class="text-sm text-gray-600">Showing {{assessmentScores.length}} students</div>
+                        <div class="flex items-center space-x-2">
+                            <button class="px-3 py-1 border border-gray-300 rounded-lg text-sm">Previous</button>
+                            <button class="px-3 py-1 bg-[#3f51b5] text-white rounded-lg text-sm">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </main>
+</div>

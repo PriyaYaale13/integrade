@@ -1,0 +1,38 @@
+<!-- Filters -->
+<div class="filters-bar mb-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 flex-grow">
+        <!-- Grades -->
+
+        <!-- <mat-form-field appearance="outline" class="w-full filter-field">
+                        <mat-label>Grade</mat-label>
+                        <mat-select [(ngModel)]="currentFilters.grade" (selectionChange)="applyFilters()">
+                            <mat-option value="all">All Grades</mat-option> 
+                            <mat-option *ngFor="let grade of grades" [value]="grade">{{ grade
+                                }}</mat-option>
+                        </mat-select>
+                    </mat-form-field> -->
+
+        <!-- Semester Dropdown -->
+        <mat-form-field appearance="outline" class="w-full filter-field">
+            <mat-label>Semester</mat-label>
+            <mat-select [(ngModel)]="currentFilters.semester" (selectionChange)="applyFilters()">
+                <mat-option value="all">All Semester</mat-option> <!-- Add 'All' option -->
+                <mat-option *ngFor="let sem of semesters" [value]="sem">{{ sem }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <!-- Right: Search Field -->
+        <mat-form-field appearance="outline" class="w-full filter-field">
+            <mat-label>Search Student</mat-label>
+            <input matInput #searchInput [(ngModel)]="currentFilters.searchTerm" (ngModelChange)="applyFilters()"
+                placeholder="Enter name..." />
+            <div matSuffix class="icon-container">
+                <button *ngIf="searchInput.value" mat-icon-button aria-label="Clear" (click)="clearSearch()">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <button *ngIf="!searchInput.value" mat-icon-button aria-label="search">
+                    <mat-icon *ngIf="!searchInput.value">search</mat-icon>
+                </button>
+            </div>
+        </mat-form-field>
+    </div>
+</div>

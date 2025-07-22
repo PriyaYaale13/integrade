@@ -1,0 +1,61 @@
+<app-header></app-header>
+<div class="page-container assessment-view-page">
+    <button mat-stroked-button (click)="goBack()" class="back-button">
+        <mat-icon>arrow_back</mat-icon> Back
+    </button>
+
+    <h1>Schoology Assessment Data</h1>
+
+     <!-- Filters -->
+    <div class="filters-bar">
+         <mat-form-field appearance="outline">
+             <mat-label>Semester</mat-label>
+             <mat-select [(ngModel)]="currentFilters.semester" (selectionChange)="applyFilters()">
+                 <mat-option *ngFor="let sem of (semesters$ | async)" [value]="sem">{{ sem | titlecase }}</mat-option>
+             </mat-select>
+         </mat-form-field>
+         <mat-form-field class="search-field" appearance="outline">
+             <mat-label>Search Student</mat-label>
+             <input matInput [(ngModel)]="currentFilters.searchTerm" (ngModelChange)="applyFilters()" placeholder="Enter name...">
+             <button *ngIf="currentFilters.searchTerm" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()"> <mat-icon>close</mat-icon> </button>
+             <mat-icon matSuffix>search</mat-icon>
+         </mat-form-field>
+         <!-- Add other filters -->
+    </div>
+
+    <ng-container *ngIf="!isLoading && (scores$ | async) as scores; else loadingOrError">
+        <mat-card class="table-card">
+            <mat-card-content>
+                <table mat-table [dataSource]="scores" class="assessment-table">
+                     <!-- Checkbox Column -->
+                     <ng-container matColumnDef="select">
+                        <th mat-header-cell *matHeaderCellDef></th>
+                        <td mat-cell *matCellDef="let row"><mat-checkbox></mat-checkbox></td>
+                     </ng-container>
+                     <ng-container matColumnDef="studentName">
+                        <th mat-header-cell *matHeaderCellDef> Student </th>
+                        <td mat-cell *matCellDef="let element"> {{element.studentName}} </td>
+                     </ng-container>
+                     <ng-container matColumnDef="semester">
+                        <th mat-header-cell *matHeaderCellDef> Semester </th>
+                        <td mat-cell *matCellDef="let element"> {{element.semester | titlecase}} </td>
+                     </ng-container>
+                     <!-- Subject Columns -->
+                      <ng-container matColumnDef="ELA"> <th mat-header-cell *matHeaderCellDef> ELA </th> <td mat-cell *matCellDef="let e"> {{e.ELA ?? '-'}} </td> </ng-container>
+                      <ng-container matColumnDef="MATHS"> <th mat-header-cell *matHeaderCellDef> Maths </th> <td mat-cell *matCellDef="let e"> {{e.MATHS ?? '-'}} </td> </ng-container>
+                      <ng-container matColumnDef="SCIENCE"> <th mat-header-cell *matHeaderCellDef> Science </th> <td mat-cell *matCellDef="let e"> {{e.SCIENCE ?? '-'}} </td> </ng-container>
+                      <ng-container matColumnDef="MUSIC"> <th mat-header-cell *matHeaderCellDef> Music </th> <td mat-cell *matCellDef="let e"> {{e.MUSIC ?? '-'}} </td> </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    <tr class="mat-row" *matNoDataRow> <td class="mat-cell" [attr.colspan]="displayedColumns.length">No Schoology data found.</td> </tr>
+                </table>
+            </mat-card-content>
+        </mat-card>
+    </ng-container>
+
+     <ng-template #loadingOrError>
+        <div class="loading-container"> <mat-spinner diameter="50"></mat-spinner> <p>Loading Schoology data...</p> </div>
+         <!-- TODO: Add error handling display -->
+    </ng-template>
+</div>

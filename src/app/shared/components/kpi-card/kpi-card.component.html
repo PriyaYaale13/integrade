@@ -1,0 +1,69 @@
+<mat-card [ngClass]="cardClasses" (click)="kpi.navigateTo ? onKpiClick(kpi) : null">
+  <mat-card-header>
+    <mat-card-title>
+      <div class="flex items-start gap-3 flex-1">
+        <!-- Icon -->
+        <div
+          [ngClass]="'w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ' + getKpiIconClass(kpi)">
+          <i [ngClass]="getKpiIcon(kpi)"></i>
+        </div>
+        <!-- Title + Trend (aligned horizontally) -->
+        <div class="flex flex-col flex-1">
+          <div class="flex items-center justify-between">
+            <h3 class="text-[#757575] font-medium truncate">{{ kpi.title }}</h3>
+            <ng-container
+              *ngIf="!kpi?.male && !kpi?.female && !kpi?.fullTime && !kpi?.partTime && !kpi?.range && !kpi?.master && !kpi?.phd && !kpi?.multiple && !kpi?.single">
+              <div class="flex flex-col items-end ml-auto" [ngClass]="getTrendClass(kpi)">
+                <div class="flex items-center gap-1">
+                  <i [ngClass]="getTrendIcon(kpi)" class="text-sm"></i>
+                  <span class="text-sm font-medium">{{ getTrendValue(kpi) }}</span>
+                </div>
+                <span class="text-xs text-[#757575] whitespace-nowrap">{{ getComparison(kpi) }}</span>
+              </div>
+            </ng-container>
+
+            <!-- Optional breakdowns (e.g., Male/Female) -->
+            <ng-container *ngIf="kpi?.male || kpi?.female">
+              <div class="flex flex-col items-end ml-auto text-xs text-[#757575]">
+                <span *ngIf="kpi?.male">Male: {{ kpi.male }}</span>
+                <span *ngIf="kpi?.female">Female: {{ kpi.female }}</span>
+              </div>
+            </ng-container>
+
+            <!-- Other breakdowns -->
+            <ng-container *ngIf="kpi.fullTime && kpi.partTime">
+              <div class="flex flex-col items-end ml-auto text-xs text-[#757575]">
+                <span>Full-Time: {{kpi.fullTime}}</span>
+                <span>Part-Time: {{kpi.partTime}}</span>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="kpi.range">
+              <span class="text-[#757575] font-medium text-xs pt-1">Range: {{kpi.range}}</span>
+            </ng-container>
+            <ng-container *ngIf="kpi.master && kpi.phd">
+              <div class="flex flex-col items-end ml-auto text-xs text-[#757575]">
+                <span>Masters: {{kpi.master}}</span>
+                <span>PhD: {{kpi.phd}}</span>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="kpi.multiple && kpi.single">
+              <div class="flex flex-col items-end ml-auto text-xs text-[#757575]">
+                <span>Multiple: {{kpi.multiple}}</span>
+                <span>Single: {{kpi.single}}</span>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="p-4">
+      <div class="text-3xl font-medium text-[#212121]">{{ kpi.value }}{{ kpi.unit }}</div>
+      <div class="w-full rounded-full h-1.5 mt-4">
+        <div [ngClass]="getProgressBarClass(kpi)" class="h-1.5 rounded-full" [style.width]="getProgressWidth(kpi)">
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

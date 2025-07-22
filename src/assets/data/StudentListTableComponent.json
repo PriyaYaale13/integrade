@@ -1,0 +1,36 @@
+[
+    {
+      "student_id": 1,
+      "academy_id": 2025001,
+      "name": "Sarah Johnson",
+      "grade": "Grade 10",
+      "riskLevel": "High Risk",
+      "riskFactors": ["Low Attendance", "Failed Math"],
+      "gpa": 1.8,
+      "attendance": "68%",
+      "image": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg"
+    },
+    {
+      "student_id": 2,
+      "academy_id": 2025002,
+      "name": "Michael Chen",
+      "grade": "Grade 11",
+      "riskLevel": "Medium Risk",
+      "riskFactors": ["Grade Drop"],
+      "gpa": 2.3,
+      "attendance": "85%",
+      "image": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg"
+    },
+    {
+      "student_id": 3,
+      "academy_id": 2025003,
+      "name": "Emily Davis",
+      "grade": "Grade 9",
+      "riskLevel": "Low Risk",
+      "riskFactors": ["Good Attendance"],
+      "gpa": 3.5,
+      "attendance": "95%",
+      "image": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-4.jpg"
+    }
+  ]
+  

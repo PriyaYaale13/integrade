@@ -1,0 +1,48 @@
+// src/app/features/parent-portal/components/academic-progress/academic-progress.component.html
+<div class="academic-progress-container">
+  <div class="content-section" *ngIf="!isLoading; else loading">
+    <div class="subject-selector">
+      <mat-form-field appearance="outline">
+        <mat-label>Subject</mat-label>
+        <mat-select [(value)]="selectedSubject" (selectionChange)="onSubjectChange($event.value)">
+          <mat-option *ngFor="let subject of subjects" [value]="subject.value">
+            {{ subject.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    
+    <div class="chart-container">
+      <app-line-chart
+        [series]="academicData.chartSeries"
+        [width]="600"
+        [height]="300"
+        [showPoints]="true"
+        [minYValue]="0"
+        [maxYValue]="100"
+        [curved]="true"
+        [showArea]="true"
+        [animated]="true">
+      </app-line-chart>
+    </div>
+    
+    <div class="grades-grid">
+      <div 
+        *ngFor="let subject of subjects | slice:1" 
+        class="grade-item"
+        [class.hidden]="selectedSubject !== 'all' && selectedSubject !== subject.value">
+        
+        <div class="grade-subject">{{ subject.label }}</div>
+        <div class="grade-value" [ngClass]="getScoreClass(academicData.currentGrades[subject.value])">
+          {{ academicData.currentGrades[subject.value] || 0 }}
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <ng-template #loading>
+    <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  </ng-template>
+</div>

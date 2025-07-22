@@ -1,0 +1,41 @@
+<app-header></app-header>
+<div class="min-h-screen pt-10 bg-custom-bg">
+
+    <div class="page-layout-container flex">
+
+
+        <app-sidebar title="Quick Links" [menuItems]="sidebarMenuItems" [useCustomIcons]="true">
+        </app-sidebar>
+
+        <main class="flex-1 space-y-6 pt-4">
+
+            <div style="display: none;">Loading state: {{isLoading}}</div>
+            <ng-container *ngIf="!isLoading; else loadingOrError">
+                <h1 class="page-title">Class Assessment Predictions</h1>
+
+                <div>
+
+                    <app-class-assessment-predictions-heading [title]="title"
+                        [count]="count"></app-class-assessment-predictions-heading>
+                </div>
+                <div>
+                    <app-class-assessment-predictions-subject-overview
+                        [subjectOverview]="subjectOverview"></app-class-assessment-predictions-subject-overview>
+                </div>
+                <div>
+                    <app-class-assessment-predictions-student-table [student]="student" [currentPage]="currentPage"
+                        [itemsPerPage]="itemsPerPage" (pageChange)="onPageChange($event)"
+                        (searchQueryChange)="onSearchQueryChange($event)"
+                        (scoreFilterChange)="onScoreFilterChange($event)"></app-class-assessment-predictions-student-table>
+                </div>
+            </ng-container>
+            <ng-template #loadingOrError>
+                <div *ngIf="isLoading" class="loading-container">
+                    <mat-spinner diameter="100"></mat-spinner>
+                    <p>Loading teachers behavior data...</p>
+                </div>
+            </ng-template>
+        </main>
+
+    </div>
+</div>

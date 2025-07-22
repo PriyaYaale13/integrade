@@ -1,0 +1,30 @@
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div *ngFor="let subject of subjectOverview; let index = index" class="border rounded-lg shadow-md overflow-hidden bg-white">
+     
+      <div class="p-4 bg-white-100 flex  ">
+        <h2 class="text-xl font-bold text-gray-800">{{ subject.subject }}</h2>
+      </div>
+  
+     
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 p-4">
+       
+        <div class="flex flex-col items-center p-4 bg-green-100 rounded-md">
+          <span class="text-2xl font-bold text-green-500">{{ subject.standards }}</span>
+          <span class="text-center font-medium text-green-700">Meeting Standards</span>
+        </div>
+  
+        <!-- Approaching -->
+        <div class="flex flex-col items-center p-4 bg-orange-100 rounded-md">
+          <span class="text-2xl font-bold text-orange-500">{{ subject.approach }}</span>
+          <span class="text-center font-medium text-orange-700">Approaching</span>
+        </div>
+  
+        <!-- Below -->
+        <div class="flex flex-col items-center p-4 bg-red-100 rounded-md">
+          <span class="text-2xl font-bold text-red-500">{{ subject.below }}</span>
+          <span class="text-center font-medium text-red-700">Below</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  

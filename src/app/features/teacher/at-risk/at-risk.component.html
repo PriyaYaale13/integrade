@@ -1,0 +1,50 @@
+<app-header></app-header>
+
+<div class="min-h-screen pt-20 bg-custom-bg">
+
+    <div class="page-layout-container">
+        <app-sidebar title="Quick Links" [menuItems]="sidebarMenuItems" [useCustomIcons]="true">
+
+        </app-sidebar>
+
+        <!-- Main Content -->
+        <main class="flex-1 space-y-6">
+
+            <h1 class="page-title">At Risk Students</h1>
+            <!-- Risk Summary Cards -->
+            <app-at-rick-card [stateAtRiskCart]="stateAtRiskCart"></app-at-rick-card>
+
+            <!-- Filters -->
+            <app-subject-selector (filtersChanges)="onFiltersChanged($event)"></app-subject-selector>
+            <!-- Student List -->
+             
+            <ng-container *ngIf="isLoading$ | async; else studentTable">
+              <div class="loading-container">
+                <mat-spinner></mat-spinner>
+                <p>Loading student data...</p>
+              </div>
+            </ng-container>
+            
+            <ng-template #studentTable>
+              <app-student-list-table
+                [studentList]="filteredStudents$ "
+                [trackByFn]="trackByStudentId">
+              </app-student-list-table>
+            </ng-template>
+            
+            
+              
+
+            <div class="p-6 border-t">
+                <div class="flex items-center justify-between">
+                    <div class="text-sm text-gray-500">Showing 1-2 of 208 students</div>
+                    <div class="flex items-center space-x-2">
+                        <button class="px-3 py-1 border rounded-lg">Previous</button>
+                        <button class="px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white border rounded-lg">Next</button>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+</div>

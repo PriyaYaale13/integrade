@@ -1,0 +1,220 @@
+// Define theme colors
+$theme-yellow: #FFAE00;
+$theme-orange: #FF881F;
+$theme-pink: #FF008F;
+
+@use '@angular/material' as mat;
+
+.container-fluid {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 0;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.header-container {
+  background: linear-gradient(to right, #ffffff, #f8f9fa);
+  transition: all 0.3s ease;
+  height: 90px; /* Ensure consistent height */
+}
+
+// Make header fixed at the top
+.bg-white.shadow-sm {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100; 
+  border-radius: 0 0 16px 16px;
+  margin: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: none;
+  border-bottom: 2px solid $theme-orange;
+  width: 100%;
+}
+
+// Logo styling
+a.flex-shrink-0 {
+  img {
+    height: 152px;
+    width: auto;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+}
+
+// Enhanced logo styling with new classes
+.logo-container {
+  display: flex;
+  align-items: center;
+  padding: 4px 0;
+  margin-left: 0;
+  position: relative;
+  z-index: 99; // Lower than dropdown menus
+}
+
+.logo-image {
+  height: 152px;
+  width: auto;
+  transition: all 0.2s ease;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+  
+  &:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.2));
+  }
+}
+
+// User controls container to properly position all ng-container elements
+.user-controls-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  z-index: 99; // Lower than dropdown menus
+  position: relative;
+}
+
+// User menu button styling
+.user-menu-button {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  padding: 6px 12px;
+  position: relative;
+  z-index: 99; // Lower than dropdown menus
+  
+  &:hover {
+    background-color: rgba($theme-orange, 0.1);
+    color: $theme-orange !important;
+  }
+}
+
+// Add specific styling for the user dropdown menu
+.user-dropdown-menu {
+  z-index: 2000 !important; // Extremely high z-index
+}
+
+// Child selector styling
+.child-selector {
+  margin-right: 1rem;
+  
+  .mat-mdc-form-field-subscript-wrapper {
+     display: none; // Hide space for errors/hints
+  }
+
+  .mat-mdc-form-field-flex {
+    background-color: transparent;
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+  }
+
+  .mat-mdc-text-field-wrapper {
+    background-color: transparent;
+  }
+
+  .mdc-notched-outline > * {
+    border-color: $theme-yellow !important;
+  }
+  
+  ::ng-deep {
+    .mat-mdc-select-value, .mat-mdc-select-arrow {
+      color: $theme-orange;
+    }
+    
+    .mat-mdc-form-field.mat-focused {
+      .mdc-notched-outline > * {
+        border-color: $theme-pink !important;
+      }
+    }
+  }
+}
+
+// Fix the dropdown menu styling
+::ng-deep {
+  // Override Material's overlay container to ensure proper z-index
+  .cdk-overlay-container {
+    z-index: 1500 !important; // Higher than any other z-index in your application
+  }
+  
+  // Style the menu panel itself
+  .mat-mdc-menu-panel {
+    border-radius: 0.5rem !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+    z-index: 1600 !important; // Even higher than the overlay container
+    
+    .mat-mdc-menu-item {
+      font-family: 'Inter', sans-serif;
+      color: #424242;
+      font-size: 0.875rem;
+      
+      &:hover {
+        background-color: rgba($theme-yellow, 0.1);
+        color: $theme-orange;
+        
+        i {
+          color: $theme-orange;
+        }
+      }
+    }
+  }
+}
+
+// Dark mode support
+@media (prefers-color-scheme: dark) {
+  .bg-white {
+    background-color: var(--color-base);
+  }
+  
+  .border-\[\#E0E0E0\] {
+    border-color: var(--color-base-300);
+  }
+  
+  .text-\[\#424242\], .text-\[\#757575\] {
+    color: var(--color-base-content);
+  }
+  
+  .hover\:text-\[\#3f51b5\]:hover {
+    color: $theme-pink;
+  }
+}
+
+// Also modify the container height to accommodate the larger logo
+.flex.justify-between {
+  height: 90px !important;
+  min-height: 90px;
+  align-items: center;
+  padding: 0 8px;
+}
+
+// Add a bit more padding around the logo
+.flex.items-center {
+  padding: 8px 0;
+}
+
+// Right side menu container adjustments 
+.flex.items-center:last-child {
+  margin-right: 8px;
+}
+
+// Profile image styling
+.profile-image-container {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid $theme-orange;
+  background-color: #f5f5f5;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.profile-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

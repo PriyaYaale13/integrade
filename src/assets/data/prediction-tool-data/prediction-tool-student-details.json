@@ -1,0 +1,195 @@
+{
+  "classes": [
+    {
+      "title": "Class 8A Students",
+      "students": [
+        {
+          "name": "Aarav Kumar",
+          "studentId": 123450,
+          "image": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg",
+          "math_prediction": "90%",
+          "ela_prediction": "70%",
+          "contributing_factors": ["Needs Reading Support", "Low Quiz Scores"]
+        },
+        {
+          "name": "Lina Zane",
+          "studentId": 123451,
+          "image": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg",
+          "math_prediction": "60%",
+          "ela_prediction": "90%",
+          "contributing_factors": ["Struggles with Math Concepts", "Needs Extra Help"]
+        },
+        {
+          "name": "Diego Marquez",
+          "studentId": 123452,
+          "image": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg",
+          "math_prediction": "80%",
+          "ela_prediction": "56%",
+          "contributing_factors": ["Needs Extra Practice in Math", "Good Class Engagement"]
+        },
+        {
+          "name": "Fatima Yusuf",
+          "studentId": 123453,
+          "image": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-4.jpg",
+          "math_prediction": "80%",
+          "ela_prediction": "70%",
+          "contributing_factors": ["Active Class Participation", "Lacks Focus"]
+        },
+        {
+          "name": "Yuki Hashimoto",
+          "studentId": 123454,
+          "image": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg",
+          "math_prediction": "50%",
+          "ela_prediction": "90%",
+          "contributing_factors": ["Needs Reading Support", "Low Quiz Scores"]
+        },
+        {
+          "name": "Jasper Lee",
+          "studentId": 123455,
+          "image": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg",
+          "math_prediction": "70%",
+          "ela_prediction": "60%",
+          "contributing_factors": ["Lacks Confidence in Math", "Needs Extra Help"]
+        },
+        {
+          "name": "Nia Roberts",
+          "studentId": 123456,
+          "image": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-9.jpg",
+          "math_prediction": "40%",
+          "ela_prediction": "40%",
+          "contributing_factors": ["Needs Major Support in Math", "Struggles with Reading Comprehension"]
+        },
+        {
+          "name": "Tariq Dawood",
+          "studentId": 123457,
+          "image": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg",
+          "math_prediction": "70%",
+          "ela_prediction": "90%",
+          "contributing_factors": ["Shows Great Potential in ELA", "Needs Extra Help in Math"]
+        },
+        {
+          "name": "Elsa Varga",
+          "studentId": 123458,
+          "image": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg",
+          "math_prediction": "40%",
+          "ela_prediction": "40%",
+       "contributing_factors": ["Strong Reading Comprehension", "Consistent Performance"]
+        },
+        {
+          "name": "Omar Suleiman",
+          "studentId": 123459,
+          "image": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg",
+          "math_prediction": "90%",
+          "ela_prediction": "60%",
+          "contributing_factors": ["Strong Math Skills", "Needs Focus in ELA"]
+        },
+        {
+          "name": "Omar Taleb",
+          "studentId": 123460,
+          "image": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg",
+          "math_prediction": "90%",
+          "ela_prediction": "90%",
+          "contributing_factors": ["Consistently High Performance", "Good Class Participation"]
+        },
+        {
+          "name": "John Antony",
+          "studentId": 123461,
+          "image": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-6.jpg",
+          "math_prediction": "85%",
+          "ela_prediction": "75%",
+          "contributing_factors": ["Good Time Management", "Needs Further Reading Support"]
+        }
+      ]
+    },
+    {
+      "title": "Class 8B Students",
+      "students": [
+        {
+          "name": "Amira Patel",
+          "studentId": 223450,
+          "image": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg",
+          "math_prediction": "75%",
+          "ela_prediction": "80%",
+          "contributing_factors": ["Strong ELA Performance", "Needs Math Practice", "Good Class Participation"]
+        },
+        {
+          "name": "Carlos Rivera",
+          "studentId": 223451,
+          "image": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg",
+          "math_prediction": "65%",
+          "ela_prediction": "85%",
+          "contributing_factors": ["Needs Focus in Math", "Good ELA Skills"]
+        },
+        {
+          "name": "Eva Mendes",
+          "studentId": 223452,
+          "image": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg",
+          "math_prediction": "70%",
+          "ela_prediction": "72%",
+          "contributing_factors": ["Good Understanding of Concepts", "Needs Extra Help in ELA"]
+        },
+        {
+          "name": "Lucas Bennett",
+          "studentId": 223453,
+          "image": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-4.jpg",
+          "math_prediction": "60%",
+          "ela_prediction": "65%",
+          "contributing_factors": ["Needs Help with Math", "Good ELA Skills"]
+        },
+        {
+          "name": "Sophia Jackson",
+          "studentId": 223454,
+          "image": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg",
+          "math_prediction": "85%",
+          "ela_prediction": "80%",
+          "contributing_factors": ["Regular Attendance", "Average Homework Completion"]
+        }
+      ]
+    },
+    {
+      "title": "Class 8C Students",
+      "students": [
+        {
+          "name": "Haruto Tanaka",
+          "studentId": 323450,
+          "image": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg",
+          "math_prediction": "95%",
+          "ela_prediction": "85%",
+          "contributing_factors": ["Excellent Math Skills", "Strong Reading Comprehension"]
+        },
+        {
+          "name": "Isabella Rossi",
+          "studentId": 323451,
+          "image": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg",
+          "math_prediction": "60%",
+          "ela_prediction": "70%",
+          "contributing_factors": ["Needs Focus on Reading", "Good Math Understanding"]
+        },
+        {
+          "name": "Elijah Smith",
+          "studentId": 323452,
+          "image": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg",
+          "math_prediction": "80%",
+          "ela_prediction": "90%",
+          "contributing_factors": ["Strong Performance in ELA", "Needs Extra Help in Math"]
+        },
+        {
+          "name": "Ava Johnson",
+          "studentId": 323453,
+          "image": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-4.jpg",
+          "math_prediction": "75%",
+          "ela_prediction": "80%",
+          "contributing_factors": ["Good Engagement in Class", "Needs Extra Help in Math"]
+        },
+        {
+          "name": "Mason Kim",
+          "studentId": 323454,
+          "image": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg",
+          "math_prediction": "85%",
+          "ela_prediction": "65%",
+          "contributing_factors": ["Strong Math Understanding", "Needs Reading Support"]
+        }
+      ]
+    }
+  ]
+}

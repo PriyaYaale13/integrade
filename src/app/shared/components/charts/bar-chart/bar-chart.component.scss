@@ -1,0 +1,8 @@
+.bar-chart-container {
+  display: block; // Or inline-block
+  // Add specific styles if needed
+  .bar:hover {
+     opacity: 0.8;
+  }
+}
+// Include global .axis, .grid styles from styles.scss or define here

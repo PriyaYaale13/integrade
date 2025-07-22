@@ -1,0 +1,33 @@
+:host {
+    display: block;
+    width: 100%; // Allow chart to take full width of container
+    overflow: hidden; // Hide potential overflow if SVG slightly larger
+  }
+  
+  // Use ::ng-deep with caution or move styles to global styles.scss
+  ::ng-deep .axis path,
+  ::ng-deep .axis line {
+    fill: none;
+    stroke: #ccc;
+    shape-rendering: crispEdges;
+  }
+  
+  ::ng-deep .axis text {
+    font-size: 11px;
+    fill: #555;
+  }
+  
+  ::ng-deep .grid path {
+      stroke: none;
+  }
+  
+  ::ng-deep .grid line {
+      stroke: #e0e0e0;
+      stroke-opacity: 0.7;
+      shape-rendering: crispEdges;
+  }
+  
+  // Style legend if needed
+  .chart-legend {
+      font-family: sans-serif;
+  }

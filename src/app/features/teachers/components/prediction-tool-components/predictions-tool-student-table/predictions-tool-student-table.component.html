@@ -1,0 +1,147 @@
+<div class="p-4 space-y-4 bg-white rounded shadow">
+  <!-- Header row -->
+  <div class="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
+    <h3 class="text-lg font-semibold text-gray-800">{{title}}</h3>
+
+    <div class="flex items-center gap-4">
+      <span class="text-sm text-gray-700">Total students: {{ count }}</span>
+
+      <!-- Filter icon with correct color -->
+      <span class="flex items-center gap-1 text-orange-500 cursor-pointer">
+        <mat-icon class="text-orange-500 text-xl">filter_alt</mat-icon>
+       
+      </span>
+    </div>
+  </div>
+
+  <!-- Status Tags -->
+  <div class="flex flex-wrap gap-2 sm:gap-4 mb-4">
+    <span class="px-3 py-1 rounded-full text-xs bg-purple-100 text-purple-800 cursor-pointer"
+          (click)="filterCategory.emit('present')"
+          (keydown.enter)="filterCategory.emit('present')"
+          tabindex="0">
+      Present: {{ categoryCounts.present }}
+    </span>
+    <span class="px-3 py-1 rounded-full text-xs bg-green-100 text-green-800 cursor-pointer"
+          (click)="filterCategory.emit('aboveAverage')"
+          (keydown.enter)="filterCategory.emit('aboveAverage')"
+          tabindex="0">
+      Above Average: {{ categoryCounts.aboveAverage }}
+    </span>
+    <span class="px-3 py-1 rounded-full text-xs bg-orange-100 text-orange-800 cursor-pointer"
+          (click)="filterCategory.emit('needSupport')"
+          (keydown.enter)="filterCategory.emit('needSupport')"
+          tabindex="0">
+      Need Support: {{ categoryCounts.needSupport }}
+    </span>
+    <span class="px-3 py-1 rounded-full text-xs bg-red-100 text-red-800 cursor-pointer"
+          (click)="filterCategory.emit('atRisk')"
+          (keydown.enter)="filterCategory.emit('atRisk')"
+          tabindex="0">
+      At Risk: {{ categoryCounts.atRisk }}
+    </span>
+  </div>
+  
+  
+  
+
+</div>
+
+<!-- Student Table -->
+<div id="student-list" class="bg-white rounded-xl shadow-sm overflow-hidden mt-4">
+  <div class="overflow-x-auto">
+    <table class="w-full">
+      <thead class="bg-gray-50">
+        <tr>
+          <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">Student</th>
+          <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">ID</th>
+          <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">ELA GRADE</th>
+          <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">MATH GRADE</th>
+          <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">ACTION</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-100">
+        <tr *ngFor="let details of studentDetails">
+          <!-- Student Info -->
+          <td class="px-6 py-4">
+            <div class="flex items-center">
+              <img [src]="details.image" class="w-8 h-8 rounded-full mr-3" alt="Avatar">
+              <div>
+                <div class="font-medium">{{ details.name }}</div>
+              </div>
+            </div>
+          </td>
+
+          <!-- Student ID -->
+          <td class="px-6 py-4">
+            <span class="text-sm">{{ details.studentId }}</span>
+          </td>
+
+          <!-- ELA Grade -->
+          <td class="px-6 py-4">
+            <span class="text-sm">
+              <span
+                class="font-semibold"
+                [ngClass]="{
+                  'text-green-500': +details.ela_prediction.replace('%', '') >= 80,
+                  'text-orange-500': +details.ela_prediction.replace('%', '') >= 60 && +details.ela_prediction.replace('%', '') < 80,
+                  'text-red-500': +details.ela_prediction.replace('%', '') < 60
+                }"
+              >
+                {{
+                  +details.ela_prediction.replace('%', '') >= 80
+                    ? 'A'
+                    : +details.ela_prediction.replace('%', '') >= 60
+                    ? 'B'
+                    : 'C'
+                }}
+              </span>
+              | {{ details.ela_prediction }}
+            </span>
+          </td>
+
+          <!-- MATH Grade -->
+          <td class="px-6 py-4">
+            <span class="text-sm">
+              <span
+                class="font-semibold"
+                [ngClass]="{
+                  'text-green-500': +details.math_prediction.replace('%', '') >= 80,
+                  'text-orange-500': +details.math_prediction.replace('%', '') >= 60 && +details.math_prediction.replace('%', '') < 80,
+                  'text-red-500': +details.math_prediction.replace('%', '') < 60
+                }"
+              >
+                {{
+                  +details.math_prediction.replace('%', '') >= 80
+                    ? 'A'
+                    : +details.math_prediction.replace('%', '') >= 60
+                    ? 'B'
+                    : 'C'
+                }}
+              </span>
+              | {{ details.math_prediction }}
+            </span>
+          </td>
+
+          <!-- Predict Action -->
+          <td class="px-6 py-4">
+            <h6
+              class="flex text-orange-500 items-center cursor-pointer"
+              tabindex="0"
+              (click)="emitPredict(details)"
+              (keydown.enter)="emitPredict(details)">
+              <span class="fa-solid fa-chart-line"></span>
+
+              <span class="ml-2 text-sm">Predict</span>
+            </h6>
+          </td>
+        </tr>
+
+        <!-- Empty state -->
+        <tr *ngIf="studentDetails.length === 0">
+          <td colspan="5" class="text-center px-6 py-10 text-gray-500">No matching students found.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

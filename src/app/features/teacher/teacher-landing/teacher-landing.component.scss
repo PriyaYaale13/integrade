@@ -1,0 +1,157 @@
+@use '@angular/material' as mat;
+
+:host {
+  // Removed font-family, should be global
+  display: block;
+  min-height: 100vh;
+  padding-top: 0; // Adjust if needed based on the new header height
+}
+
+// Layout styles to work with full-height sidebar
+.page-layout-container {
+  display: flex;
+  min-height: calc(100vh - 90px); // Adjusted to account for taller header
+  padding-top: 10px; // Add some padding at the top for visual separation from header
+}
+
+.app-main-content {
+  flex: 1;
+  padding: 20px;
+  overflow-x: hidden;
+}
+
+// REMOVED: .container-fluid (now global)
+// REMOVED: aside styles (now global .app-sidebar)
+// REMOVED: main.flex-1 (now global .app-main-content)
+// REMOVED: @media (max-width: 768px) for layout (now global)
+
+// --- Component Specific Styles --- 
+
+// Filter styles (can potentially be shared too if used elsewhere)
+.filters-bar {
+  display: flex; 
+  flex-wrap: wrap; 
+  gap: 1rem; 
+  align-items: center; 
+  padding: 1rem; 
+  background-color: #fff; 
+  border-radius: 8px; 
+  margin-bottom: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.1);
+
+  .filter-field {
+    min-width: 140px;
+  }
+  
+  .search-field {
+    min-width: 240px;
+    margin-left: auto; // Keep search pushed right
+  }
+  
+  @media (max-width: 768px) {
+    .filter-field,
+    .search-field {
+      width: 100%;
+      margin-left: 0; // Reset margin on small screens
+    }
+  }
+}
+
+// KPI card grid
+.kpi-grid {
+  transition: grid-template-columns 0.3s ease;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); // Default grid columns
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  
+  > div {
+    min-width: 0; // Ensures text doesn't overflow
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.2s ease;
+    background-color: white;
+    border-radius: 0.75rem; // rounded-xl
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); // shadow-lg
+    padding: 1.5rem; // p-6
+    cursor: pointer;
+    
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    // Improve title word-wrap for longer titles
+    h3 {
+      max-width: 160px;
+      line-height: 1.2;
+      hyphens: auto;
+    }
+  }
+}
+
+// State Assessment Container
+.state-assessment-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  
+  app-state-assessment-grid {
+    flex: 1 1 100%; // Make the grid take full width
+    min-width: 0;
+  }
+}
+
+// Responsive adjustments for KPI Grid
+@media (max-width: 1200px) {
+  .kpi-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 992px) {
+  .kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) { // Adjust breakpoint if needed
+  .kpi-grid {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+}
+
+// Page Title and Section Titles
+.page-title {
+    font-size: 1.5rem; // text-2xl
+    font-weight: 500; // font-medium
+    color: #212121;
+    margin-top: 10px; // Add margin for better header spacing
+}
+
+.section-title {
+   color: #333;
+   font-size: 1.25rem; // text-xl
+   font-weight: 500; // font-medium
+   margin-bottom: 1rem; // mb-4
+}
+
+// Loading/Error Template Styles
+.loading-error-container {
+    background-color: white;
+    border-radius: 0.75rem; // rounded-xl
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); // shadow-lg
+    padding: 2rem; // p-8
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+
+    mat-spinner {
+        margin-bottom: 1rem; // mb-4
+    }
+    p {
+        color: #757575;
+    }
+}

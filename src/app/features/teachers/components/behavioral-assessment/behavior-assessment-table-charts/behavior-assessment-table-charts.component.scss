@@ -1,0 +1,40 @@
+// Table Responsiveness
+.responsive-table-wrapper {
+    width: 100%;
+    overflow-x: auto; // Enable horizontal scroll on small devices
+}
+
+
+.teacher-behavior-table {
+    width: 100%;
+    min-width: 900px; // Important: prevents columns from collapsing weirdly
+}
+
+// Responsive Layout Fixes
+@media (max-width: 768px) {
+    .page-layout-container {
+        flex-direction: column;
+        padding: 4px; // Less padding on mobile
+    }
+
+    .app-main-content {
+        padding: 10px;
+        overflow-x: auto; // Allow inner content to scroll if needed
+    }
+
+    .filters-bar {
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 0.5rem;
+    }
+
+    .grid-cols-3 {
+        grid-template-columns: 1fr !important; // 1 column on mobile for your charts
+    }
+}
+
+//  Paginator Responsiveness 
+::ng-deep .mat-paginator-container {
+    flex-wrap: wrap;
+    justify-content: center;
+}

@@ -1,0 +1,42 @@
+<app-header></app-header>
+
+<div class="h-full text-base-content mt-10">
+  <div class="page-layout-container">
+    <app-sidebar title="Quick Links" [menuItems]="sidebarMenuItems" [useCustomIcons]="true">
+
+    </app-sidebar>
+
+
+
+    <main class="flex-1 space-y-6">
+
+      <div class="flex justify-end sm:justify-end">
+        <h6 class="flex text-orange-500 cursor-pointer" [routerLink]="'/teacher/at-risk'">
+          <span class="material-icons text-orange-500 text-lg">arrow_back</span>
+          <span class="ml-2 text-lg">Back</span>
+        </h6>
+      </div>
+      <div style="display: none;">Loading state: {{isLoading}}</div>
+      <ng-container *ngIf="!isLoading; else loadingOrError">
+        <!-- Students Profile Header -->
+        <app-student-profile-header [studentList]="studentList"></app-student-profile-header>
+
+        <!-- Student KPIs and Details -->
+        <app-student-kpis-and-details></app-student-kpis-and-details>
+
+
+        <!-- Student Details Tabs -->
+        <app-academic-detail-card-with-recommendations [grades]="grades" [behaviors]="behaviors"
+          [activeTabIndex]="tabIndex" [notes]="notes" (tabChanged)="onTabChanged($event)">
+        </app-academic-detail-card-with-recommendations>
+      </ng-container>
+      <ng-template #loadingOrError>
+        <div *ngIf="isLoading" class="loading-container">
+          <mat-spinner diameter="50"></mat-spinner>
+          <p>Loading teachers behavior data...</p>
+        </div>
+      </ng-template>
+
+    </main>
+
+  </div>

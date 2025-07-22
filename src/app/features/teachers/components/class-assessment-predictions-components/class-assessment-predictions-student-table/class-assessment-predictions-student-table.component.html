@@ -1,0 +1,141 @@
+<div class="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0 p-4">
+    <!-- Title -->
+    <h3 class="text-lg font-semibold text-gray-800">Individual Student Prediction</h3>
+
+    <!-- Grade and Class Select -->
+    <div class="flex flex-col sm:flex-row sm:space-x-4 w-full sm:w-auto space-y-4 sm:space-y-0">
+
+        <!-- Grade Select (Input Field) -->
+        <div class="relative flex-1">
+            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 20 20">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                </svg>
+            </div>
+            <input placeholder="Enter Grade"
+                class="border border-gray-300 rounded px-4 py-2 text-xs w-full sm:w-40 focus:outline-none focus:ring-2 focus:ring-orange-500 pl-10"
+                placeholder="Search" [(ngModel)]="searchQuery" (input)="onSearch()" />
+        </div>
+
+        <!-- Class Select -->
+        <div class="flex-1">
+            <select id="scoreFilter" [(ngModel)]="scoreFilter" (change)="applyScoreFilter()"
+                class="border border-gray-300 rounded px-4 py-2 text-xs w-full sm:w-40 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                <option value="">All Scores</option>
+                <option value="90">90% and above</option>
+                <option value="80">80% and above</option>
+                <option value="70">70% and above</option>
+                <option value="60">60% and above</option>
+            </select>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+<div id="student-list" class="bg-white rounded-xl shadow-sm overflow-hidden mt-1">
+    <div class="overflow-x-auto">
+        <table class="w-full">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">STUDENT</th>
+                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">MATH PREDICTION</th>
+                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">ELA PREDICTION</th>
+                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">CONTRIBUTING FACTORS</th>
+
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+                <tr *ngFor="let details of paginatedStudentDetails">
+                    <td class="px-6 py-4">
+                        <div class="flex items-center">
+                            <img [src]="details.image" class="w-8 h-8 rounded-full mr-3" alt="Avatar">
+                            <div>
+                                <div class="font-medium">{{ details.name }}</div>
+                                <div class="text-sm text-gray-500">{{ details.studentId }}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <span
+                            class="px-3 py-1 rounded-full text-xs sm:text-xs md:text-xs lg:text-sm xl:text-sm block w-fit"
+                            [ngClass]="{
+                        'bg-green-100 text-green-800': details.math_prediction >= '80',
+                        'bg-orange-100 text-orange-600': details.math_prediction < '80',
+                        'bg-red-100 text-red-800': details.math_prediction < '60'
+                    }">
+                            {{ details.math_prediction }}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4">
+                        <span
+                            class="px-3 py-1 rounded-full text-xs sm:text-xs md:text-xs lg:text-sm xl:text-sm block w-fit"
+                            [ngClass]="{
+                        'bg-green-100 text-green-800': details.ela_prediction >= '80',
+                        'bg-orange-100 text-orange-600': details.ela_prediction < '80',
+                        'bg-red-100 text-red-800': details.ela_prediction < '60'
+                    }">
+                            {{ details.ela_prediction }}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="flex flex-col space-y-2">
+                            <div
+                                class="px-3 py-1 text-xs md:text-sm inline-flex items-center bg-green-100 text-green-800 rounded">
+
+                                {{ details.contributing_factors[0] }}
+                            </div>
+                            <div
+                                class="px-3 py-1 text-xs md:text-sm inline-flex items-center bg-red-100 text-red-800 rounded">
+
+                                {{ details.contributing_factors[1] }}
+                            </div>
+                        </div>
+                    </td>
+
+                    <td>
+
+                    </td>
+                <tr *ngIf="student.length === 0">
+                    <td colspan="7" class="text-center px-6 py-10 text-gray-500">No matching students found.</td>
+
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <!-- Pagination controls with custom styles -->
+    <div class="p-6 border-t">
+        <div class="flex items-center justify-between">
+            <!-- Showing page range and total number of students -->
+            <div class="text-sm text-gray-500">
+                Showing {{ (currentPage - 1) * itemsPerPage + 1 }}-{{ (currentPage * itemsPerPage) >
+                student.length ? student.length : currentPage * itemsPerPage }} of {{
+                student.length }} students
+            </div>
+
+            <!-- Pagination Buttons -->
+            <div class="flex items-center space-x-2">
+                <!-- Previous Button -->
+                <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1"
+                    class="px-3 py-1 border rounded-lg text-sm text-gray-600 hover:bg-gray-200 disabled:bg-gray-300 cursor-pointer">
+                    Previous
+                </button>
+
+                <!-- Next Button -->
+                <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages"
+                    class="px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white border rounded-lg text-sm disabled:bg-gray-300 cursor-pointer">
+                    Next
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

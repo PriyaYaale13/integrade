@@ -1,0 +1,68 @@
+<div *ngIf="student">
+    <section id="section-info" class="bg-white rounded-lg shadow mb-6 p-6 sm:p-6">
+                        
+        <!-- Image and Print button Container -->
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 space-y-4 sm:space-y-0">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-6">
+    
+                <!-- Image Container -->
+                <img 
+                    src="{{student.image}}" 
+                    alt="Student Photo" 
+                    class="w-24 h-24 rounded-lg object-cover border-4 border-[#b53f64] shadow-md"
+                >
+    
+                <!-- Academy Name -->
+              
+                <div>
+                    <h1 class="text-2xl font-medium text-[#212121]">{{student.full_name}}</h1>
+                    <p class="text-[#757575] mt-1">{{student.Academy}}</p>
+                </div>
+            </div>
+    
+            <!-- Print Report Button -->
+            <button class="bg-orange-400 hover:bg-orange-500 text-white px-4 py-2 sm:px-4 rounded flex items-center space-x-2 hover:cursor-pointer">
+                <i class="fa-solid fa-print"></i>
+                <span>Print Report</span>
+            </button>    
+        </div>
+        
+        <!-- Students Details Grid -->
+        <div class="grid grid-cols-4 gap-6">
+            <div class="space-y-2 col-span-2 sm:col-span-2 lg:col-span-1">
+                <p class="text-[#757575]">Student ID</p>
+                <p class="font-medium">{{student.student_id}}</p>
+            </div>
+            <div class="space-y-2 col-span-2 sm:col-span-2 lg:col-span-1">
+                <p class="text-[#757575]">Age / Gender</p>
+                <p class="font-medium">{{student.age_gender}}</p>
+            </div>
+            <div class="space-y-2 col-span-2 sm:col-span-2 lg:col-span-1">
+                <p class="text-[#757575]">Ethnicity</p>
+                <p class="font-medium">{{student.ethnicity}}</p>
+            </div>
+            <div class="space-y-2 col-span-2 sm:col-span-2 lg:col-span-1">
+                <p class="text-[#757575]">Grade</p>
+                <p class="font-medium">{{student.grade}}</p>
+            </div>
+            <div class="space-y-2 col-span-2 sm:col-span-2 lg:col-span-1">
+                <p class="text-[#757575]">Bus No.</p>
+                <p class="font-medium">{{student.bus_no}}</p>
+            </div>
+            <div class="space-y-2 col-span-2 sm:col-span-2 lg:col-span-1">
+                <p class="text-[#757575]">Teacher</p>
+                <p class="font-medium">{{student.teacher}}</p>
+            </div>
+            <div class="space-y-2 col-span-2 sm:col-span-2 lg:col-span-1">
+                <p class="text-[#757575]">Room</p>
+                <p class="font-medium">{{student.room}}</p>
+            </div>
+            <div class="space-y-2 col-span-4 sm:col-span-2 lg:col-span-1">
+                <p class="text-[#757575]">Address</p>
+                <p class="font-medium break-words">{{student.address}}</p>
+            </div>
+        </div>
+        
+        
+    </section>
+</div>

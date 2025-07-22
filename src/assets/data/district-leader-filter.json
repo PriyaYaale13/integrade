@@ -1,0 +1,7 @@
+{
+    "schools": ["All Schools", "Stanford Prep", "Harvard High School"],
+    "subjects": ["All Subjects", "Maths",  "Science"],
+    "grades": ["All Grades", "11th", "12th"],
+    "academicYears": ["All Academic Years","2024", "2025"]
+  }
+  

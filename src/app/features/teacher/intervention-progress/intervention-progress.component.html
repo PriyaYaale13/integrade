@@ -1,0 +1,206 @@
+<app-header></app-header>
+
+<div class="min-h-screen bg-[#F5F7FA]">
+  <!-- Main Layout using Global Classes -->
+  <div class="container-fluid px-6 py-6"> <!-- Uses global .container-fluid -->
+    <div class="page-layout-container"> <!-- Uses global .page-layout-container -->
+
+      <!-- Use the reusable Sidebar component -->
+      <app-sidebar 
+        title="Navigation" 
+        [menuItems]="sidebarMenuItems" 
+        [useCustomIcons]="true">
+      </app-sidebar>
+
+      <!-- Main Content using Global Class -->
+      <main class="app-main-content"> <!-- Uses global .app-main-content -->
+
+        <!-- Filter Section -->
+        <div class="filters-bar mb-8"> <!-- Uses component style -->
+             <mat-form-field appearance="outline">
+                <mat-label>Semester</mat-label>
+                <mat-select [(ngModel)]="currentFilters.semester" (selectionChange)="applyFilters()">
+                    <mat-option *ngFor="let sem of (semesters$ | async)" [value]="sem">{{ sem }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+             <mat-form-field appearance="outline">
+                <mat-label>Intervention Type</mat-label>
+                <mat-select [(ngModel)]="currentFilters.interventionType" (selectionChange)="applyFilters()">
+                    <mat-option *ngFor="let type of (interventionTypes$ | async)" [value]="type">{{ type }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+             <mat-form-field class="search-field" appearance="outline">
+                <mat-label>Search Student</mat-label>
+                <input matInput #searchInput [(ngModel)]="currentFilters.searchTerm" (input)="onSearchTermChange($event)" placeholder="Enter name...">
+                <button *ngIf="currentFilters.searchTerm" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()"> <mat-icon>close</mat-icon> </button>
+                <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+            
+            <!-- Search Results Dropdown -->
+            <div *ngIf="showSearchResults" class="absolute z-10 bg-white rounded-md shadow-lg max-h-60 overflow-auto search-results-dropdown">
+              <div *ngFor="let student of searchResults" 
+                   class="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center border-b border-gray-100 last:border-b-0"
+                   (click)="navigateToStudentDetails(student)">
+                <img [src]="student.image" class="w-8 h-8 rounded-full mr-3" alt="Student photo" 
+                     onerror="this.src='assets/images/profile-placeholder.png'">
+                <div class="flex-1">
+                  <div class="font-medium text-gray-800">{{student.displayName}}</div>
+                  <div class="text-xs text-gray-600">{{student.displayInfo}}</div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-gray-400 text-xs"></i>
+              </div>
+              <div *ngIf="searchResults.length === 0" class="px-4 py-2 text-gray-500 text-center">
+                No students found
+              </div>
+            </div>
+        </div>
+
+        <!-- Main Content Area Card -->
+        <div class="content-card"> <!-- Uses component style -->
+            <div class="card-header">
+                <h2 class="card-title">Intervention Tracking</h2> <!-- Uses component style -->
+            </div>
+
+            <ng-container *ngIf="(interventionData$ | async) as data; else loadingOrError">
+                <!-- Effectiveness Section -->
+                <div class="effectiveness-section"> <!-- Uses component style -->
+                    <h3 class="section-title">Intervention Effectiveness</h3>
+                    <div class="effectiveness-grid">
+                        <div class="impact-card high-impact">
+                            <div class="impact-header">
+                                <span class="impact-label">High Impact</span>
+                                <span class="impact-percentage">{{ effectivenessData.highImpact.percentage }}%</span>
+                            </div>
+                            <div class="progress-bar-bg">
+                                <div class="progress-bar" [style.width.%]="effectivenessData.highImpact.percentage" [style.backgroundColor]="effectivenessData.highImpact.color"></div>
+                            </div>
+                        </div>
+                        <div class="impact-card medium-impact">
+                            <div class="impact-header">
+                                <span class="impact-label">Medium Impact</span>
+                                <span class="impact-percentage">{{ effectivenessData.mediumImpact.percentage }}%</span>
+                            </div>
+                            <div class="progress-bar-bg">
+                                <div class="progress-bar" [style.width.%]="effectivenessData.mediumImpact.percentage" [style.backgroundColor]="effectivenessData.mediumImpact.color"></div>
+                            </div>
+                        </div>
+                        <div class="impact-card low-impact">
+                            <div class="impact-header">
+                                <span class="impact-label">Low Impact</span>
+                                <span class="impact-percentage">{{ effectivenessData.lowImpact.percentage }}%</span>
+                            </div>
+                            <div class="progress-bar-bg">
+                                <div class="progress-bar" [style.width.%]="effectivenessData.lowImpact.percentage" [style.backgroundColor]="effectivenessData.lowImpact.color"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Intervention Table Section -->
+                <div class="table-section"> <!-- Uses component style -->
+                     <h3 class="section-title">Student Progress Details</h3>
+                    <div class="table-container">
+                        <table mat-table [dataSource]="data.progress" class="intervention-table">
+                            <!-- Columns -->
+                            <ng-container matColumnDef="student">
+                                <th mat-header-cell *matHeaderCellDef>Student</th>
+                                <td mat-cell *matCellDef="let element">
+                                    <div class="student-cell">
+                                        <img [src]="element.student?.avatarUrl || 'assets/default-avatar.png'" alt="Student" class="student-avatar">
+                                        <span>{{ element.student?.name || 'N/A' }}</span>
+                                    </div>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="type">
+                                <th mat-header-cell *matHeaderCellDef>Type</th>
+                                <td mat-cell *matCellDef="let element">{{ element.type || 'N/A' }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="startDate">
+                                <th mat-header-cell *matHeaderCellDef>Start Date</th>
+                                <td mat-cell *matCellDef="let element">{{ element.originalData?.startDate | date: 'MMM d, yyyy' }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="duration">
+                                <th mat-header-cell *matHeaderCellDef>Duration</th>
+                                <td mat-cell *matCellDef="let element">{{ element.originalData?.duration || 'N/A' }}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="status">
+                                <th mat-header-cell *matHeaderCellDef>Status</th>
+                                <td mat-cell *matCellDef="let element">
+                                    <span class="status-badge" [ngClass]="element.status?.badgeClass || ''">
+                                        {{ element.status?.text || 'N/A' }}
+                                    </span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="progress">
+                                <th mat-header-cell *matHeaderCellDef>Progress</th>
+                                <td mat-cell *matCellDef="let element">
+                                    <div class="progress-bar-bg table-progress">
+                                        <div class="progress-bar" [style.width.%]="element.progress || 0" [ngClass]="element.status?.badgeClass || ''"></div>
+                                    </div>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="actions">
+                                <th mat-header-cell *matHeaderCellDef>Actions</th>
+                                <td mat-cell *matCellDef="let element">
+                                    <button mat-stroked-button color="primary" class="view-details-btn" (click)="viewDetails(element)">View Details</button>
+                                </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="table-row"></tr>
+                            <tr class="mat-row" *matNoDataRow>
+                                <td class="mat-cell" [attr.colspan]="displayedColumns.length">No intervention data found matching filters.</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                 <!-- Intervention Summary Report Section -->
+                <div class="summary-report-section" *ngIf="data.summaryReport?.length"> <!-- Uses component style -->
+                    <h3 class="section-title">Intervention Summary Report</h3>
+                    <div class="summary-grid">
+                        <div *ngFor="let summaryItem of data.summaryReport" class="summary-card">
+                            <h4 class="summary-card-title">{{ summaryItem.title }}</h4>
+                            <div class="summary-item">
+                                <span class="summary-label on-track">On Track</span>
+                                <span>{{ summaryItem.onTrackPercent }}%</span>
+                            </div>
+                            <div class="progress-bar-bg mb-2">
+                                <div class="progress-bar on-track-bar" [style.width.%]="summaryItem.onTrackPercent"></div>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label not-on-track">Not On Track</span>
+                                <span>{{ summaryItem.notOnTrackPercent }}%</span>
+                            </div>
+                            <div class="progress-bar-bg">
+                                <div class="progress-bar not-on-track-bar" [style.width.%]="summaryItem.notOnTrackPercent"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </ng-container>
+
+            <!-- Loading/Error Template -->
+            <ng-template #loadingOrError>
+                <div *ngIf="isLoading" class="loading-container"> <!-- Uses component style -->
+                    <mat-spinner diameter="50"></mat-spinner>
+                    <p>Loading intervention data...</p>
+                </div>
+                <div *ngIf="!isLoading && error" class="error-container"> <!-- Uses component style -->
+                    <mat-icon color="warn">error</mat-icon>
+                    <p>{{error}}</p>
+                    <button mat-raised-button color="primary" (click)="loadData()">Retry</button>
+                </div>
+                 <div *ngIf="!isLoading && !error && !(interventionData$ | async)" class="error-container">
+                    <mat-icon>info</mat-icon>
+                    <p>No intervention data available.</p>
+                </div>
+            </ng-template>
+
+        </div> <!-- End content-card -->
+      </main>
+
+    </div> <!-- End page-layout-container -->
+  </div> <!-- End container-fluid -->
+</div> <!-- End min-h-screen -->

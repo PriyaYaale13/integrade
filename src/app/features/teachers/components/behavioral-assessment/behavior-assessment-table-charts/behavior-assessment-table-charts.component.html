@@ -1,0 +1,103 @@
+<div class="behavior-content">
+    <!-- Behavior Table -->
+    <mat-card>
+        <mat-card-content>
+            <div class="responsive-table-wrapper">
+                <table mat-table [dataSource]="dataSource" class="teacher-behavior-table">
+                    <!-- Checkbox Column (Optional) -->
+                    <ng-container matColumnDef="select">
+                        <th mat-header-cell *matHeaderCellDef> <!-- Add master toggle checkbox here -->
+                        </th>
+                        <td mat-cell *matCellDef="let row"> <mat-checkbox></mat-checkbox> </td>
+                    </ng-container>
+                    <!-- Student Name -->
+                    <ng-container matColumnDef="studentName">
+                        <th mat-header-cell *matHeaderCellDef> Student Name </th>
+                        <td mat-cell *matCellDef="let element" style="text-align: left;">
+                            <div>{{element.studentName}}</div>
+                        </td>
+                    </ng-container>
+                  
+                    <!-- Grade Level -->
+                    <ng-container matColumnDef="gradeLevel">
+                        <th mat-header-cell *matHeaderCellDef> Grade Level </th>
+                        <td mat-cell *matCellDef="let element"> {{element.gradeLevel ?? '-'}} </td>
+                    </ng-container>
+                    
+                    <!-- Attendance -->
+                    <ng-container matColumnDef="attendance">
+                        <th mat-header-cell *matHeaderCellDef> Attendance (%) </th>
+                        <td mat-cell *matCellDef="let element"> {{element.attendance ?? '-'}}% </td>
+                    </ng-container>
+                    <!-- Absent Days -->
+                    <ng-container matColumnDef="absentDays">
+                        <th mat-header-cell *matHeaderCellDef> Absent Days </th>
+                        <td mat-cell *matCellDef="let element"> {{element.absentDays ?? 0}} </td>
+                    </ng-container>
+                    <!-- Tardiness -->
+                    <ng-container matColumnDef="tardinessCount">
+                        <th mat-header-cell *matHeaderCellDef> Tardiness </th>
+                        <td mat-cell *matCellDef="let element"> {{element.tardinessCount ?? 0}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="earlyDismissalCount">
+                        <th mat-header-cell *matHeaderCellDef> Early Dismissal </th>
+                        <td mat-cell *matCellDef="let element"> {{element.earlyDismissalCount ?? 0}}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="warnings">
+                        <th mat-header-cell *matHeaderCellDef> Warnings </th>
+                        <td mat-cell *matCellDef="let element"> {{element.warnings ?? 0}}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="status">
+                        <th mat-header-cell *matHeaderCellDef> Status </th>
+                        <td mat-cell *matCellDef="let element">
+                            <span [ngClass]="getStatusClass(element.status)"
+                                class="inline-block px-4 py-2 rounded-full">
+                                {{element.status}}
+                            </span>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="disciplinaryActions">
+                        <th mat-header-cell *matHeaderCellDef> Disc. Actions </th>
+                        <td mat-cell *matCellDef="let element"> {{element.disciplinaryActions ?? 0}}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="suspensionCount">
+                        <th mat-header-cell *matHeaderCellDef> Suspensions </th>
+                        <td mat-cell *matCellDef="let element"> {{element.suspensionCount ?? 0}} </td>
+                    </ng-container>
+                    <!-- Status columns using icons -->
+                    <ng-container matColumnDef="interventionCount">
+                        <th mat-header-cell *matHeaderCellDef> Intervention </th>
+                        <td mat-cell *matCellDef="let element">{{element.interventionCount}}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="atRiskStatus">
+                        <th mat-header-cell *matHeaderCellDef> At Risk </th>
+                        <td mat-cell *matCellDef="let element">{{element.atRiskStatus}}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="iepStatus">
+                        <th mat-header-cell *matHeaderCellDef> IEP </th>
+                        <td mat-cell *matCellDef="let element">{{element.iepStatus}}
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" [attr.colspan]="displayedColumns.length">No behavior data
+                            found.
+                        </td>
+                    </tr>
+                </table>
+            </div>
+    
+
+<mat-paginator [length]="dataSource.data.length || 0" [pageSize]="5" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+
+
+        
+        </mat-card-content>
+    </mat-card>
+</div>

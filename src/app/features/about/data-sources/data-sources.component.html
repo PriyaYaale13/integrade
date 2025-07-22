@@ -1,0 +1,20 @@
+<app-header></app-header>
+<div class="page-container about-page">
+    <button mat-stroked-button (click)="goBack()" class="back-button">
+        <mat-icon>arrow_back</mat-icon> Back
+    </button>
+
+     <h1>About Integrade - Data Sources</h1>
+
+     <mat-card>
+        <mat-card-content>
+            <p>Integrade consolidates data from various educational platforms and systems to provide a comprehensive view of student progress and school performance. Key data sources include:</p>
+            <mat-list role="list">
+                <mat-list-item *ngFor="let source of dataSources" role="listitem">
+                    <mat-icon matListItemIcon>storage</mat-icon>
+                    <div matListItemTitle>{{ source }}</div>
+                </mat-list-item>
+            </mat-list>
+        </mat-card-content>
+     </mat-card>
+</div>

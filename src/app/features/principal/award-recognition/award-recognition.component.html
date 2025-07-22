@@ -1,0 +1,214 @@
+<app-header></app-header>
+<div class="min-h-screen  bg-[#f5f5f5]">
+
+    <div class="page-layout-container flex gap-6">
+        <app-sidebar title="Quick Links" [menuItems]="sidebarMenuItems" [useCustomIcons]="true">
+
+        </app-sidebar>
+
+        <!-- Main Content -->
+        <main class="flex-1 space-y-6 p-3">
+      
+
+            <!-- Page Header -->
+            <div
+                class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 space-y-4 sm:space-y-0">
+                <h1 class="text-2xl font-bold text-gray-800">Student Awards & Recognition</h1>
+                <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 w-full sm:w-auto">
+                    <button class="bg-white border border-gray-200 px-4 py-2 rounded-lg w-full sm:w-auto"
+                        (click)="exportToExcel()">
+                        <i class="fa-solid fa-download mr-2"></i>Export
+                    </button>
+
+                </div>
+            </div>
+
+
+
+            <!-- Award Stats -->
+            <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6" id="award-stats">
+                <div
+                    class="hover:shadow-xl transition-shadow duration-300 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1),_0_2px_4px_-1px_rgba(0,0,0,0.06)] rounded-xl bg-white p-6">
+                    <div class="flex items-center gap-3 mb-2 ">
+                        <mat-icon class="text-[#f44336] bg-red-100 p-3 rounded-full"
+                            aria-hidden="false">emoji_events</mat-icon>
+                        <h3 class="text-[#757575] font-medium break-words">Higher Honor Roll</h3>
+                    </div>
+                    <div class="text-2xl font-bold">127</div>
+                    <div class="text-sm text-gray-500 mt-1">GPA 3.75–4.0</div>
+                </div>
+
+                <div
+                    class="hover:shadow-xl transition-shadow duration-300 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1),_0_2px_4px_-1px_rgba(0,0,0,0.06)] rounded-xl bg-white p-6">
+                    <div class="flex items-center gap-3 mb-2">
+                        <mat-icon class="text-[#ff9800] bg-orange-100 p-3 rounded-full">school</mat-icon>
+                        <h3 class="text-[#757575] font-medium break-words">Honor Roll</h3>
+                    </div>
+                    <div class="text-2xl font-bold">243</div>
+                    <div class="text-sm text-gray-500 mt-1">GPA 3.5–3.74</div>
+                </div>
+
+                <div
+                    class="hover:shadow-xl transition-shadow duration-300 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1),_0_2px_4px_-1px_rgba(0,0,0,0.06)] rounded-xl bg-white p-6">
+                    <div class="flex items-center gap-3 mb-2">
+                        <mat-icon class="text-[#4caf50] bg-green-100 p-3 rounded-full">volunteer_activism</mat-icon>
+                        <h3 class="text-[#757575] font-medium break-words">Citizenship Awards</h3>
+                    </div>
+                    <div class="text-2xl font-bold">89</div>
+                    <div class="text-sm text-gray-500 mt-1">Outstanding Service</div>
+                </div>
+
+                <div
+                    class="hover:shadow-xl transition-shadow duration-300 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1),_0_2px_4px_-1px_rgba(0,0,0,0.06)] rounded-xl bg-white p-6">
+                    <div class="flex items-center gap-3 mb-2">
+                        <mat-icon class="text-[#3f51b5] bg-blue-100 p-3 rounded-full">leaderboard</mat-icon>
+                        <h3 class="text-[#757575] font-medium break-words">Leadership Awards</h3>
+                    </div>
+                    <div class="text-2xl font-bold">56</div>
+                    <div class="text-sm text-gray-500 mt-1">Student Leaders</div>
+                </div>
+            </section>
+
+
+
+            <!-- Filters -->
+            <section class="bg-white rounded-xl p-4 mb-6 shadow-sm">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    <mat-form-field appearance="outline" class="w-full filter-field">
+                        <mat-label>Search students</mat-label>
+                        <input matInput [(ngModel)]="searchText" (input)="emitFilters()"
+                            placeholder="Search students..." />
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="w-full filter-field">
+                        <mat-label>Grade Level</mat-label>
+                        <mat-select [(ngModel)]="grade" (selectionChange)="emitFilters()">
+                            <mat-option value="">All Grade Levels</mat-option>
+                            <mat-option value="12th">12th</mat-option>
+                            <mat-option value="11th">11th</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="w-full filter-field">
+                        <mat-label>Award Type</mat-label>
+                        <mat-select [(ngModel)]="awardType" (selectionChange)="emitFilters()">
+                            <mat-option value="">All Award Types</mat-option>
+                            <mat-option value="Higher Honor Roll">Higher Honor Roll</mat-option>
+                            <mat-option value="Honor Roll">Honor Roll</mat-option>
+                            <mat-option value="Leadership">Leadership</mat-option>
+                            <mat-option value="Citizenship">Citizenship</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="w-full filter-field">
+                        <mat-label>Quarter/Semester</mat-label>
+                        <mat-select [(ngModel)]="term" (selectionChange)="emitFilters()">
+                            <mat-option value="">Quarter/Semester</mat-option>
+                            <mat-option value="Q1">Q1</mat-option>
+                            <mat-option value="Q2">Q2</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+            </section>
+
+
+            <!-- Award List -->
+            <section class="bg-white rounded-xl shadow-sm">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-gray-50 border-b border-gray-200">
+                            <tr>
+                                <th class="text-left px-6 py-4 text-sm font-semibold text-gray-600">Student</th>
+                                <th class="text-left px-6 py-4 text-sm font-semibold text-gray-600">Grade</th>
+                                <th class="text-left px-6 py-4 text-sm font-semibold text-gray-600">Awards</th>
+                                <th class="text-left px-6 py-4 text-sm font-semibold text-gray-600">GPA</th>
+                                <th class="text-left px-6 py-4 text-sm font-semibold text-gray-600">Activities</th>
+                                <th class="text-left px-6 py-4 text-sm font-semibold text-gray-600">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                            <tr *ngFor="let student of paginatedAwards$ | async" class="hover:bg-gray-50">
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center space-x-3">
+                                        <img [src]="student.avatar" class="w-10 h-10 rounded-full" [alt]="'Avatar of ' + student.studentName">
+                                        <div>
+                                            <div class="font-medium">{{ student.studentName }}</div>
+                                            <div class="text-sm text-gray-500">ID: {{ student.id }}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">{{
+                                        student.grade }}</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex flex-wrap gap-1">
+                                        <span *ngFor="let award of student.awards"
+                                            class="px-2 py-1 rounded-full text-xs" [ngClass]="{
+                        'bg-red-100 text-red-800': award === 'Higher Honor Roll',
+                        'bg-orange-100 text-orange-800': award === 'Honor Roll',
+                        'bg-blue-100 text-blue-800': award === 'Leadership',
+                        'bg-green-100 text-green-800': award === 'Citizenship'
+                      }">
+                                            {{ award }}
+                                        </span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="font-semibold">{{ student.gpa }}</div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="text-sm">{{ student.activities[0] }}</div>
+                                    <div class="text-xs text-gray-500">{{ student.activities[1] }}</div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-sm">{{
+                                        student.status }}</span>
+                                </td>
+
+                            </tr>
+
+                            <!-- Show message if no matches -->
+
+                            <tr *ngIf="(filteredAwards$ | async)?.length === 0">
+                                <td colspan="7" class="text-center px-6 py-4 text-gray-500">No matching students found.
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+                </div>
+                <!-- Pagination -->
+                <div
+                    class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 px-4 py-4 border-t border-gray-100 text-sm">
+
+                    <!-- Showing text (custom) -->
+                    <!-- Showing Text -->
+                    <div class="mb-2">
+                        Showing
+                        {{
+                        (currentPage * pageSize) + 1
+                        }}–{{
+                        Math.min((currentPage + 1) * pageSize, (filteredAwards$ | async)?.length || 0)
+                        }}
+                        of {{ (filteredAwards$ | async)?.length || 0 }} students
+                    </div>
+
+                    <!-- Paginator -->
+                    <mat-paginator [length]="(filteredAwards$ | async)?.length || 0" [pageSize]="pageSize"
+                        [pageSizeOptions]="[5, 10, 20]" (page)="onPageChange($event)" showFirstLastButtons
+                        aria-label="Award recognition pagination">
+                    </mat-paginator>
+
+
+                </div>
+
+
+
+            </section>
+
+        </main>
+</div>
+</div>

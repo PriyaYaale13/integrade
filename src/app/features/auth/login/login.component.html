@@ -1,0 +1,103 @@
+<div class="min-h-screen bg-base-50 dark:bg-dark-base flex items-center justify-center">
+  <div id="login-container" class="w-full max-w-md">
+    <div id="login-card" class="bg-base dark:bg-dark-base-100 rounded-xl shadow-lg p-8">
+      <!-- Logo Section -->
+      <div class="flex justify-center mb-8">
+        <img src="assets/logos/logo-transparent.png" alt="Integrade Logo" class="logo-image">
+      </div>
+
+      <!-- Welcome Text -->
+      <div class="text-center mb-8">
+        <h1 class="text-2xl font-medium text-base-content dark:text-dark-base-content">Welcome Back!</h1>
+        <p class="text-base-500 dark:text-base-400 mt-2">Please sign in to continue</p>
+      </div>
+
+      <!-- Login Form -->
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-6">
+        <div class="space-y-2">
+          <label for="username" class="block text-sm font-medium text-base-600 dark:text-dark-base-content">Username</label>
+          <div class="relative">
+            <i class="fa-regular fa-envelope absolute left-3 top-1/2 -translate-y-1/2 text-base-500 dark:text-base-400"></i>
+            <input 
+              type="text" 
+              id="username" 
+              formControlName="username"
+              class="w-full pl-10 pr-4 py-3 border border-base-200 dark:border-base-700 bg-base dark:bg-dark-base rounded-lg focus:outline-none focus:border-primary dark:focus:border-dark-primary focus:ring-1 focus:ring-primary dark:focus:ring-dark-primary text-base-content dark:text-dark-base-content placeholder-base-400 dark:placeholder-base-500" 
+              placeholder="Enter your username"
+            >
+            <div *ngIf="username?.invalid && (username?.dirty || username?.touched)" class="text-error dark:text-dark-error text-sm mt-1">
+              Username is required.
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <label for="password" class="block text-sm font-medium text-base-600 dark:text-dark-base-content">Password</label>
+          <div class="relative">
+            <i class="fas fa-lock input-icon"></i>
+            <input 
+              [type]="hidePassword ? 'password' : 'text'"
+              id="password" 
+              formControlName="password"
+              class="w-full h-[48px] pl-10 pr-10 py-2 border border-base-200 dark:border-base-700 bg-base dark:bg-dark-base rounded-lg focus:outline-none focus:border-primary dark:focus:border-dark-primary focus:ring-1 focus:ring-primary dark:focus:ring-dark-primary text-base-content dark:text-dark-base-content placeholder-base-400 dark:placeholder-base-500" 
+              placeholder="Enter your password"
+            >
+            <button 
+              type="button"
+              (click)="hidePassword = !hidePassword" 
+              class="absolute right-3 top-1/2 -translate-y-1/2 text-base-500 dark:text-base-400"
+              [attr.aria-label]="'Hide password'" 
+              [attr.aria-pressed]="hidePassword"
+            >
+              <i class="fas" [ngClass]="hidePassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+            </button>
+            <div *ngIf="password?.invalid && (password?.dirty || password?.touched)" class="text-error dark:text-dark-error text-sm mt-1">
+              Password is required.
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="errorMessage" class="text-error dark:text-dark-error flex items-center gap-2 text-sm">
+          <i class="fas fa-exclamation-circle"></i>
+          <span>{{ errorMessage }}</span>
+        </div>
+
+        <div class="flex items-center justify-between">
+          <div class="flex items-center">
+            <input 
+              type="checkbox" 
+              id="remember" 
+              class="w-4 h-4 border-base-200 dark:border-base-700 rounded text-primary dark:text-dark-primary focus:ring-primary dark:focus:ring-dark-primary bg-base dark:bg-dark-base-100"
+            >
+            <label for="remember" class="ml-2 text-sm text-base-500 dark:text-base-400">Remember me</label>
+          </div>
+          <a routerLink="/forgot-password" class="text-sm text-primary dark:text-dark-primary hover:text-primary-focus dark:hover:text-dark-primary-focus cursor-pointer">Forgot password?</a>
+        </div>
+
+        <button 
+          type="submit" 
+          [disabled]="loading || loginForm.invalid"
+          class="w-full h-[48px] bg-primary dark:bg-dark-primary text-primary-content dark:text-dark-primary-content py-3 px-4 rounded-lg hover:bg-primary-focus dark:hover:bg-dark-primary-focus transition-colors duration-200 flex justify-center items-center disabled:opacity-70 disabled:cursor-not-allowed"
+        >
+          <span *ngIf="!loading">Sign In</span>
+          <mat-spinner *ngIf="loading" diameter="24" class="!text-white"></mat-spinner>
+        </button>
+      </form>
+
+      <!-- Footer Links -->
+      <div class="mt-6 text-center text-sm text-base-500 dark:text-base-400">
+        <span>Don't have an account? </span>
+        <span class="text-primary dark:text-dark-primary hover:text-primary-focus dark:hover:text-dark-primary-focus cursor-pointer">Sign up</span>
+      </div>
+    </div>
+
+    <!-- Additional Info -->
+    <div class="mt-6 text-center text-sm text-base-500 dark:text-base-400">
+      <a routerLink="/about/data-sources" class="text-primary dark:text-dark-primary hover:text-primary-focus dark:hover:text-dark-primary-focus cursor-pointer">About Integrade</a>
+      <span class="mx-2">•</span>
+      <a class="hover:text-base-600 dark:hover:text-dark-base-content cursor-pointer">Terms of Service</a>
+      <span class="mx-2">•</span>
+      <a class="hover:text-base-600 dark:hover:text-dark-base-content cursor-pointer">Privacy Policy</a>
+    </div>
+  </div>
+</div>
